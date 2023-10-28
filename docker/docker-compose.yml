@@ -1,0 +1,14 @@
+version: '3'
+services:
+  database-treenity:
+    image: postgres
+    environment:
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    volumes:
+      - treenity-volume:/data/db
+    ports:
+      - "5432:5432"
+
+volumes:
+  treenity-volume:
