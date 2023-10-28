@@ -30,10 +30,9 @@ public class Node {
                 .data(NodeDTO.Data.builder().label(String.valueOf(stepValue)).build())
             .build());
 
-        int i = 1; // todo edgeID sequence
         result.addAll(
                 childNodes.stream().map(childNode -> EdgeDTO.builder()
-                    .id("Edge " + i)
+                    .id(String.format("edge---%s::%s", id, childNode.getId()))
                     .source(id)
                     .target(childNode.getId())
                     .build()
