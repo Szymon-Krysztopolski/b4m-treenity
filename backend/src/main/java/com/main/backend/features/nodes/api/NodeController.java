@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api")
 public class NodeController {
@@ -18,8 +16,8 @@ public class NodeController {
         this.service = service;
     }
 
-    @GetMapping("/nodes")
-    public List<TreePartsDTO> getNodes() { // todo return HttpResponse
-        return service.getNodes();
+    @GetMapping("/tree")
+    public TreePartsDTO getTree() { // todo return HttpResponse
+        return service.getTree();
     }
 }

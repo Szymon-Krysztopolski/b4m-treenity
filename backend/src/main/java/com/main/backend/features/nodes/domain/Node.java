@@ -1,15 +1,13 @@
 package com.main.backend.features.nodes.domain;
 
-import com.main.backend.features.nodes.dto.EdgeDTO;
-import com.main.backend.features.nodes.dto.NodeDTO;
 import com.main.backend.features.nodes.dto.TreePartsDTO;
+import com.main.backend.features.nodes.dto.TreePartsDTOFactory;
 import com.main.backend.features.nodes.entity.NodeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,23 +21,9 @@ public class Node {
     private Integer pathValue;
     private List<Node> childNodes;
 
-    public List<TreePartsDTO> toDTO() {
-        List<TreePartsDTO> result = new ArrayList<>();
-        result.add(NodeDTO.builder()
-                .id(id)
-                .data(NodeDTO.Data.builder().label(String.valueOf(stepValue)).build())
-            .build());
+    public TreePartsDTO toDTO() {
 
-        result.addAll(
-                childNodes.stream().map(childNode -> EdgeDTO.builder()
-                    .id(String.format("edge---%s::%s", id, childNode.getId()))
-                    .source(id)
-                    .target(childNode.getId())
-                    .build()
-                ).toList()
-        );
-
-        return result;
+        return TreePartsDTOFactory.create(this);
     }
 
     public static Node from(NodeEntity entity) {

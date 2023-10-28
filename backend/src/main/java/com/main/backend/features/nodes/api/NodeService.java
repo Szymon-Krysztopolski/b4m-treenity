@@ -6,7 +6,6 @@ import com.main.backend.features.nodes.entity.NodeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,13 +17,16 @@ public class NodeService {
         this.repository = repository;
     }
 
-    public List<TreePartsDTO> getNodes() {
+    public TreePartsDTO getTree() {
         List<NodeEntity> nodes = repository.findAll();
-        List<TreePartsDTO> treePartsDTOList = new ArrayList<>();
+        TreePartsDTO tree = new TreePartsDTO();
 
-        nodes.forEach(nodeEntity ->
-                treePartsDTOList.addAll(Node.from(nodeEntity).toDTO())
-        );
-        return treePartsDTOList;
+        nodes.forEach(nodeEntity -> {
+            TreePartsDTO treeToAdd = Node.from(nodeEntity).toDTO();
+            tree.getNodes().addAll(treeToAdd.getNodes());
+            tree.getEdges().addAll(treeToAdd.getEdges());
+        });
+
+        return tree;
     }
 }

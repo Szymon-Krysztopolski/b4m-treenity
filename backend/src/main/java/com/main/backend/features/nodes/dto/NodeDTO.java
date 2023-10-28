@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class NodeDTO implements TreePartsDTO {
+public class NodeDTO {
     private String id;
     private Data data;
 
