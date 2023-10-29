@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class NodeDTO {
+class NodeDTO {
     private String id;
     private Data data;
 
     @lombok.Data
-    @Builder
-    @AllArgsConstructor
     @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class Data {
         private String label;
     }

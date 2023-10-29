@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class EdgeDTO {
+class EdgeDTO {
     private String id;
     private String source;
     private String target;
