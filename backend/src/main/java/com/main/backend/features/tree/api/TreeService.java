@@ -1,7 +1,8 @@
 package com.main.backend.features.tree.api;
 
 import com.main.backend.features.tree.domain.Node;
-import com.main.backend.features.tree.dto.TreePartsDTO;
+import com.main.backend.features.tree.dto.TreeDTO;
+import com.main.backend.features.tree.dto.TreePartDTO;
 import com.main.backend.features.tree.entity.NodeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +18,15 @@ public class TreeService {
         this.repository = repository;
     }
 
-    public TreePartsDTO getTree() {
+    public TreeDTO getTree() {
         List<NodeEntity> nodes = repository.findAll();
-        TreePartsDTO tree = new TreePartsDTO();
+        TreeDTO tree = new TreeDTO();
 
         nodes.forEach(nodeEntity -> {
-            TreePartsDTO treeToAdd = Node.from(nodeEntity).toDTO();
-            tree.getNodes().addAll(treeToAdd.getNodes());
-            tree.getEdges().addAll(treeToAdd.getEdges());
+            TreePartDTO treeToAdd = Node.from(nodeEntity).toPartDTO();
+
+            tree.getNodes().add(treeToAdd.getNode());
+            tree.getEdges().add(treeToAdd.getParentEdge());
         });
 
         return tree;

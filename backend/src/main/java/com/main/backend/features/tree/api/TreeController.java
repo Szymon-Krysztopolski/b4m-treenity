@@ -1,6 +1,6 @@
 package com.main.backend.features.tree.api;
 
-import com.main.backend.features.tree.dto.TreePartsDTO;
+import com.main.backend.features.tree.dto.TreeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class TreeController {
     }
 
     @GetMapping("/tree")
-    public ResponseEntity<TreePartsDTO> getTree() {
+    public ResponseEntity<TreeDTO> getTree() {
         //return ResponseEntity.ok(service.getTree());
         return ResponseEntity.status(HttpStatus.OK).body(service.getTree());
     }

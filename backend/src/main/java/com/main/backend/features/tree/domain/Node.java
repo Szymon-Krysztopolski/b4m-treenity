@@ -1,7 +1,7 @@
 package com.main.backend.features.tree.domain;
 
-import com.main.backend.features.tree.dto.TreePartsDTO;
-import com.main.backend.features.tree.dto.TreePartsDTOFactory;
+import com.main.backend.features.tree.dto.TreeDTOFactory;
+import com.main.backend.features.tree.dto.TreePartDTO;
 import com.main.backend.features.tree.entity.NodeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,8 +40,8 @@ public class Node {
                 .collect(Collectors.toList());
     }
 
-    public TreePartsDTO toDTO() {
-        return TreePartsDTOFactory.create(this);
+    public TreePartDTO toPartDTO() {
+        return TreeDTOFactory.create(this);
     }
 
     public static Node from(NodeEntity entity) {

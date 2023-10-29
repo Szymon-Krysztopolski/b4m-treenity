@@ -2,13 +2,11 @@ package com.main.backend.features.tree.dto;
 
 import com.main.backend.features.tree.domain.Node;
 
-import java.util.List;
+public class TreeDTOFactory {
+    public static TreePartDTO create(Node node) {
+        TreePartDTO treePart = new TreePartDTO();
 
-public class TreePartsDTOFactory {
-    public static TreePartsDTO create(Node node) {
-        TreePartsDTO tree = new TreePartsDTO();
-
-        tree.setNodes(List.of(
+        treePart.setNode(
                 NodeDTO.builder()
                         .id(node.getId())
                         .data(new NodeDTO.Data((
@@ -18,20 +16,20 @@ public class TreePartsDTOFactory {
                         )))
                         .position(new NodeDTO.Position(50, 50))
                         .build()
-        ));
+        );
 
         if(node.hasParent()) {
             final Node parent = node.getParentNode();
-            tree.setEdges(List.of(
+            treePart.setParentEdge(
                     EdgeDTO.builder()
                             .id(String.format("edge---%s::%s", parent.getId(), node.getId()))
                             .source(parent.getId())
                             .target(node.getId())
                             .label(String.valueOf(node.getStepValue()))
                             .build()
-            ));
+            );
         }
 
-        return tree;
+        return treePart;
     }
 }
