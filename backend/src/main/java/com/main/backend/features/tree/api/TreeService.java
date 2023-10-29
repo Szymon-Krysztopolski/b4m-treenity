@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TreeService {
@@ -32,8 +33,14 @@ public class TreeService {
         return tree;
     }
 
-    public String addNode(String id) { // TODO
-        return null;
+    public String addNode(String parentNodeId, Integer stepValue) {
+        repository.saveAndFlush(NodeEntity.builder()
+                .id("node---" + UUID.randomUUID()) // todo fix
+                .parentNode(repository.getReferenceById(parentNodeId))
+                .stepValue(stepValue)
+                .build());
+
+        return "OK";
     }
 
     public String updateNode(String id) { // TODO

@@ -31,14 +31,14 @@ public class TreeController {
     }
 
     @PostMapping("/nodes/{id}")
-    public ResponseEntity<String> addNode(@PathVariable String id) {
+    public ResponseEntity<String> addNode(@PathVariable String id, @RequestBody Integer stepValue) {
         HttpStatus status = HttpStatus.BAD_GATEWAY;
         String response = "Error when adding node!";
 
         try {
             log.info("Adding new node: {} to tree", id);
             status = HttpStatus.OK;
-            response = service.addNode(id);
+            response = service.addNode(id, stepValue);
         } catch (Exception ex) {
             log.error(response, ex);
         }
