@@ -11,10 +11,9 @@ public class TreeDTOFactory {
                         .id(node.getId())
                         .data(new NodeDTO.Data((
                                 node.hasParent()
-                                        ? String.valueOf(node.getPathValue())
+                                        ? "node: " + node.getPathValue()
                                         : node.getId()
                         )))
-                        .position(new NodeDTO.Position(50, 50))
                         .build()
         );
 

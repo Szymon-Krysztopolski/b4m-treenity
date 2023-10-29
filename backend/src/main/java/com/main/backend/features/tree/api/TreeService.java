@@ -23,10 +23,10 @@ public class TreeService {
         TreeDTO tree = new TreeDTO();
 
         nodes.forEach(nodeEntity -> {
-            TreePartDTO treeToAdd = Node.from(nodeEntity).toPartDTO();
+            TreePartDTO partToAdd = Node.from(nodeEntity).toPartDTO();
 
-            tree.getNodes().add(treeToAdd.getNode());
-            tree.getEdges().add(treeToAdd.getParentEdge());
+            if(partToAdd.hasNode()) tree.getNodes().add(partToAdd.getNode());
+            if(partToAdd.hasParentEdge()) tree.getEdges().add(partToAdd.getParentEdge());
         });
 
         return tree;
