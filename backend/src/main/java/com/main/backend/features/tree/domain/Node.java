@@ -41,7 +41,7 @@ public class Node {
     }
 
     public TreePartDTO toPartDTO() {
-        return TreeDTOFactory.create(this);
+        return TreeDTOFactory.createTreePart(this);
     }
 
     public static Node from(NodeEntity entity) {

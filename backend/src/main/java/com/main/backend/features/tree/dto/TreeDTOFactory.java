@@ -3,7 +3,7 @@ package com.main.backend.features.tree.dto;
 import com.main.backend.features.tree.domain.Node;
 
 public class TreeDTOFactory {
-    public static TreePartDTO create(Node node) {
+    public static TreePartDTO createTreePart(Node node) {
         TreePartDTO treePart = new TreePartDTO();
 
         treePart.setNode(
