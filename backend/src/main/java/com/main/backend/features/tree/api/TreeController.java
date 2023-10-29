@@ -32,19 +32,52 @@ public class TreeController {
 
     @PostMapping("/nodes/{id}")
     public ResponseEntity<String> addNode(@PathVariable String id) {
-        // todo
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        HttpStatus status = HttpStatus.BAD_GATEWAY;
+        String response = "Error when adding node!";
+
+        try {
+            log.info("Adding new node: {} to tree", id);
+            status = HttpStatus.OK;
+            response = service.addNode(id);
+        } catch (Exception ex) {
+            log.error(response, ex);
+        }
+
+        log.info("Node added successful");
+        return ResponseEntity.status(status).body(response);
     }
 
     @PutMapping("/nodes/{id}")
     public ResponseEntity<String> updateNode(@PathVariable String id) {
-        // todo
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        HttpStatus status = HttpStatus.BAD_GATEWAY;
+        String response = "Error when updating node!";
+
+        try {
+            log.info("Updating node: {}", id);
+            status = HttpStatus.OK;
+            response = service.updateNode(id);
+        } catch (Exception ex) {
+            log.error(response, ex);
+        }
+
+        log.info("Node updated successful");
+        return ResponseEntity.status(status).body(response);
     }
 
     @DeleteMapping("/nodes/{id}")
     public ResponseEntity<String> deleteNode(@PathVariable String id) {
-        // todo
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        HttpStatus status = HttpStatus.BAD_GATEWAY;
+        String response = "Error when deleting node!";
+
+        try {
+            log.info("Deleting node: {}", id);
+            status = HttpStatus.OK;
+            response = service.deleteNode(id);
+        } catch (Exception ex) {
+            log.error(response, ex);
+        }
+
+        log.info("Node deleted successful");
+        return ResponseEntity.status(status).body(response);
     }
 }

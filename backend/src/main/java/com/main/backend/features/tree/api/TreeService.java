@@ -31,4 +31,16 @@ public class TreeService {
 
         return tree;
     }
+
+    public String addNode(String id) { // TODO
+        return null;
+    }
+
+    public String updateNode(String id) { // TODO
+        return null;
+    }
+
+    public String deleteNode(String id) { // TODO
+        return null;
+    }
 }
