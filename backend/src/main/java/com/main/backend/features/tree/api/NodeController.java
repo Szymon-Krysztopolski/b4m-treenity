@@ -1,6 +1,6 @@
-package com.main.backend.features.nodes.api;
+package com.main.backend.features.tree.api;
 
-import com.main.backend.features.nodes.dto.TreePartsDTO;
+import com.main.backend.features.tree.dto.TreePartsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

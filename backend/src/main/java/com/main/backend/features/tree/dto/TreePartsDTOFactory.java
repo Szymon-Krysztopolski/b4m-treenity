@@ -1,8 +1,7 @@
-package com.main.backend.features.nodes.dto;
+package com.main.backend.features.tree.dto;
 
-import com.main.backend.features.nodes.domain.Node;
+import com.main.backend.features.tree.domain.Node;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TreePartsDTOFactory {

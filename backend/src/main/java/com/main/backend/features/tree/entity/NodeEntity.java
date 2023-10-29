@@ -1,4 +1,4 @@
-package com.main.backend.features.nodes.entity;
+package com.main.backend.features.tree.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

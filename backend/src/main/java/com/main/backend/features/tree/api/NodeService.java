@@ -1,8 +1,8 @@
-package com.main.backend.features.nodes.api;
+package com.main.backend.features.tree.api;
 
-import com.main.backend.features.nodes.domain.Node;
-import com.main.backend.features.nodes.dto.TreePartsDTO;
-import com.main.backend.features.nodes.entity.NodeEntity;
+import com.main.backend.features.tree.domain.Node;
+import com.main.backend.features.tree.dto.TreePartsDTO;
+import com.main.backend.features.tree.entity.NodeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

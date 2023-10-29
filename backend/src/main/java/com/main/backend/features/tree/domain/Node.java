@@ -1,8 +1,8 @@
-package com.main.backend.features.nodes.domain;
+package com.main.backend.features.tree.domain;
 
-import com.main.backend.features.nodes.dto.TreePartsDTO;
-import com.main.backend.features.nodes.dto.TreePartsDTOFactory;
-import com.main.backend.features.nodes.entity.NodeEntity;
+import com.main.backend.features.tree.dto.TreePartsDTO;
+import com.main.backend.features.tree.dto.TreePartsDTOFactory;
+import com.main.backend.features.tree.entity.NodeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

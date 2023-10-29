@@ -1,4 +1,4 @@
-package com.main.backend.features.nodes.dto;
+package com.main.backend.features.tree.dto;
 
 import lombok.Data;
 
