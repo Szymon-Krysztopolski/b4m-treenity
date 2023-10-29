@@ -19,26 +19,28 @@ public class Node {
     private String id;
     private Integer stepValue;
     private Integer pathValue;
-    private List<Node> childNodes;
+    private NodeEntity nodeEntity;
+
+    public Node getParentNode() {
+        return Node.from(nodeEntity.getParentNode());
+    }
+
+    public List<Node> getChildNode() {
+        return nodeEntity.getChildNodes()
+                .stream()
+                .map(Node::from)
+                .collect(Collectors.toList());
+    }
 
     public TreePartsDTO toDTO() {
-
         return TreePartsDTOFactory.create(this);
     }
 
     public static Node from(NodeEntity entity) {
-        Node.NodeBuilder builder = Node.builder()
+        return Node.builder()
                 .id(entity.getId())
                 .stepValue(entity.getStepValue())
-                .pathValue(entity.getPathValue());
-
-        if (entity.getChildNodes() != null) {
-            List<Node> childNodes = entity.getChildNodes().stream()
-                    .map(Node::from)
-                    .collect(Collectors.toList());
-            builder.childNodes(childNodes);
-        }
-
-        return builder.build();
+                .pathValue(entity.getPathValue())
+                .nodeEntity(entity).build();
     }
 }
