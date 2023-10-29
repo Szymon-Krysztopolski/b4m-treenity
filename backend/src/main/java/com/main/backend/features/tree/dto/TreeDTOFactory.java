@@ -11,7 +11,7 @@ public class TreeDTOFactory {
                         .id(node.getId())
                         .data(new NodeDTO.Data((
                                 node.hasParent()
-                                        ? "node: " + node.getPathValue()
+                                        ? node.getId() + " | value = " + node.getPathValue()
                                         : node.getId()
                         )))
                         .build()
