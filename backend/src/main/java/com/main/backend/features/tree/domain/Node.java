@@ -26,7 +26,7 @@ public class Node {
     }
 
     public boolean hasAnyChild() {
-        return nodeEntity.getChildNodes() != null;
+        return !nodeEntity.getChildNodes().isEmpty();
     }
 
     public Node getParentNode() {
@@ -40,7 +40,7 @@ public class Node {
                 .collect(Collectors.toList());
     }
 
-    public TreePartDTO toPartDTO() {
+    public TreePartDTO toTreePartDTO() {
         return TreeDTOFactory.createTreePart(this);
     }
 

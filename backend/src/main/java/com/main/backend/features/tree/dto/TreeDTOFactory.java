@@ -9,6 +9,7 @@ public class TreeDTOFactory {
         treePart.setNode(
                 NodeDTO.builder()
                         .id(node.getId())
+                        .type(getType(node))
                         .data(new NodeDTO.Data((
                                 node.hasParent()
                                         ? node.getId() + " | value = " + node.getPathValue()
@@ -30,5 +31,14 @@ public class TreeDTOFactory {
         }
 
         return treePart;
+    }
+
+    private static String getType(Node node) {
+        String type = null;
+
+        if(!node.hasParent() && node.hasAnyChild()) type = "input";
+        if(node.hasParent() && !node.hasAnyChild()) type = "output";
+
+        return type;
     }
 }

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 class NodeDTO {
     private String id;
+    private String type;
     private Data data;
 
     @lombok.Data
