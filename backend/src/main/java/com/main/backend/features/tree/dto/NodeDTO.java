@@ -12,12 +12,20 @@ import lombok.NoArgsConstructor;
 class NodeDTO {
     private String id;
     private Data data;
+    private Position position;
 
     @lombok.Data
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder
     public static class Data {
         private String label;
+    }
+
+    @lombok.Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Position {
+        private Integer x;
+        private Integer y;
     }
 }

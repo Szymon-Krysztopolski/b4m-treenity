@@ -1,4 +1,4 @@
-INSERT INTO nodes (id, step_value) VALUES ('root-1', 10);
+INSERT INTO nodes (id, step_value) VALUES ('root-1', null);
 INSERT INTO nodes (id, step_value, parent_node_id) VALUES ('node-1', 1, 'root-1');
 INSERT INTO nodes (id, step_value, parent_node_id) VALUES ('node-2', 2, 'node-1');
 INSERT INTO nodes (id, step_value, parent_node_id) VALUES ('node-3', 3, 'node-2');
@@ -8,5 +8,5 @@ INSERT INTO nodes (id, step_value, parent_node_id) VALUES ('node-6', 6, 'node-3'
 INSERT INTO nodes (id, step_value, parent_node_id) VALUES ('node-7', 7, 'node-4');
 INSERT INTO nodes (id, step_value, parent_node_id) VALUES ('node-8', 8, 'node-4');
 INSERT INTO nodes (id, step_value, parent_node_id) VALUES ('node-9', 9, 'node-5');
-INSERT INTO nodes (id, step_value) VALUES ('root-2', 11);
+INSERT INTO nodes (id, step_value) VALUES ('root-2', null);
 INSERT INTO nodes (id, step_value, parent_node_id) VALUES ('node-10', 15, 'root-2');

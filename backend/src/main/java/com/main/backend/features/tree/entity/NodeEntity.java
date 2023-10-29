@@ -26,14 +26,18 @@ public class NodeEntity {
     private NodeEntity parentNode;
 
     public int getPathValue() {
-        int pathValue = stepValue;
+        int pathValue = (hasStepValue() ? stepValue : 0);
 
         NodeEntity currentParent = parentNode;
-        while (currentParent != null) {
+        while (currentParent != null && currentParent.hasStepValue()) {
             pathValue += currentParent.getStepValue();
             currentParent = currentParent.getParentNode();
         }
 
         return pathValue;
+    }
+
+    public boolean hasStepValue() {
+        return stepValue != null;
     }
 }

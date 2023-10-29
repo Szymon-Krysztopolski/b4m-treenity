@@ -11,22 +11,26 @@ public class TreePartsDTOFactory {
         tree.setNodes(List.of(
                 NodeDTO.builder()
                         .id(node.getId())
-                        .data(NodeDTO.Data.builder()
-                                .label(String.valueOf(node.getStepValue()))
-                                .build())
+                        .data(new NodeDTO.Data((
+                                node.hasParent()
+                                        ? String.valueOf(node.getPathValue())
+                                        : node.getId()
+                        )))
+                        .position(new NodeDTO.Position(50, 50))
                         .build()
         ));
 
-        tree.setEdges(
-                node.getChildNodes()
-                        .stream()
-                        .map(childNode -> EdgeDTO.builder()
-                                .id(String.format("edge---%s::%s", node.getId(), childNode.getId()))
-                                .source(node.getId())
-                                .target(childNode.getId())
-                                .build())
-                        .toList()
-        );
+        if(node.hasParent()) {
+            final Node parent = node.getParentNode();
+            tree.setEdges(List.of(
+                    EdgeDTO.builder()
+                            .id(String.format("edge---%s::%s", parent.getId(), node.getId()))
+                            .source(parent.getId())
+                            .target(node.getId())
+                            .label(String.valueOf(node.getStepValue()))
+                            .build()
+            ));
+        }
 
         return tree;
     }

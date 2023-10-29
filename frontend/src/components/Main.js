@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react"
+import React, {useCallback, useEffect, useState} from "react"
 import ReactFlow, {
     applyEdgeChanges,
     applyNodeChanges,
@@ -9,12 +9,21 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 
-import exampleNodes from "../exampleNodes";
-import exampleEdges from "../exampleEges";
-
 export default function Main() {
-    const [nodes, setNodes] = useState(exampleNodes);
-    const [edges, setEdges] = useState(exampleEdges);
+    const [nodes, setNodes] = useState([]);
+    const [edges, setEdges] = useState([]);
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:8080/api/tree')
+            .then(response => response.json())
+            .then(data => {
+                setNodes(data['nodes'])
+                setEdges(data['edges'])
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
 
     const onNodeChange = useCallback(
         (x) => setNodes((newNode) => applyNodeChanges(x, newNode)),
@@ -27,7 +36,7 @@ export default function Main() {
     );
 
     const onEdgeConnect = useCallback(
-        (x) => setEdges((eds) => addEdge({ ...x, animated: true }, eds)),
+        (x) => setEdges((eds) => addEdge({...x, animated: true}, eds)),
         [setEdges]
     );
 
@@ -40,9 +49,9 @@ export default function Main() {
                 onEdgesChange={onEdgeChange}
                 onConnect={onEdgeConnect}
             >
-                <MiniMap />
-                <Controls />
-                <Background />
+                <MiniMap/>
+                <Controls/>
+                <Background/>
             </ReactFlow>
         </main>
     )

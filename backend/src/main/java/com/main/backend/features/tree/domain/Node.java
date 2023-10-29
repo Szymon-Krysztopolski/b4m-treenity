@@ -21,6 +21,14 @@ public class Node {
     private Integer pathValue;
     private NodeEntity nodeEntity;
 
+    public boolean hasParent() {
+        return nodeEntity.getParentNode() != null;
+    }
+
+    public boolean hasAnyChild() {
+        return nodeEntity.getChildNodes() != null;
+    }
+
     public Node getParentNode() {
         return Node.from(nodeEntity.getParentNode());
     }
