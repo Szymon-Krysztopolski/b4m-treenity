@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class NodeService {
-    private final NodeRepository repository;
+public class TreeService {
+    private final TreeRepository repository;
 
     @Autowired
-    public NodeService(NodeRepository repository) {
+    public TreeService(TreeRepository repository) {
         this.repository = repository;
     }
 

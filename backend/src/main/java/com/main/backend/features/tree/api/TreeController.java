@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class NodeController {
-    private final NodeService service;
+public class TreeController {
+    private final TreeService service;
 
     @Autowired
-    public NodeController(NodeService service) {
+    public TreeController(TreeService service) {
         this.service = service;
     }
 
