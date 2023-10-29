@@ -25,7 +25,7 @@ public class Node {
         return Node.from(nodeEntity.getParentNode());
     }
 
-    public List<Node> getChildNode() {
+    public List<Node> getChildNodes() {
         return nodeEntity.getChildNodes()
                 .stream()
                 .map(Node::from)
