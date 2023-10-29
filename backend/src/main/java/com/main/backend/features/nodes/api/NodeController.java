@@ -19,7 +19,7 @@ public class NodeController {
     }
 
     @GetMapping("/tree")
-    public ResponseEntity<TreePartsDTO> getTree() { // todo return HttpResponse
+    public ResponseEntity<TreePartsDTO> getTree() {
         //return ResponseEntity.ok(service.getTree());
         return ResponseEntity.status(HttpStatus.OK).body(service.getTree());
     }
