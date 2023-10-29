@@ -5,7 +5,6 @@ import ReactFlow, {
     MiniMap,
     Controls,
     Background,
-    ConnectionLineType,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import getLayoutedElements from "../utils/LayoutUtils";
@@ -40,7 +39,6 @@ export default function Main() {
                 edges={edges}
                 onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
-                connectionLineType={ConnectionLineType.SmoothStep}
                 fitView
             >
                 <MiniMap/>
