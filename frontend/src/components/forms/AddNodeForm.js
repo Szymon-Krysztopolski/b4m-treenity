@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 
-export default function AddNodeForm({ elements }) {
+export default function AddNodeForm({elements}) {
     const [formData, setFormData] = useState({
         parentId: "",
         label: "",
@@ -8,7 +8,7 @@ export default function AddNodeForm({ elements }) {
     });
 
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         setFormData({
             ...formData,
             [name]: value,
@@ -16,9 +16,29 @@ export default function AddNodeForm({ elements }) {
     };
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-        // You can handle form submission logic here, e.g., sending the data to an API
         console.log("Form submitted with data:", formData);
+        event.preventDefault();
+
+        fetch('http://127.0.0.1:8080/api/nodes', {
+            method: 'post',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text()
+                        .then(errorText => {
+                            throw new Error(errorText);
+                        });
+                }
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                alert(error)
+                console.error(error);
+            });
     };
 
     return (

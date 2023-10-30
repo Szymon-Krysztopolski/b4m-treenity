@@ -33,8 +33,8 @@ public class TreeController {
 
     @PostMapping("/nodes")
     public ResponseEntity<String> addNode(@RequestBody NodeInstruction instruction) {
-        HttpStatus status = HttpStatus.BAD_GATEWAY;
-        String response = "Error when adding node!";
+        HttpStatus status;
+        String response;
 
         try {
             log.info("Adding new node to parent: {}", instruction.getParentId());
@@ -42,6 +42,8 @@ public class TreeController {
             response = service.addNode(instruction.getParentId(), instruction.getLabel(), instruction.getStepValue());
             log.info("Node added successfully");
         } catch (Exception ex) {
+            status = HttpStatus.BAD_REQUEST;
+            response = "Error when adding node!";
             log.error(response, ex);
         }
 
@@ -50,8 +52,8 @@ public class TreeController {
 
     @PatchMapping("/nodes/{id}")
     public ResponseEntity<String> updateNode(@PathVariable String id, @RequestBody NodeInstruction instruction) {
-        HttpStatus status = HttpStatus.BAD_GATEWAY;
-        String response = "Error when updating node!";
+        HttpStatus status;
+        String response;
 
         try {
             log.info("Updating node: {}", id);
@@ -59,6 +61,8 @@ public class TreeController {
             response = service.updateNode(id, instruction.getParentId(), instruction.getLabel(), instruction.getStepValue());
             log.info("Node updated successfully");
         } catch (Exception ex) {
+            status = HttpStatus.BAD_REQUEST;
+            response = "Error when updating node!";
             log.error(response, ex);
         }
 
@@ -67,8 +71,8 @@ public class TreeController {
 
     @DeleteMapping("/nodes/{id}")
     public ResponseEntity<String> deleteNode(@PathVariable String id) {
-        HttpStatus status = HttpStatus.BAD_GATEWAY;
-        String response = "Error when deleting node!";
+        HttpStatus status;
+        String response;
 
         try {
             log.info("Deleting node: {}", id);
@@ -76,6 +80,8 @@ public class TreeController {
             response = service.deleteNode(id);
             log.info("Node deleted successfully");
         } catch (Exception ex) {
+            status = HttpStatus.BAD_REQUEST;
+            response = "Error when deleting node!";
             log.error(response, ex);
         }
 
