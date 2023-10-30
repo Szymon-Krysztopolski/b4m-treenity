@@ -8,7 +8,7 @@ import ReactFlow, {
     Background,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import Form from "./Form";
+import AddNodeForm from "./forms/AddNodeForm";
 import getLayoutedElements from "../utils/LayoutUtils";
 
 export default function Main() {
@@ -44,7 +44,7 @@ export default function Main() {
                 fitView
             >
                 <Panel position="top-left">
-                    <Form/>
+                    <AddNodeForm elements={nodes}/>
                 </Panel>
                 <MiniMap/>
                 <Controls/>
