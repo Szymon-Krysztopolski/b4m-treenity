@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @Builder
 public class Node {
     private String id;
+    private String label;
     private Integer stepValue;
     private Integer pathValue;
     private NodeEntity nodeEntity;
@@ -47,6 +48,7 @@ public class Node {
     public static Node from(NodeEntity entity) {
         return Node.builder()
                 .id(entity.getId())
+                .label(entity.getLabel())
                 .stepValue(entity.getStepValue())
                 .pathValue(entity.getPathValue())
                 .nodeEntity(entity).build();

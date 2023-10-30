@@ -17,6 +17,7 @@ import java.util.List;
 public class NodeEntity {
     @Id
     private String id;
+    private String label;
     private Integer stepValue;
 
     @OneToMany(mappedBy = "parentNode")

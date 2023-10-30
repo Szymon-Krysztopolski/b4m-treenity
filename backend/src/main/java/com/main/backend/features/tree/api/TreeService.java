@@ -26,16 +26,17 @@ public class TreeService {
         nodes.forEach(nodeEntity -> {
             TreePartDTO partToAdd = Node.from(nodeEntity).toTreePartDTO();
 
-            if(partToAdd.hasNode()) tree.getNodes().add(partToAdd.getNode());
-            if(partToAdd.hasParentEdge()) tree.getEdges().add(partToAdd.getParentEdge());
+            if (partToAdd.hasNode()) tree.getNodes().add(partToAdd.getNode());
+            if (partToAdd.hasParentEdge()) tree.getEdges().add(partToAdd.getParentEdge());
         });
 
         return tree;
     }
 
-    public String addNode(String parentNodeId, Integer stepValue) {
+    public String addNode(String parentNodeId, String label, Integer stepValue) {
         repository.saveAndFlush(NodeEntity.builder()
-                .id("node---" + UUID.randomUUID()) // todo fix
+                .id(String.valueOf(UUID.randomUUID()))
+                .label(label)
                 .parentNode(repository.getReferenceById(parentNodeId))
                 .stepValue(stepValue)
                 .build());

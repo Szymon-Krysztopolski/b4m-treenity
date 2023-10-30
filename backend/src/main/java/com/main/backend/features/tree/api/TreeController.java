@@ -1,8 +1,10 @@
 package com.main.backend.features.tree.api;
 
+import com.main.backend.features.tree.dto.NodeInstructionDTO;
 import com.main.backend.features.tree.dto.TreeDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.JsonPath;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,15 +32,15 @@ public class TreeController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
-    @PostMapping("/nodes/{id}")
-    public ResponseEntity<String> addNode(@PathVariable String id, @RequestBody Integer stepValue) {
+    @PostMapping("/nodes")
+    public ResponseEntity<String> addNode(@RequestBody NodeInstructionDTO newNode) {
         HttpStatus status = HttpStatus.BAD_GATEWAY;
         String response = "Error when adding node!";
 
         try {
-            log.info("Adding new node: {} to tree", id);
+            log.info("Adding new node to parent: {}", newNode.getId());
             status = HttpStatus.OK;
-            response = service.addNode(id, stepValue);
+            response = service.addNode(newNode.getId(), newNode.getLabel(), newNode.getStepValue());
         } catch (Exception ex) {
             log.error(response, ex);
         }
