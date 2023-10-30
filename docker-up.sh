@@ -5,7 +5,7 @@ set -x
 # Docker Compose service names
 service_name="b4m-treenity"
 database_service_name="b4m-treenity-database-treenity-1"
-sql_content=$(< "docs/init.sql")
+sql_content=$(< "init.sql")
 
 
 # Stop Docker services
