@@ -1,6 +1,6 @@
 package com.main.backend.features.tree.api;
 
-import com.main.backend.features.tree.dto.NodeInstructionDTO;
+import com.main.backend.features.tree.domain.NodeInstruction;
 import com.main.backend.features.tree.dto.TreeDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class TreeController {
     }
 
     @PostMapping("/nodes")
-    public ResponseEntity<String> addNode(@RequestBody NodeInstructionDTO instruction) {
+    public ResponseEntity<String> addNode(@RequestBody NodeInstruction instruction) {
         HttpStatus status = HttpStatus.BAD_GATEWAY;
         String response = "Error when adding node!";
 
@@ -49,7 +49,7 @@ public class TreeController {
     }
 
     @PatchMapping("/nodes/{id}")
-    public ResponseEntity<String> updateNode(@PathVariable String id, @RequestBody NodeInstructionDTO instruction) {
+    public ResponseEntity<String> updateNode(@PathVariable String id, @RequestBody NodeInstruction instruction) {
         HttpStatus status = HttpStatus.BAD_GATEWAY;
         String response = "Error when updating node!";
 
