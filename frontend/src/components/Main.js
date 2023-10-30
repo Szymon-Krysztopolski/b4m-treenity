@@ -2,11 +2,13 @@ import React, {useEffect} from 'react';
 import ReactFlow, {
     useNodesState,
     useEdgesState,
+    Panel,
     MiniMap,
     Controls,
     Background,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
+import Form from "./Form";
 import getLayoutedElements from "../utils/LayoutUtils";
 
 export default function Main() {
@@ -41,6 +43,9 @@ export default function Main() {
                 onEdgesChange={onEdgesChange}
                 fitView
             >
+                <Panel position="top-left">
+                    <Form/>
+                </Panel>
                 <MiniMap/>
                 <Controls/>
                 <Background/>
