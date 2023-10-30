@@ -23,22 +23,18 @@ export default function AddNodeForm({elements}) {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(formData)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    return response.text()
-                        .then(errorText => {
-                            throw new Error(errorText);
-                        });
-                }
-            })
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                alert(error)
-                console.error(error);
-            });
+        }).then(response => {
+            if (!response.ok) {
+                return response.text()
+                    .then(errorText => {
+                        throw new Error(errorText);
+                    });
+            }
+            console.log(response);
+        }).catch(error => {
+            alert(error)
+            console.error(error);
+        });
     };
 
     return (
