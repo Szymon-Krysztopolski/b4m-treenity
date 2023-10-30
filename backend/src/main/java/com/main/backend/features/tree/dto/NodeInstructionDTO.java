@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class NodeInstructionDTO {
-    private String id;
+    private String parentId;
     private String label;
     private Integer stepValue;
 }

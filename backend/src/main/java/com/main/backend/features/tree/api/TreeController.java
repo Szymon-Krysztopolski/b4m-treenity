@@ -4,7 +4,6 @@ import com.main.backend.features.tree.dto.NodeInstructionDTO;
 import com.main.backend.features.tree.dto.TreeDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.JsonPath;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,36 +32,36 @@ public class TreeController {
     }
 
     @PostMapping("/nodes")
-    public ResponseEntity<String> addNode(@RequestBody NodeInstructionDTO newNode) {
+    public ResponseEntity<String> addNode(@RequestBody NodeInstructionDTO instruction) {
         HttpStatus status = HttpStatus.BAD_GATEWAY;
         String response = "Error when adding node!";
 
         try {
-            log.info("Adding new node to parent: {}", newNode.getId());
+            log.info("Adding new node to parent: {}", instruction.getParentId());
             status = HttpStatus.OK;
-            response = service.addNode(newNode.getId(), newNode.getLabel(), newNode.getStepValue());
+            response = service.addNode(instruction.getParentId(), instruction.getLabel(), instruction.getStepValue());
+            log.info("Node added successful");
         } catch (Exception ex) {
             log.error(response, ex);
         }
 
-        log.info("Node added successful");
         return ResponseEntity.status(status).body(response);
     }
 
-    @PutMapping("/nodes/{id}")
-    public ResponseEntity<String> updateNode(@PathVariable String id) {
+    @PatchMapping("/nodes/{id}")
+    public ResponseEntity<String> updateNode(@PathVariable String id, @RequestBody NodeInstructionDTO instruction) {
         HttpStatus status = HttpStatus.BAD_GATEWAY;
         String response = "Error when updating node!";
 
         try {
             log.info("Updating node: {}", id);
             status = HttpStatus.OK;
-            response = service.updateNode(id);
+            response = service.updateNode(id, instruction.getParentId(), instruction.getLabel(), instruction.getStepValue());
+            log.info("Node updated successful");
         } catch (Exception ex) {
             log.error(response, ex);
         }
 
-        log.info("Node updated successful");
         return ResponseEntity.status(status).body(response);
     }
 
@@ -75,11 +74,11 @@ public class TreeController {
             log.info("Deleting node: {}", id);
             status = HttpStatus.OK;
             response = service.deleteNode(id);
+            log.info("Node deleted successful");
         } catch (Exception ex) {
             log.error(response, ex);
         }
 
-        log.info("Node deleted successful");
         return ResponseEntity.status(status).body(response);
     }
 }

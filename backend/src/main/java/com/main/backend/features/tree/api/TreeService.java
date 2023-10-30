@@ -33,22 +33,31 @@ public class TreeService {
         return tree;
     }
 
-    public String addNode(String parentNodeId, String label, Integer stepValue) {
+    public String addNode(String parentId, String label, Integer stepValue) {
+        String newNodeId = String.valueOf(UUID.randomUUID());
+
         repository.saveAndFlush(NodeEntity.builder()
-                .id(String.valueOf(UUID.randomUUID()))
+                .id(newNodeId)
                 .label(label)
-                .parentNode(repository.getReferenceById(parentNodeId))
+                .parentNode(repository.getReferenceById(parentId))
                 .stepValue(stepValue)
                 .build());
 
-        return "OK";
+        return String.format("Node %s added successful", newNodeId);
     }
 
-    public String updateNode(String id) { // TODO
-        return null;
+    public String updateNode(String id, String parentId, String label, Integer stepValue) {
+        NodeEntity nodeToChange = repository.getReferenceById(id);
+        if (label != null) nodeToChange.setLabel(label);
+        if (stepValue != null) nodeToChange.setStepValue(stepValue);
+        if (parentId != null) nodeToChange.setParentNode(repository.getReferenceById(parentId));
+
+        repository.saveAndFlush(nodeToChange);
+        return "Node updated successful";
     }
 
-    public String deleteNode(String id) { // TODO
-        return null;
+    public String deleteNode(String id) {
+        repository.deleteById(id);
+        return "Node deleted successful";
     }
 }

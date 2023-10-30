@@ -1,14 +1,11 @@
 package com.main.backend.features.tree.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -16,11 +13,12 @@ import java.util.List;
 @Table(name = "nodes")
 public class NodeEntity {
     @Id
+    @Setter(AccessLevel.NONE)
     private String id;
     private String label;
     private Integer stepValue;
 
-    @OneToMany(mappedBy = "parentNode")
+    @OneToMany(mappedBy = "parentNode", cascade = CascadeType.REMOVE)
     private List<NodeEntity> childNodes;
 
     @ManyToOne
