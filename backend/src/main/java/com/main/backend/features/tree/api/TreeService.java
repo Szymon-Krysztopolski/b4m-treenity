@@ -43,7 +43,7 @@ public class TreeService {
                 .stepValue(stepValue)
                 .build());
 
-        return String.format("Node %s added successful", newNodeId);
+        return String.format("Node %s added successfully", newNodeId);
     }
 
     public String updateNode(String id, String parentId, String label, Integer stepValue) {
@@ -53,11 +53,11 @@ public class TreeService {
         if (parentId != null) nodeToChange.setParentNode(repository.getReferenceById(parentId));
 
         repository.saveAndFlush(nodeToChange);
-        return "Node updated successful";
+        return "Node updated successfully";
     }
 
     public String deleteNode(String id) {
         repository.deleteById(id);
-        return "Node deleted successful";
+        return "Node deleted successfully";
     }
 }

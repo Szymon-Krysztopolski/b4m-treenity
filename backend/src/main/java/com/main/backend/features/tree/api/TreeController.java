@@ -40,7 +40,7 @@ public class TreeController {
             log.info("Adding new node to parent: {}", instruction.getParentId());
             status = HttpStatus.OK;
             response = service.addNode(instruction.getParentId(), instruction.getLabel(), instruction.getStepValue());
-            log.info("Node added successful");
+            log.info("Node added successfully");
         } catch (Exception ex) {
             log.error(response, ex);
         }
@@ -57,7 +57,7 @@ public class TreeController {
             log.info("Updating node: {}", id);
             status = HttpStatus.OK;
             response = service.updateNode(id, instruction.getParentId(), instruction.getLabel(), instruction.getStepValue());
-            log.info("Node updated successful");
+            log.info("Node updated successfully");
         } catch (Exception ex) {
             log.error(response, ex);
         }
@@ -74,7 +74,7 @@ public class TreeController {
             log.info("Deleting node: {}", id);
             status = HttpStatus.OK;
             response = service.deleteNode(id);
-            log.info("Node deleted successful");
+            log.info("Node deleted successfully");
         } catch (Exception ex) {
             log.error(response, ex);
         }
