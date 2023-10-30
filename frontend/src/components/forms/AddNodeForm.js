@@ -32,8 +32,9 @@ export default function AddNodeForm({ elements }) {
                         value={formData.parentId}
                         onChange={handleInputChange}
                     >
+                        <option value="">Select an element</option>
                         {elements.map((node) => (
-                            <option key={node.id} value={node.data.label}>
+                            <option key={node.id} value={node.id}>
                                 {node.data.label}
                             </option>
                         ))}
@@ -43,8 +44,8 @@ export default function AddNodeForm({ elements }) {
                     <label>Label:</label>
                     <input
                         type="text"
-                        name="name"
-                        value={formData.name}
+                        name="label"
+                        value={formData.label}
                         onChange={handleInputChange}
                     />
                 </div>
