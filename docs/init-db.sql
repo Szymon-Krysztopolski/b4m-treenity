@@ -1,3 +1,5 @@
+CREATE TABLE IF NOT EXISTS nodes (id VARCHAR(255) PRIMARY KEY, label VARCHAR(255), step_value INTEGER, parent_node_id VARCHAR(255));
+
 INSERT INTO nodes (id, label, step_value) VALUES ('cb3f2de0-76f8-11ee-b962-0242ac120002', 'root-1', null);
 INSERT INTO nodes (id, label, step_value) VALUES ('47641fac-76f9-11ee-b962-0242ac120002', 'root-2', null);
 INSERT INTO nodes (id, label, step_value, parent_node_id) VALUES ('4764227c-76f9-11ee-b962-0242ac120002', 'node-1', 1, 'cb3f2de0-76f8-11ee-b962-0242ac120002');
