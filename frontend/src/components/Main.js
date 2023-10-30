@@ -44,7 +44,10 @@ export default function Main() {
                 fitView
             >
                 <Panel position="top-left">
-                    <AddNodeForm elements={nodes}/>
+                    <div>
+                        <h3>Admin Panel</h3>
+                        <AddNodeForm nodes={nodes}/>
+                    </div>
                 </Panel>
                 <MiniMap/>
                 <Controls/>

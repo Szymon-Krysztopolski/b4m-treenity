@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-export default function AddNodeForm({elements}) {
+export default function AddNodeForm({nodes}) {
     const [formData, setFormData] = useState({
         parentId: "",
         label: "",
@@ -29,8 +29,10 @@ export default function AddNodeForm({elements}) {
                     .then(errorText => {
                         throw new Error(errorText);
                     });
+            } else {
+                console.log(response);
+                window.location.reload();
             }
-            console.log(response);
         }).catch(error => {
             alert(error)
             console.error(error);
@@ -38,44 +40,41 @@ export default function AddNodeForm({elements}) {
     };
 
     return (
-        <div>
-            <h3>Admin Panel</h3>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Parent node:</label>
-                    <select
-                        name="parentId"
-                        value={formData.parentId}
-                        onChange={handleInputChange}
-                    >
-                        <option value="">Select an element</option>
-                        {elements.map((node) => (
-                            <option key={node.id} value={node.id}>
-                                {node.data.label}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label>Label:</label>
-                    <input
-                        type="text"
-                        name="label"
-                        value={formData.label}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div>
-                    <label>Step cost:</label>
-                    <input
-                        type="number"
-                        name="stepValue"
-                        value={formData.stepValue}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <button type="submit">Submit</button>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit}>
+            <div>
+                <label>Parent node:</label>
+                <select
+                    name="parentId"
+                    value={formData.parentId}
+                    onChange={handleInputChange}
+                >
+                    <option value="">Select an element</option>
+                    {nodes.map((node) => (
+                        <option key={node.id} value={node.id}>
+                            {node.data.label}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <div>
+                <label>Label:</label>
+                <input
+                    type="text"
+                    name="label"
+                    value={formData.label}
+                    onChange={handleInputChange}
+                />
+            </div>
+            <div>
+                <label>Step cost:</label>
+                <input
+                    type="number"
+                    name="stepValue"
+                    value={formData.stepValue}
+                    onChange={handleInputChange}
+                />
+            </div>
+            <button type="submit">Submit</button>
+        </form>
     );
 }
