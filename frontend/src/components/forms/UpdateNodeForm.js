@@ -3,7 +3,7 @@ import {handleInputChange, handleSubmit} from "./dataHandler";
 
 export default function UpdateNodeForm({nodes}) {
     const [formData, setFormData] = useState({
-        id: "",
+        id: "-",
         parentId: "",
         label: "",
         stepValue: 0,
@@ -18,7 +18,7 @@ export default function UpdateNodeForm({nodes}) {
                     value={formData.id}
                     onChange={handleInputChange(formData, setFormData)}
                 >
-                    <option value="">Select an element</option>
+                    <option value="-">Select an element</option>
                     {nodes.map((node) => (
                         <option key={node.id} value={node.id}>
                             {node.data.label}
