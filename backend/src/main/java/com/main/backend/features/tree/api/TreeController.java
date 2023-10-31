@@ -22,7 +22,7 @@ public class TreeController {
     @GetMapping("/tree")
     public ResponseEntity<TreeDTO> getTree() {
         try {
-            log.info("Downloading of the entire tree");
+            log.info("Downloading the tree");
             return ResponseEntity.ok(service.getTree());
         } catch (Exception ex) {
             log.error("Error with getTree()!", ex);
@@ -78,7 +78,7 @@ public class TreeController {
             log.info("Deleting node: {}", id);
             status = HttpStatus.OK;
             response = service.deleteNode(id);
-            log.info("Node deleted successfully");
+            log.info("Node {} deleted successfully", id);
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
             response = "Error when deleting node!";

@@ -11,6 +11,7 @@ import 'reactflow/dist/style.css';
 import AddNodeForm from "./forms/AddNodeForm";
 import getLayoutedElements from "../utils/layoutUtils";
 import UpdateNodeForm from "./forms/UpdateNodeForm";
+import DeleteNodeForm from "./forms/DeleteNodeForm";
 
 export default function Main() {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -49,6 +50,7 @@ export default function Main() {
                         <h3>Admin Panel</h3>
                         <AddNodeForm nodes={nodes}/>
                         <UpdateNodeForm nodes={nodes}/>
+                        <DeleteNodeForm nodes={nodes}/>
                     </div>
                 </Panel>
                 <MiniMap/>
