@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {handleInputChange, handleSubmit} from "./dataHandler";
+import "../../style.css"
 
 export default function AddNodeForm({nodes}) {
     const [formData, setFormData] = useState({
@@ -9,8 +10,8 @@ export default function AddNodeForm({nodes}) {
     });
 
     return (
-        <form onSubmit={handleSubmit(formData, "post", "http://127.0.0.1:8080/api/nodes")}>
-            <div>
+        <form className={"panel--form"} onSubmit={handleSubmit(formData, "post", "http://127.0.0.1:8080/api/nodes")}>
+            <div className={"panel--form--input"}>
                 <label>Parent node:</label>
                 <select
                     name="parentId"
@@ -25,7 +26,7 @@ export default function AddNodeForm({nodes}) {
                     ))}
                 </select>
             </div>
-            <div>
+            <div className={"panel--form--input"}>
                 <label>Label:</label>
                 <input
                     type="text"
@@ -34,7 +35,7 @@ export default function AddNodeForm({nodes}) {
                     onChange={handleInputChange(formData, setFormData)}
                 />
             </div>
-            <div>
+            <div className={"panel--form--input"}>
                 <label>Step cost:</label>
                 <input
                     type="number"

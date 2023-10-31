@@ -4,3 +4,16 @@
 body {
     margin: 0;
 }
+
+.panel--button {
+    margin: 10px;
+}
+
+.panel--form {
+    border: black solid 1px;
+    padding: 10px;
+}
+
+.panel--form--input {
+    margin: 10px;
+}

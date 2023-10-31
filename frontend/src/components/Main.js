@@ -12,6 +12,7 @@ import AddNodeForm from "./forms/AddNodeForm";
 import getLayoutedElements from "../utils/layoutUtils";
 import UpdateNodeForm from "./forms/UpdateNodeForm";
 import DeleteNodeForm from "./forms/DeleteNodeForm";
+import "../style.css"
 
 export default function Main() {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -36,6 +37,14 @@ export default function Main() {
             });
     }, []);
 
+    const [showAddForm, setAddForm] = React.useState(false)
+    const [showUpdateForm, setUpdateForm] = React.useState(false)
+    const [showDeleteForm, setDeleteForm] = React.useState(false)
+
+    function changeValue(setFormValue) {
+        setFormValue(prev => !prev)
+    }
+
     return (
         <main>
             <ReactFlow
@@ -48,9 +57,14 @@ export default function Main() {
                 <Panel position="top-left">
                     <div>
                         <h3>Admin Panel</h3>
-                        <AddNodeForm nodes={nodes}/>
-                        <UpdateNodeForm nodes={nodes}/>
-                        <DeleteNodeForm nodes={nodes}/>
+                        <div>
+                            <input className={"panel--button"} type="submit" value="Add new node" onClick={() => changeValue(setAddForm)}/>
+                            <input className={"panel--button"} type="submit" value="Update node" onClick={() => changeValue(setUpdateForm)}/>
+                            <input className={"panel--button"} type="submit" value="Delete node" onClick={() => changeValue(setDeleteForm)}/>
+                        </div>
+                        {showAddForm ? <AddNodeForm nodes={nodes}/> : null}
+                        {showUpdateForm ? <UpdateNodeForm nodes={nodes}/> : null}
+                        {showDeleteForm ? <DeleteNodeForm nodes={nodes}/> : null}
                     </div>
                 </Panel>
                 <MiniMap/>
