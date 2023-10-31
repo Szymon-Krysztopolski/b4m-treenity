@@ -50,7 +50,7 @@ public class TreeController {
         return ResponseEntity.status(status).body(response);
     }
 
-    @PatchMapping("/nodes/{id}")
+    @PutMapping("/nodes/{id}")
     public ResponseEntity<String> updateNode(@PathVariable String id, @RequestBody NodeInstruction instruction) {
         HttpStatus status;
         String response;

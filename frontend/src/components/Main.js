@@ -9,7 +9,8 @@ import ReactFlow, {
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import AddNodeForm from "./forms/AddNodeForm";
-import getLayoutedElements from "../utils/LayoutUtils";
+import getLayoutedElements from "../utils/layoutUtils";
+import UpdateNodeForm from "./forms/UpdateNodeForm";
 
 export default function Main() {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -47,6 +48,7 @@ export default function Main() {
                     <div>
                         <h3>Admin Panel</h3>
                         <AddNodeForm nodes={nodes}/>
+                        <UpdateNodeForm nodes={nodes}/>
                     </div>
                 </Panel>
                 <MiniMap/>

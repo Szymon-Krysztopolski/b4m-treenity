@@ -1,15 +1,31 @@
 import React, {useState} from "react";
 import {handleInputChange, handleSubmit} from "./dataHandler";
 
-export default function AddNodeForm({nodes}) {
+export default function UpdateNodeForm({nodes}) {
     const [formData, setFormData] = useState({
+        id: "",
         parentId: "",
         label: "",
         stepValue: 0,
     });
 
     return (
-        <form onSubmit={handleSubmit(formData, "post", "http://127.0.0.1:8080/api/nodes")}>
+        <form onSubmit={handleSubmit(formData, "put", "http://127.0.0.1:8080/api/nodes/" + formData.id)}>
+            <div>
+                <label>Node to update:</label>
+                <select
+                    name="id"
+                    value={formData.id}
+                    onChange={handleInputChange(formData, setFormData)}
+                >
+                    <option value="">Select an element</option>
+                    {nodes.map((node) => (
+                        <option key={node.id} value={node.id}>
+                            {node.data.label}
+                        </option>
+                    ))}
+                </select>
+            </div>
             <div>
                 <label>Parent node:</label>
                 <select
