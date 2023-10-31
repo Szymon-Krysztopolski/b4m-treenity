@@ -12,7 +12,7 @@ export default function UpdateNodeForm({nodes}) {
     return (
         <form className={"panel--form"} onSubmit={handleSubmit(formData, "put", "http://127.0.0.1:8080/api/nodes/" + formData.id)}>
             <div className={"panel--form--input"}>
-                <label>Node to update:</label>
+                <label>Node to update</label>
                 <select
                     name="id"
                     value={formData.id}
@@ -27,7 +27,7 @@ export default function UpdateNodeForm({nodes}) {
                 </select>
             </div>
             <div className={"panel--form--input"}>
-                <label>Parent node:</label>
+                <label>Parent node</label>
                 <select
                     name="parentId"
                     value={formData.parentId}
@@ -42,7 +42,7 @@ export default function UpdateNodeForm({nodes}) {
                 </select>
             </div>
             <div className={"panel--form--input"}>
-                <label>Label:</label>
+                <label>Label</label>
                 <input
                     type="text"
                     name="label"
@@ -51,7 +51,7 @@ export default function UpdateNodeForm({nodes}) {
                 />
             </div>
             <div className={"panel--form--input"}>
-                <label>Step cost:</label>
+                <label>Step cost</label>
                 <input
                     type="number"
                     name="stepValue"

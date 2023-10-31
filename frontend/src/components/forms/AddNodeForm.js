@@ -12,7 +12,7 @@ export default function AddNodeForm({nodes}) {
     return (
         <form className={"panel--form"} onSubmit={handleSubmit(formData, "post", "http://127.0.0.1:8080/api/nodes")}>
             <div className={"panel--form--input"}>
-                <label>Parent node:</label>
+                <label>Parent node</label>
                 <select
                     name="parentId"
                     value={formData.parentId}
@@ -27,7 +27,7 @@ export default function AddNodeForm({nodes}) {
                 </select>
             </div>
             <div className={"panel--form--input"}>
-                <label>Label:</label>
+                <label>Label</label>
                 <input
                     type="text"
                     name="label"
@@ -36,7 +36,7 @@ export default function AddNodeForm({nodes}) {
                 />
             </div>
             <div className={"panel--form--input"}>
-                <label>Step cost:</label>
+                <label>Step cost</label>
                 <input
                     type="number"
                     name="stepValue"
