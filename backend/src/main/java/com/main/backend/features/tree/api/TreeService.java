@@ -1,9 +1,11 @@
 package com.main.backend.features.tree.api;
 
 import com.main.backend.features.tree.domain.Node;
+import com.main.backend.features.tree.domain.TreeException;
 import com.main.backend.features.tree.dto.TreeDTO;
 import com.main.backend.features.tree.dto.TreePartDTO;
 import com.main.backend.features.tree.entity.NodeEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class TreeService {
     private final TreeRepository repository;
 
@@ -33,24 +36,44 @@ public class TreeService {
         return tree;
     }
 
-    public String addNode(String parentId, String label, Integer stepValue) {
+    public String addNode(String parentId, String label, Integer stepValue) throws TreeException {
         String newNodeId = String.valueOf(UUID.randomUUID());
+
+        NodeEntity parent = (repository.existsById(parentId) ? repository.getReferenceById(parentId) : null);
+        if (stepValue == null) throw new TreeException("New node should have a value!");
+        if (label == null || label.isBlank()) throw new TreeException("The new node should be properly labeled!");
 
         repository.saveAndFlush(NodeEntity.builder()
                 .id(newNodeId)
                 .label(label)
-                .parentNode(repository.getReferenceById(parentId))
+                .parentNode(parent)
                 .stepValue(stepValue)
                 .build());
 
         return String.format("Node %s added successfully", newNodeId);
     }
 
-    public String updateNode(String id, String parentId, String label, Integer stepValue) {
+    public String updateNode(String id, String parentId, String label, Integer stepValue) throws TreeException {
+        if (id == null || id.isBlank() || !repository.existsById(id)) {
+            log.error("Node {} not found!", id);
+            throw new TreeException("No node has been selected! Select proper value!");
+        }
+
         NodeEntity nodeToChange = repository.getReferenceById(id);
-        if (label != null) nodeToChange.setLabel(label);
+        if(repository.existsById(parentId)) {
+            NodeEntity potentialParent = repository.getReferenceById(parentId);
+            if(potentialParent.isYourParentOrYou(nodeToChange)) {
+                log.error("Incorrect node selected as parent");
+                throw new TreeException("You cannot set you, or your child as your parent!");
+            }
+            nodeToChange.setParentNode(potentialParent);
+        } else {
+            log.debug("Parent not found, creating a new root");
+            nodeToChange.setParentNode(null);
+        }
+        if (label != null && !label.isBlank()) nodeToChange.setLabel(label);
         if (stepValue != null) nodeToChange.setStepValue(stepValue);
-        if (parentId != null) nodeToChange.setParentNode(repository.getReferenceById(parentId));
+
 
         repository.saveAndFlush(nodeToChange);
         return "Node updated successfully";

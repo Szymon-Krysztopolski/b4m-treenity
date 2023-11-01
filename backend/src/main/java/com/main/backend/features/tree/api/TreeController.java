@@ -1,6 +1,7 @@
 package com.main.backend.features.tree.api;
 
 import com.main.backend.features.tree.domain.NodeInstruction;
+import com.main.backend.features.tree.domain.TreeException;
 import com.main.backend.features.tree.dto.TreeDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,13 @@ public class TreeController {
             status = HttpStatus.OK;
             response = service.addNode(instruction.getParentId(), instruction.getLabel(), instruction.getStepValue());
             log.info("Node added successfully");
+        } catch (TreeException ex) {
+            status = HttpStatus.BAD_REQUEST;
+            response = ex.getMessage();
+            log.error(response, ex);
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
-            response = "Error when adding node!";
+            response = "Error during adding node!";
             log.error(response, ex);
         }
 
@@ -60,6 +65,10 @@ public class TreeController {
             status = HttpStatus.OK;
             response = service.updateNode(id, instruction.getParentId(), instruction.getLabel(), instruction.getStepValue());
             log.info("Node updated successfully");
+        } catch (TreeException ex) {
+            status = HttpStatus.BAD_REQUEST;
+            response = ex.getMessage();
+            log.error(response, ex);
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
             response = "Error when updating node!";

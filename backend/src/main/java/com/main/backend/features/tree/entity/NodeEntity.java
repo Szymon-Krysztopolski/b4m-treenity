@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -36,7 +37,24 @@ public class NodeEntity {
         return pathValue;
     }
 
+    public boolean isYourParentOrYou(NodeEntity nodeEntity) {
+        if (id.equals(nodeEntity.getId()))
+            return true;
+
+        NodeEntity currentParent = parentNode;
+        while (currentParent != null) {
+            if (nodeEntity.getId().equals(currentParent.getId()))
+                return true;
+            currentParent = currentParent.getParentNode();
+        }
+        return false;
+    }
+
     public boolean hasStepValue() {
-        return stepValue != null;
+        return !isRoot() && stepValue != null;
+    }
+
+    public boolean isRoot() {
+        return parentNode == null;
     }
 }
