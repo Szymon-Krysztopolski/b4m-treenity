@@ -78,7 +78,7 @@ public class TreeService {
             nodeToChange.setParentNode(null);
         }
         if (label != null && !label.isBlank()) nodeToChange.setLabel(label);
-        if (stepValue != null && !nodeToChange.isRoot()) nodeToChange.setStepValue(stepValue);
+        if (stepValue != null && nodeToChange.isNotRoot()) nodeToChange.setStepValue(stepValue);
 
         repository.saveAndFlush(nodeToChange);
         return "Node updated successfully";

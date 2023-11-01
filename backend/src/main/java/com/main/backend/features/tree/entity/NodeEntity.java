@@ -50,10 +50,10 @@ public class NodeEntity {
     }
 
     public boolean hasStepValue() {
-        return !isRoot() && stepValue != null;
+        return isNotRoot() && stepValue != null;
     }
 
-    public boolean isRoot() {
-        return parentNode == null;
+    public boolean isNotRoot() {
+        return parentNode != null;
     }
 }
