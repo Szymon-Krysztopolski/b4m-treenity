@@ -43,10 +43,8 @@ public class TreeService {
         if (parent == null) {
             stepValue = null;
             log.debug("Root cannot have a stepValue.");
-        } else {
-            if (stepValue == null) {
-                throw new TreeException("The new node should have a value if it is not the root!");
-            }
+        } else if (stepValue == null){
+            throw new TreeException("The new node should have a value if it is not the root!");
         }
         if (label == null || label.isBlank()) throw new TreeException("The new node should be properly labeled!");
 
