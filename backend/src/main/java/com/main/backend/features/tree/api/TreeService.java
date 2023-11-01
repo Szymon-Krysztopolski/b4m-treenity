@@ -40,7 +40,14 @@ public class TreeService {
         String newNodeId = String.valueOf(UUID.randomUUID());
 
         NodeEntity parent = (repository.existsById(parentId) ? repository.getReferenceById(parentId) : null);
-        if (stepValue == null) throw new TreeException("New node should have a value!");
+        if (parent == null) {
+            stepValue = null;
+            log.debug("Root cannot have a stepValue.");
+        } else {
+            if (stepValue == null) {
+                throw new TreeException("The new node should have a value if it is not the root!");
+            }
+        }
         if (label == null || label.isBlank()) throw new TreeException("The new node should be properly labeled!");
 
         repository.saveAndFlush(NodeEntity.builder()
@@ -48,7 +55,8 @@ public class TreeService {
                 .label(label)
                 .parentNode(parent)
                 .stepValue(stepValue)
-                .build());
+                .build()
+        );
 
         return String.format("Node %s added successfully", newNodeId);
     }
@@ -60,9 +68,9 @@ public class TreeService {
         }
 
         NodeEntity nodeToChange = repository.getReferenceById(id);
-        if(repository.existsById(parentId)) {
+        if (repository.existsById(parentId)) {
             NodeEntity potentialParent = repository.getReferenceById(parentId);
-            if(potentialParent.isYourParentOrYou(nodeToChange)) {
+            if (potentialParent.isYourParentOrYou(nodeToChange)) {
                 log.error("Incorrect node selected as parent");
                 throw new TreeException("You cannot set you, or your child as your parent!");
             }
@@ -72,8 +80,7 @@ public class TreeService {
             nodeToChange.setParentNode(null);
         }
         if (label != null && !label.isBlank()) nodeToChange.setLabel(label);
-        if (stepValue != null) nodeToChange.setStepValue(stepValue);
-
+        if (stepValue != null && !nodeToChange.isRoot()) nodeToChange.setStepValue(stepValue);
 
         repository.saveAndFlush(nodeToChange);
         return "Node updated successfully";
