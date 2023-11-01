@@ -42,7 +42,7 @@ export default function UpdateNodeForm({nodes}) {
                 </select>
             </div>
             <div className={"panel--form--input"}>
-                <label>Label</label>
+                <label>New label (optional)</label>
                 <input
                     type="text"
                     name="label"
@@ -59,7 +59,7 @@ export default function UpdateNodeForm({nodes}) {
                     onChange={handleInputChange(formData, setFormData)}
                 />
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit">Update</button>
         </form>
     );
 }

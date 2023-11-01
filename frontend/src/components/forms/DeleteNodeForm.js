@@ -23,7 +23,7 @@ export default function DeleteNodeForm({nodes}) {
                     ))}
                 </select>
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit">Delete</button>
         </form>
     );
 }

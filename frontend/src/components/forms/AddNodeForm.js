@@ -44,7 +44,7 @@ export default function AddNodeForm({nodes}) {
                     onChange={handleInputChange(formData, setFormData)}
                 />
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit">Add</button>
         </form>
     );
 }
