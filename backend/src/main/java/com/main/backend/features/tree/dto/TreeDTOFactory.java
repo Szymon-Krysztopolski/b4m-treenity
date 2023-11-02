@@ -11,8 +11,8 @@ public class TreeDTOFactory {
         tree.setMessage(message);
         nodes.forEach(node -> {
             TreePartDTO treePart = createTreePart(node);
-            if (treePart.getNode() != null) tree.getNodes().add(treePart.getNode());
-            if (treePart.getParentEdge() != null) tree.getEdges().add(treePart.getParentEdge());
+            if (treePart.hasNode()) tree.getNodes().add(treePart.getNode());
+            if (treePart.hasParentEdge()) tree.getEdges().add(treePart.getParentEdge());
         });
 
         return tree;
