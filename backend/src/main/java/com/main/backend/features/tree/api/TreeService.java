@@ -39,7 +39,11 @@ public class TreeService {
     public String addNode(String parentId, String label, Integer stepValue) throws TreeException {
         String newNodeId = String.valueOf(UUID.randomUUID());
 
-        NodeEntity parent = (repository.existsById(parentId) ? repository.getReferenceById(parentId) : null);
+        NodeEntity parent = (parentId != null && repository.existsById(parentId)
+                ? repository.getReferenceById(parentId)
+                : null
+        );
+
         if (parent == null) {
             stepValue = null;
             log.debug("Root cannot have a stepValue.");
