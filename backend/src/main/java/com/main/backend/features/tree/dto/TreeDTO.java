@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class TreeDTO {
+    private String message;
     private List<NodeDTO> nodes = new ArrayList<>();
     private List<EdgeDTO> edges = new ArrayList<>();
 }

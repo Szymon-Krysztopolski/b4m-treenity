@@ -2,8 +2,23 @@ package com.main.backend.features.tree.dto;
 
 import com.main.backend.features.tree.domain.Node;
 
+import java.util.List;
+
 public class TreeDTOFactory {
-    public static TreePartDTO createTreePart(Node node) {
+    public static TreeDTO createTree(String message, List<Node> nodes) {
+        TreeDTO tree = new TreeDTO();
+
+        tree.setMessage(message);
+        nodes.forEach(node -> {
+            TreePartDTO treePart = createTreePart(node);
+            if (treePart.getNode() != null) tree.getNodes().add(treePart.getNode());
+            if (treePart.getParentEdge() != null) tree.getEdges().add(treePart.getParentEdge());
+        });
+
+        return tree;
+    }
+
+    private static TreePartDTO createTreePart(Node node) {
         TreePartDTO treePart = new TreePartDTO();
 
         treePart.setNode(
@@ -18,7 +33,7 @@ public class TreeDTOFactory {
                         .build()
         );
 
-        if(node.hasParent()) {
+        if (node.hasParent()) {
             final Node parent = node.getParentNode();
             treePart.setParentEdge(
                     EdgeDTO.builder()
@@ -36,8 +51,8 @@ public class TreeDTOFactory {
     private static String getType(Node node) {
         String type = null;
 
-        if(!node.hasParent() && node.hasAnyChild()) type = "input";
-        if(node.hasParent() && !node.hasAnyChild()) type = "output";
+        if (!node.hasParent() && node.hasAnyChild()) type = "input";
+        if (node.hasParent() && !node.hasAnyChild()) type = "output";
 
         return type;
     }

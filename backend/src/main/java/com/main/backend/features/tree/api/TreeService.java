@@ -3,7 +3,7 @@ package com.main.backend.features.tree.api;
 import com.main.backend.features.tree.domain.Node;
 import com.main.backend.features.tree.domain.TreeException;
 import com.main.backend.features.tree.dto.TreeDTO;
-import com.main.backend.features.tree.dto.TreePartDTO;
+import com.main.backend.features.tree.dto.TreeDTOFactory;
 import com.main.backend.features.tree.entity.NodeEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +23,10 @@ public class TreeService {
     }
 
     public TreeDTO getTree() {
-        List<NodeEntity> nodes = repository.findAll();
-        TreeDTO tree = new TreeDTO();
+        List<NodeEntity> nodeEntityList = repository.findAll();
+        List<Node> nodeList = nodeEntityList.stream().map(Node::from).toList();
 
-        nodes.forEach(nodeEntity -> {
-            TreePartDTO partToAdd = Node.from(nodeEntity).toTreePartDTO();
-
-            if (partToAdd.hasNode()) tree.getNodes().add(partToAdd.getNode());
-            if (partToAdd.hasParentEdge()) tree.getEdges().add(partToAdd.getParentEdge());
-        });
-
-        return tree;
+        return TreeDTOFactory.createTree(null, nodeList);
     }
 
     public String addNode(String parentId, String label, Integer stepValue) throws TreeException {
