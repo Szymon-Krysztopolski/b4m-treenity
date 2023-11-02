@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,13 +31,27 @@ class TreeControllerTest {
     }
 
     @Test
-    void getTree() {
+    void checkIfTreeContainsInitialNodesAndEdges() {
+        // given
+        List<String> listOfNodes = new ArrayList<>(List.of("root", "node-1", "node-2", "node-3", "node-4", "last"));
+        List<String> listOfEdges = new ArrayList<>(List.of(
+                "edge---root::node-1",
+                "edge---root::node-2",
+                "edge---node-1::node-3",
+                "edge---node-1::node-4",
+                "edge---node-2::last"
+        ));
+
         // when
         final TreeDTO tree = getTreeDTO();
 
         // then
-        assertEquals(6, tree.getNodes().size());
-        assertEquals(5, tree.getEdges().size());
+        assertEquals(listOfNodes.size(), tree.getNodes().size());
+        assertEquals(listOfEdges.size(), tree.getEdges().size());
+
+        // and then
+        listOfNodes.forEach(node -> assertTrue(tree.checkIfNodeExists(node)));
+        listOfEdges.forEach(edge -> assertTrue(tree.checkIfEdgeExists(edge)));
     }
 
     @Test
@@ -84,14 +100,6 @@ class TreeControllerTest {
         final TreeDTO tree = getTreeDTO();
         assertEquals(expectedNumberOfNodes, tree.getNodes().size());
         assertEquals(expectedNumberOfEdges, tree.getEdges().size());
-    }
-
-    private boolean checkIfNodeExists(String id) {
-        return getTreeDTO().checkIfNodeExists(id);
-    }
-
-    private boolean checkIfEdgeExists(String id) {
-        return getTreeDTO().checkIfEdgeExists(id);
     }
 
     private TreeDTO getTreeDTO() {
