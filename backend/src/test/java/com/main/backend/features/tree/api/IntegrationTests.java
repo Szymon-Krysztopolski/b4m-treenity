@@ -83,16 +83,82 @@ class IntegrationTests {
     @Test
     void whenNodeIsAddedWithoutLabelThenException() {
         // when
-        TreeException exception = assertThrows(TreeException.class, () -> {
-            getIdFromResponse(service.addNode(null, null, null));
-        });
+        TreeException exception = assertThrows(TreeException.class, () ->
+                getIdFromResponse(service.addNode(null, null, null))
+        );
 
         // then
         assertEquals("The new node should be properly labeled!", exception.getMessage());
     }
 
     @Test
-    void updateNode() {
+    void whenNodeIsAddedWithoutStepValueThenException() {
+        // when
+        TreeException exception = assertThrows(TreeException.class, () ->
+                getIdFromResponse(service.addNode("root", "example", null))
+        );
+
+        // then
+        assertEquals("The new node should have a value if it is not the root!", exception.getMessage());
+    }
+
+    @Test
+    void whenNodeUpdatedWithoutNodeIdThenException() {
+        // when
+        TreeException exception = assertThrows(TreeException.class, () ->
+                getIdFromResponse(service.updateNode(null, null, null, null))
+        );
+
+        // then
+        assertEquals("No node has been selected! Select proper value!", exception.getMessage());
+    }
+
+    @Test
+    void whenParentChildLoopThenException() {
+        // when
+        TreeException exception = assertThrows(TreeException.class, () ->
+                getIdFromResponse(service.updateNode("root", "node-1", null, null))
+        );
+
+        // then
+        assertEquals("You cannot set you, or your child as your parent!", exception.getMessage());
+    }
+
+    @Test
+    void updateNodeSuccessful() throws TreeException {
+        // given
+        final TreeDTO tree = getTreeDTO();
+        assertTrue(tree.checkIfNodeExists("node-3", "output", "node-3 | value = 4"));
+        assertFalse(tree.checkIfNodeExists("node-3", "output", "newNode | value = 5"));
+        assertTrue(tree.checkIfEdgeExists(getEdgeId("node-1", "node-3"), "node-1", "node-3", 3));
+
+        // when
+        service.updateNode("node-3", "root", "newNode", 5);
+
+        // then
+        final TreeDTO newTree = getTreeDTO();
+        checkTreeSize(initNumberOfNodes, initNumberOfEdges);
+        assertFalse(newTree.checkIfNodeExists("node-3", "output", "node-3 | value = 4"));
+        assertTrue(newTree.checkIfNodeExists("node-3", "output", "newNode | value = 5"));
+        assertTrue(newTree.checkIfEdgeExists(getEdgeId("root", "node-3"), "root", "node-3", 5));
+    }
+
+    @Test
+    void updateNodeToRootWithoutChangingLabel() throws TreeException {
+        // given
+        final TreeDTO tree = getTreeDTO();
+        assertTrue(tree.checkIfNodeExists("last", "output", "last | value = 7"));
+        assertTrue(tree.checkIfEdgeExists(getEdgeId("node-2", "last"), "node-2", "last", 5));
+
+        // when
+        service.updateNode("last", null, null, null);
+
+        // then
+        final TreeDTO newTree = getTreeDTO();
+        checkTreeSize(initNumberOfNodes, initNumberOfEdges - 1);
+        assertFalse(newTree.checkIfNodeExists("last", "output", "last | value = 7"));
+        assertFalse(newTree.checkIfEdgeExists(getEdgeId("node-2", "last"), "node-2", "last", 5));
+        assertTrue(newTree.checkIfNodeExists("last", "input", "last"));
     }
 
     @Test

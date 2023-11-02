@@ -60,7 +60,7 @@ public class TreeService {
         }
 
         NodeEntity nodeToChange = repository.getReferenceById(id);
-        if (repository.existsById(parentId)) {
+        if (parentId != null && repository.existsById(parentId)) {
             NodeEntity potentialParent = repository.getReferenceById(parentId);
             if (potentialParent.isYourParentOrYou(nodeToChange)) {
                 log.error("Incorrect node selected as parent");
