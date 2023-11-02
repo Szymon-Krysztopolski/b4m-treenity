@@ -1,6 +1,6 @@
 package com.main.backend.features.tree.api;
 
-import com.main.backend.features.tree.domain.NodeInstruction;
+import com.main.backend.features.tree.dto.NodeInstructionDTO;
 import com.main.backend.features.tree.domain.TreeException;
 import com.main.backend.features.tree.dto.TreeDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class TreeController {
     }
 
     @PostMapping("/nodes")
-    public ResponseEntity<String> addNode(@RequestBody NodeInstruction instruction) {
+    public ResponseEntity<String> addNode(@RequestBody NodeInstructionDTO instruction) {
         HttpStatus status;
         String response;
 
@@ -56,7 +56,7 @@ public class TreeController {
     }
 
     @PutMapping("/nodes/{id}")
-    public ResponseEntity<String> updateNode(@PathVariable String id, @RequestBody NodeInstruction instruction) {
+    public ResponseEntity<String> updateNode(@PathVariable String id, @RequestBody NodeInstructionDTO instruction) {
         HttpStatus status;
         String response;
 
