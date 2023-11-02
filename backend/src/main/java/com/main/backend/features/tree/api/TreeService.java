@@ -50,7 +50,7 @@ public class TreeService {
                 .build()
         );
 
-        return String.format("Node %s added successfully", newNodeId);
+        return String.format("Node {%s} added successfully", newNodeId);
     }
 
     public String updateNode(String id, String parentId, String label, Integer stepValue) throws TreeException {
@@ -75,11 +75,11 @@ public class TreeService {
         if (stepValue != null && nodeToChange.isNotRoot()) nodeToChange.setStepValue(stepValue);
 
         repository.saveAndFlush(nodeToChange);
-        return "Node updated successfully";
+        return String.format("Node {%s} updated successfully", id);
     }
 
     public String deleteNode(String id) {
         repository.deleteById(id);
-        return "Node deleted successfully";
+        return String.format("Node {%s} deleted successfully", id);
     }
 }

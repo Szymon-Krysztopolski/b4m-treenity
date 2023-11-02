@@ -1,4 +1,4 @@
-package com.main.backend.features.tree.dto;
+package com.main.backend.features.tree.dto.internal;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-class EdgeDTO {
+public class EdgeDTO implements TreeElementDTO {
     private String id;
     private String source;
     private String target;

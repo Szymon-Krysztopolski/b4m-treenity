@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -60,10 +63,12 @@ class TreeControllerTest {
     @Test
     void deleteLastSingleNode() {
         // when
+        assertTrue(getTreeDTO().checkIfNodeExists("last"));
         service.deleteNode("last");
 
         // then
         checkTreeSize(initNumberOfNodes - 1, initNumberOfEdges - 1);
+        assertFalse(getTreeDTO().checkIfNodeExists("last"));
     }
 
     @Test
@@ -81,7 +86,20 @@ class TreeControllerTest {
         assertEquals(expectedNumberOfEdges, tree.getEdges().size());
     }
 
+    private boolean checkIfNodeExists(String id) {
+        return getTreeDTO().checkIfNodeExists(id);
+    }
+
+    private boolean checkIfEdgeExists(String id) {
+        return getTreeDTO().checkIfEdgeExists(id);
+    }
+
     private TreeDTO getTreeDTO() {
         return TreeDTOFactory.createTree(service.getNodeList());
+    }
+
+    private String getIdFromResponse(String input) {
+        Matcher matcher = Pattern.compile("\\{([^}]*)\\}").matcher(input);
+        return (matcher.find() ? matcher.group(1) : "");
     }
 }

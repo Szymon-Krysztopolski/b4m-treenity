@@ -1,6 +1,9 @@
 package com.main.backend.features.tree.dto;
 
 import com.main.backend.features.tree.domain.Node;
+import com.main.backend.features.tree.dto.internal.EdgeDTO;
+import com.main.backend.features.tree.dto.internal.NodeDTO;
+import com.main.backend.features.tree.dto.internal.TreeNodeConnectionDTO;
 
 import java.util.List;
 
@@ -9,7 +12,7 @@ public class TreeDTOFactory {
         TreeDTO tree = new TreeDTO();
 
         nodes.forEach(node -> {
-            TreePartDTO treePart = createTreePart(node);
+            TreeNodeConnectionDTO treePart = createTreeNodeConnection(node);
             if (treePart.hasNode()) tree.getNodes().add(treePart.getNode());
             if (treePart.hasParentEdge()) tree.getEdges().add(treePart.getParentEdge());
         });
@@ -17,8 +20,8 @@ public class TreeDTOFactory {
         return tree;
     }
 
-    private static TreePartDTO createTreePart(Node node) {
-        TreePartDTO treePart = new TreePartDTO();
+    private static TreeNodeConnectionDTO createTreeNodeConnection(Node node) {
+        TreeNodeConnectionDTO treePart = new TreeNodeConnectionDTO();
 
         treePart.setNode(
                 NodeDTO.builder()

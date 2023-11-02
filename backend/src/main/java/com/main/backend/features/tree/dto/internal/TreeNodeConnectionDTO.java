@@ -1,9 +1,9 @@
-package com.main.backend.features.tree.dto;
+package com.main.backend.features.tree.dto.internal;
 
 import lombok.Data;
 
 @Data
-class TreePartDTO {
+public class TreeNodeConnectionDTO {
     private NodeDTO node;
     private EdgeDTO parentEdge;
 
