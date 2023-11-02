@@ -27,7 +27,9 @@ public class Node {
     }
 
     public boolean hasAnyChild() {
-        return !nodeEntity.getChildNodes().isEmpty();
+        return nodeEntity != null
+                && nodeEntity.getChildNodes() != null
+                && !nodeEntity.getChildNodes().isEmpty();
     }
 
     public Node getParentNode() {
