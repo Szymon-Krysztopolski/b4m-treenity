@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class TreeControllerTest {
+class IntegrationTests {
     @Autowired
     private TreeService service;
     private int initNumberOfNodes, initNumberOfEdges;
@@ -57,19 +57,38 @@ class TreeControllerTest {
     @Test
     void addNewRootSuccessfully() throws TreeException {
         // when
-        service.addNode(null, "example", 1);
+        final String response = service.addNode(null, "example", null);
+        final String newNodeId = getIdFromResponse(response);
 
         // then
         checkTreeSize(initNumberOfNodes + 1, initNumberOfEdges);
+        assertTrue(getTreeDTO().checkIfNodeExists(newNodeId, "input", "example"));
     }
 
     @Test
-    void addNodeSuccessfully() throws TreeException {
+    void addTwoNodesSuccessfully() throws TreeException {
         // when
-        service.addNode("root", "example", 1);
+        final String newNodeId1 = getIdFromResponse(service.addNode("root", "example-1", 1));
+        final String newNodeId2 = getIdFromResponse(service.addNode(newNodeId1, "example-2", 2));
 
         // then
-        checkTreeSize(initNumberOfNodes + 1, initNumberOfEdges + 1);
+        final TreeDTO newTree = getTreeDTO();
+        checkTreeSize(initNumberOfNodes + 2, initNumberOfEdges + 2);
+
+        // and then
+        assertTrue(newTree.checkIfNodeExists(newNodeId2, "output", "example-2 | value = 3"));
+        assertTrue(newTree.checkIfEdgeExists(getEdgeId(newNodeId1, newNodeId2), newNodeId1, newNodeId2, 2));
+    }
+
+    @Test
+    void whenNodeIsAddedWithoutLabelThenException() {
+        // when
+        TreeException exception = assertThrows(TreeException.class, () -> {
+            getIdFromResponse(service.addNode(null, null, null));
+        });
+
+        // then
+        assertEquals("The new node should be properly labeled!", exception.getMessage());
     }
 
     @Test
@@ -109,5 +128,9 @@ class TreeControllerTest {
     private String getIdFromResponse(String input) {
         Matcher matcher = Pattern.compile("\\{([^}]*)\\}").matcher(input);
         return (matcher.find() ? matcher.group(1) : "");
+    }
+
+    private String getEdgeId(String source, String destination) {
+        return String.format("edge---%s::%s", source, destination);
     }
 }

@@ -51,10 +51,11 @@ public class TreeDTOFactory {
     }
 
     private static String getType(Node node) {
-        String type = null;
+        String type;
 
-        if (!node.hasParent() && node.hasAnyChild()) type = "input";
-        if (node.hasParent() && !node.hasAnyChild()) type = "output";
+        if (!node.hasParent()) type = "input";
+        else if (!node.hasAnyChild()) type = "output";
+        else type = null;
 
         return type;
     }

@@ -13,9 +13,16 @@ import java.util.List;
 @Data
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class TreeDTO {
-    private String message;
     private List<NodeDTO> nodes = new ArrayList<>();
     private List<EdgeDTO> edges = new ArrayList<>();
+
+    public boolean checkIfNodeExists(String id, String type, String data) {
+        return nodes.contains(new NodeDTO(id, type, new NodeDTO.Data(data)));
+    }
+
+    public boolean checkIfEdgeExists(String id, String source, String destination, int label) {
+        return edges.contains(new EdgeDTO(id, source, destination, String.valueOf(label)));
+    }
 
     public boolean checkIfNodeExists(String id) {
         return idChecker(id, nodes);
