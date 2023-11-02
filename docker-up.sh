@@ -1,5 +1,4 @@
 #!/bin/bash
-source .env
 set -x
 
 # Stop Docker services
@@ -11,8 +10,10 @@ docker compose up --build -d "$@"
 #-------------------------------------------------------------------------
 # TODO - check initialization of database
 
+source .env
+
 # Docker Compose service names
-database_service_name="b4m-treenity-database-treenity-1"
+database_service_name="b4m-treenity-database-1"
 sql_content=$(< "init.sql")
 
 # Variable encoding fix
