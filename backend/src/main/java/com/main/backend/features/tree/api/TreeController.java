@@ -3,6 +3,7 @@ package com.main.backend.features.tree.api;
 import com.main.backend.features.tree.dto.NodeInstructionDTO;
 import com.main.backend.features.tree.domain.TreeException;
 import com.main.backend.features.tree.dto.TreeDTO;
+import com.main.backend.features.tree.dto.TreeDTOFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class TreeController {
     public ResponseEntity<TreeDTO> getTree() {
         try {
             log.info("Downloading the tree");
-            return ResponseEntity.ok(service.getTree());
+            return ResponseEntity.ok(TreeDTOFactory.createTree(service.getNodeList()));
         } catch (Exception ex) {
             log.error("Error with getTree()!", ex);
         }

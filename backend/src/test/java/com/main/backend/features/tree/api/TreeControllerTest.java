@@ -2,6 +2,7 @@ package com.main.backend.features.tree.api;
 
 import com.main.backend.features.tree.domain.TreeException;
 import com.main.backend.features.tree.dto.TreeDTO;
+import com.main.backend.features.tree.dto.TreeDTOFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ class TreeControllerTest {
 
     @BeforeEach
     void setUp() {
-        final TreeDTO tree = service.getTree();
+        final TreeDTO tree = getTreeDTO();
         initNumberOfNodes = tree.getNodes().size();
         initNumberOfEdges = tree.getEdges().size();
     }
@@ -27,7 +28,7 @@ class TreeControllerTest {
     @Test
     void getTree() {
         // when
-        final TreeDTO tree = service.getTree();
+        final TreeDTO tree = getTreeDTO();
 
         // then
         assertEquals(6, tree.getNodes().size());
@@ -75,8 +76,12 @@ class TreeControllerTest {
     }
 
     private void checkTreeSize(int expectedNumberOfNodes, int expectedNumberOfEdges) {
-        final TreeDTO tree = service.getTree();
+        final TreeDTO tree = getTreeDTO();
         assertEquals(expectedNumberOfNodes, tree.getNodes().size());
         assertEquals(expectedNumberOfEdges, tree.getEdges().size());
+    }
+
+    private TreeDTO getTreeDTO() {
+        return TreeDTOFactory.createTree(service.getNodeList());
     }
 }

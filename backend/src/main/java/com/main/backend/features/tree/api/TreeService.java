@@ -2,8 +2,6 @@ package com.main.backend.features.tree.api;
 
 import com.main.backend.features.tree.domain.Node;
 import com.main.backend.features.tree.domain.TreeException;
-import com.main.backend.features.tree.dto.TreeDTO;
-import com.main.backend.features.tree.dto.TreeDTOFactory;
 import com.main.backend.features.tree.entity.NodeEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +20,10 @@ public class TreeService {
         this.repository = repository;
     }
 
-    public TreeDTO getTree() {
+    public List<Node> getNodeList() {
         List<NodeEntity> nodeEntityList = repository.findAll();
-        List<Node> nodeList = nodeEntityList.stream().map(Node::from).toList();
 
-        return TreeDTOFactory.createTree(nodeList);
+        return nodeEntityList.stream().map(Node::from).toList();
     }
 
     public String addNode(String parentId, String label, Integer stepValue) throws TreeException {
