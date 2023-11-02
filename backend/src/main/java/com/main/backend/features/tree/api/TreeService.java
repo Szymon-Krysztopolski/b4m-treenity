@@ -26,7 +26,7 @@ public class TreeService {
         List<NodeEntity> nodeEntityList = repository.findAll();
         List<Node> nodeList = nodeEntityList.stream().map(Node::from).toList();
 
-        return TreeDTOFactory.createTree(null, nodeList);
+        return TreeDTOFactory.createTree(nodeList);
     }
 
     public String addNode(String parentId, String label, Integer stepValue) throws TreeException {

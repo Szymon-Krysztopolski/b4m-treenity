@@ -5,10 +5,9 @@ import com.main.backend.features.tree.domain.Node;
 import java.util.List;
 
 public class TreeDTOFactory {
-    public static TreeDTO createTree(String message, List<Node> nodes) {
+    public static TreeDTO createTree(List<Node> nodes) {
         TreeDTO tree = new TreeDTO();
 
-        tree.setMessage(message);
         nodes.forEach(node -> {
             TreePartDTO treePart = createTreePart(node);
             if (treePart.hasNode()) tree.getNodes().add(treePart.getNode());
