@@ -1,4 +1,4 @@
-package com.main.backend.features.tree.api;
+package com.main.backend.features.tree.api.utils;
 
 import com.main.backend.features.tree.dto.TreeDTO;
 
