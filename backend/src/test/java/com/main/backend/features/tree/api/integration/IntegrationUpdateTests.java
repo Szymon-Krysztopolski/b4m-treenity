@@ -1,5 +1,6 @@
-package com.main.backend.features.tree.api;
+package com.main.backend.features.tree.api.integration;
 
+import com.main.backend.features.tree.api.TreeService;
 import com.main.backend.features.tree.api.utils.IntegrationTestsUtils;
 import com.main.backend.features.tree.domain.TreeException;
 import com.main.backend.features.tree.dto.TreeDTO;
@@ -55,6 +56,19 @@ class IntegrationUpdateTests {
         assertFalse(utils.checkIfNodeExists(newTree, "node-3", "output", "node-3 | value = 4"));
         assertTrue(utils.checkIfNodeExists(newTree, "node-3", "output", "newNode | value = 5"));
         assertTrue(utils.checkIfEdgeExists(newTree, "root", "node-3", 5));
+    }
+
+    @Test
+    void swapWithParentSuccessful() throws TreeException {
+        // when
+        service.updateNode("root", "node-3", null, 1);
+
+        // then
+        final TreeDTO tree = getTreeDTO();
+        checkTreeSize(initNumberOfNodes, initNumberOfEdges);
+        assertTrue(utils.checkIfNodeExists(tree, "node-3", "input", "node-3"));
+        assertTrue(utils.checkIfNodeExists(tree, "root", null, "root-1 | value = 1"));
+        assertTrue(utils.checkIfEdgeExists(tree, "node-3", "root", 1));
     }
 
     @Test

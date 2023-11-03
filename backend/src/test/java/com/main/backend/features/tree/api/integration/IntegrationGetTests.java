@@ -1,5 +1,6 @@
-package com.main.backend.features.tree.api;
+package com.main.backend.features.tree.api.integration;
 
+import com.main.backend.features.tree.api.TreeService;
 import com.main.backend.features.tree.api.utils.IntegrationTestsUtils;
 import com.main.backend.features.tree.dto.TreeDTO;
 import com.main.backend.features.tree.dto.TreeDTOFactory;
