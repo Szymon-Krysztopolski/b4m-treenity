@@ -1,6 +1,5 @@
 # Treenity
 
----
 ## Introduction
 
 Treenity is a tool created in the Java programming language with the aim of enabling users to create, edit, and manage hierarchical tree structures. This documentation describes the structure, functionalities, and how to use this application.
@@ -17,13 +16,11 @@ The application allows for the creation, editing, deletion, and storage of numer
 * Postgres
 * Docker
 
----
 ## Table of Contents
 1. [Quick reference guide](#quick-reference-guide)
 2. [Application launch](#application-launch)
 3. [Usage description](#usage-description)
 
----
 ## Quick reference guide
 ```bash
 # commands to be executed in the root directory
@@ -34,7 +31,6 @@ docker compose up --build -d
 ./test/mock-database.sh
 ```
 
----
 ## Application launch
 ### Environment preparation
 Create an `.env` file according to the template found in the `.env.template` file. You can copy the file and fill in the missing values. It is important that the file with the variables is named `.env` and that it is in the same folder as `docker-compose.yml`. Docker compose automatically retrieves the variables found in the `.env` configuration file.
@@ -77,7 +73,6 @@ After setting docker with database, there is a possible to set default tree for 
 ./test/mock-database.sh
 ```
 
----
 ## Usage description
 The application includes a single screen. The user can see the existing tree structure. To modify the tree (or rather the forest), use the administration panel. Initially, the forms for modifying the tree are hidden, they can be easily revealed using the appropriate button.
 
