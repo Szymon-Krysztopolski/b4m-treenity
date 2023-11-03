@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Layer used between Entity and DTO objects.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

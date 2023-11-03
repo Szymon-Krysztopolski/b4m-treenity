@@ -7,6 +7,9 @@ import com.main.backend.features.tree.dto.internal.TreeNodeConnectionDTO;
 
 import java.util.List;
 
+/**
+ * Factory to create {@link TreeDTO} objects.
+ */
 public class TreeDTOFactory {
     public static TreeDTO createTree(List<Node> nodes) {
         TreeDTO tree = new TreeDTO();

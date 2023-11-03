@@ -10,6 +10,11 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main object of tree structure that is sent to the frontend.
+ * It contains {@link NodeDTO} and {@link EdgeDTO} lists which represent entire tree structure.
+ * Available for non-dto classes from {@link TreeDTOFactory}. The components of this class are not visible outside the DTO package.
+ */
 @Data
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class TreeDTO {
