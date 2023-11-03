@@ -50,8 +50,8 @@ class IntegrationTests {
         assertEquals(listOfEdges.size(), tree.getEdges().size());
 
         // and then
-        listOfNodes.forEach(node -> assertTrue(tree.checkIfNodeExists(node)));
-        listOfEdges.forEach(edge -> assertTrue(tree.checkIfEdgeExists(edge)));
+        listOfNodes.forEach(node -> assertTrue(checkIfNodeExists(tree, node)));
+        listOfEdges.forEach(edge -> assertTrue(checkIfEdgeExists(tree, edge)));
     }
 
     @Test
@@ -62,7 +62,7 @@ class IntegrationTests {
 
         // then
         checkTreeSize(initNumberOfNodes + 1, initNumberOfEdges);
-        assertTrue(getTreeDTO().checkIfNodeExists(newNodeId, "input", "example"));
+        assertTrue(checkIfNodeExists(getTreeDTO(), newNodeId, "input", "example"));
     }
 
     @Test
@@ -76,8 +76,8 @@ class IntegrationTests {
         checkTreeSize(initNumberOfNodes + 2, initNumberOfEdges + 2);
 
         // and then
-        assertTrue(newTree.checkIfNodeExists(newNodeId2, "output", "example-2 | value = 3"));
-        assertTrue(newTree.checkIfEdgeExists(getEdgeId(newNodeId1, newNodeId2), newNodeId1, newNodeId2, 2));
+        assertTrue(checkIfNodeExists(newTree, newNodeId2, "output", "example-2 | value = 3"));
+        assertTrue(checkIfEdgeExists(newTree, newNodeId1, newNodeId2, 2));
     }
 
     @Test
@@ -128,9 +128,9 @@ class IntegrationTests {
     void updateNodeSuccessful() throws TreeException {
         // given
         final TreeDTO tree = getTreeDTO();
-        assertTrue(tree.checkIfNodeExists("node-3", "output", "node-3 | value = 4"));
-        assertFalse(tree.checkIfNodeExists("node-3", "output", "newNode | value = 5"));
-        assertTrue(tree.checkIfEdgeExists(getEdgeId("node-1", "node-3"), "node-1", "node-3", 3));
+        assertTrue(checkIfNodeExists(tree, "node-3", "output", "node-3 | value = 4"));
+        assertFalse(checkIfNodeExists(tree, "node-3", "output", "newNode | value = 5"));
+        assertTrue(checkIfEdgeExists(tree, "node-1", "node-3", 3));
 
         // when
         service.updateNode("node-3", "root", "newNode", 5);
@@ -138,17 +138,17 @@ class IntegrationTests {
         // then
         final TreeDTO newTree = getTreeDTO();
         checkTreeSize(initNumberOfNodes, initNumberOfEdges);
-        assertFalse(newTree.checkIfNodeExists("node-3", "output", "node-3 | value = 4"));
-        assertTrue(newTree.checkIfNodeExists("node-3", "output", "newNode | value = 5"));
-        assertTrue(newTree.checkIfEdgeExists(getEdgeId("root", "node-3"), "root", "node-3", 5));
+        assertFalse(checkIfNodeExists(newTree, "node-3", "output", "node-3 | value = 4"));
+        assertTrue(checkIfNodeExists(newTree, "node-3", "output", "newNode | value = 5"));
+        assertTrue(checkIfEdgeExists(newTree, "root", "node-3", 5));
     }
 
     @Test
     void updateNodeToRootWithoutChangingLabel() throws TreeException {
         // given
         final TreeDTO tree = getTreeDTO();
-        assertTrue(tree.checkIfNodeExists("last", "output", "last | value = 7"));
-        assertTrue(tree.checkIfEdgeExists(getEdgeId("node-2", "last"), "node-2", "last", 5));
+        assertTrue(checkIfNodeExists(tree, "last", "output", "last | value = 7"));
+        assertTrue(checkIfEdgeExists(tree, "node-2", "last", 5));
 
         // when
         service.updateNode("last", null, null, null);
@@ -156,20 +156,20 @@ class IntegrationTests {
         // then
         final TreeDTO newTree = getTreeDTO();
         checkTreeSize(initNumberOfNodes, initNumberOfEdges - 1);
-        assertFalse(newTree.checkIfNodeExists("last", "output", "last | value = 7"));
-        assertFalse(newTree.checkIfEdgeExists(getEdgeId("node-2", "last"), "node-2", "last", 5));
-        assertTrue(newTree.checkIfNodeExists("last", "input", "last"));
+        assertFalse(checkIfNodeExists(newTree, "last", "output", "last | value = 7"));
+        assertFalse(checkIfEdgeExists(newTree, "node-2", "last", 5));
+        assertTrue(checkIfNodeExists(newTree, "last", "input", "last"));
     }
 
     @Test
     void deleteLastSingleNode() {
         // when
-        assertTrue(getTreeDTO().checkIfNodeExists("last"));
+        assertTrue(checkIfNodeExists(getTreeDTO(), "last"));
         service.deleteNode("last");
 
         // then
         checkTreeSize(initNumberOfNodes - 1, initNumberOfEdges - 1);
-        assertFalse(getTreeDTO().checkIfNodeExists("last"));
+        assertFalse(checkIfNodeExists(getTreeDTO(), "last"));
     }
 
     @Test
@@ -198,5 +198,21 @@ class IntegrationTests {
 
     private String getEdgeId(String source, String destination) {
         return String.format("edge---%s::%s", source, destination);
+    }
+
+    private boolean checkIfNodeExists(TreeDTO tree, String id, String type, String data) {
+        return tree.checkIfNodeExists(id, type, data);
+    }
+
+    private boolean checkIfEdgeExists(TreeDTO tree, String source, String destination, int label) {
+        return tree.checkIfEdgeExists(getEdgeId(source, destination), source, destination, label);
+    }
+
+    private boolean checkIfNodeExists(TreeDTO tree, String id) {
+        return tree.checkIfNodeExists(id);
+    }
+
+    private boolean checkIfEdgeExists(TreeDTO tree, String id) {
+        return tree.checkIfEdgeExists(id);
     }
 }
