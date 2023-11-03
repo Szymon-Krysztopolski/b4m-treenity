@@ -14,7 +14,10 @@ services:
 
   treenity-frontend:
     container_name: treenity-frontend-container
-    build: frontend
+    build:
+      context: frontend
+      args:
+        REACT_APP_BASE_BACKEND_URL: ${REACT_APP_BASE_BACKEND_URL}
     image: treenity-frontend-image
     ports:
       - "3000:3000"

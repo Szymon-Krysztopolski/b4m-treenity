@@ -10,7 +10,7 @@ export default function AddNodeForm({nodes}) {
     });
 
     return (
-        <form className={"panel--form"} onSubmit={handleSubmit(formData, "post", "http://127.0.0.1:8080/api/nodes")}>
+        <form className={"panel--form"} onSubmit={handleSubmit(formData, "post", "/api/nodes")}>
             <div className={"panel--form--input"}>
                 <label>Parent node</label>
                 <select

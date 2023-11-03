@@ -15,11 +15,12 @@ import DeleteNodeForm from "./forms/DeleteNodeForm";
 import "../style.css"
 
 export default function Main() {
+    const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL;
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8080/api/tree')
+        fetch(baseUrl + '/api/tree')
             .then(response => response.json())
             .then(data => {
                 const nodes = data['nodes'].map((node) => ({
@@ -58,9 +59,12 @@ export default function Main() {
                     <div>
                         <h3>Admin Panel</h3>
                         <div>
-                            <input className={"panel--button"} type="submit" value="Add new node" onClick={() => changeValue(setAddForm)}/>
-                            <input className={"panel--button"} type="submit" value="Update node" onClick={() => changeValue(setUpdateForm)}/>
-                            <input className={"panel--button"} type="submit" value="Delete node" onClick={() => changeValue(setDeleteForm)}/>
+                            <input className={"panel--button"} type="submit" value="Add new node"
+                                   onClick={() => changeValue(setAddForm)}/>
+                            <input className={"panel--button"} type="submit" value="Update node"
+                                   onClick={() => changeValue(setUpdateForm)}/>
+                            <input className={"panel--button"} type="submit" value="Delete node"
+                                   onClick={() => changeValue(setDeleteForm)}/>
                         </div>
                         {showAddForm ? <AddNodeForm nodes={nodes}/> : null}
                         {showUpdateForm ? <UpdateNodeForm nodes={nodes}/> : null}

@@ -6,11 +6,12 @@ export const handleInputChange = (formData, setFormData) => (event) => {
     });
 };
 
-export const handleSubmit = (formData, method, url) => (event) => {
+export const handleSubmit = (formData, method, endpoint) => (event) => {
+    const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL;
     console.log("Form submitted with data:", formData);
     event.preventDefault();
 
-    fetch(url, {
+    fetch(baseUrl + endpoint, {
         method: method,
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(formData)

@@ -7,7 +7,7 @@ export default function DeleteNodeForm({nodes}) {
     });
 
     return (
-        <form className={"panel--form"} onSubmit={handleSubmit(null, "delete", "http://127.0.0.1:8080/api/nodes/" + formData.id)}>
+        <form className={"panel--form"} onSubmit={handleSubmit(null, "delete", "/api/nodes/" + formData.id)}>
             <div className={"panel--form--input"}>
                 <label>Node to delete</label>
                 <select
