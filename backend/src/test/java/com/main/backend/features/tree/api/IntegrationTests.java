@@ -114,14 +114,14 @@ class IntegrationTests {
     }
 
     @Test
-    void whenParentChildLoopThenException() {
+    void whenSetNewNodeParentToItselfThenException() {
         // when
         TreeException exception = assertThrows(TreeException.class, () ->
-                getIdFromResponse(service.updateNode("root", "node-1", null, null))
+                getIdFromResponse(service.updateNode("root", "root", null, null))
         );
 
         // then
-        assertEquals("You cannot set you, or your child as your parent!", exception.getMessage());
+        assertEquals("You cannot set you as your parent!", exception.getMessage());
     }
 
     @Test

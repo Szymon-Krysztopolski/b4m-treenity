@@ -62,9 +62,13 @@ public class TreeService {
         NodeEntity nodeToChange = repository.getReferenceById(id);
         if (parentId != null && repository.existsById(parentId)) {
             NodeEntity potentialParent = repository.getReferenceById(parentId);
-            if (potentialParent.isYourParentOrYou(nodeToChange)) {
+            if (potentialParent.isYou(nodeToChange)) {
                 log.error("Incorrect node selected as parent");
-                throw new TreeException("You cannot set you, or your child as your parent!");
+                throw new TreeException("You cannot set you as your parent!");
+            } else if (potentialParent.isYourParent(nodeToChange)) {
+                log.debug("Changing the order of nodes");
+                potentialParent.setParentNode(nodeToChange.getParentNode());
+                repository.save(potentialParent);
             }
             nodeToChange.setParentNode(potentialParent);
         } else {

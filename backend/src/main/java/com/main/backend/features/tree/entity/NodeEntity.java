@@ -36,10 +36,7 @@ public class NodeEntity {
         return pathValue;
     }
 
-    public boolean isYourParentOrYou(NodeEntity nodeEntity) {
-        if (id.equals(nodeEntity.getId()))
-            return true;
-
+    public boolean isYourParent(NodeEntity nodeEntity) {
         NodeEntity currentParent = parentNode;
         while (currentParent != null) {
             if (nodeEntity.getId().equals(currentParent.getId()))
@@ -47,6 +44,10 @@ public class NodeEntity {
             currentParent = currentParent.getParentNode();
         }
         return false;
+    }
+
+    public boolean isYou(NodeEntity nodeEntity) {
+        return id.equals(nodeEntity.getId());
     }
 
     public boolean hasStepValue() {
