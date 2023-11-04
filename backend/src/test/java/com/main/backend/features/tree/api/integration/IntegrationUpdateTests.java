@@ -61,14 +61,16 @@ class IntegrationUpdateTests {
     @Test
     void swapWithParentSuccessful() throws TreeException {
         // when
-        service.updateNode("root", "node-3", null, 1);
+        service.updateNode("node-1", "node-3", null, -10);
 
         // then
         final TreeDTO tree = getTreeDTO();
+
         checkTreeSize(initNumberOfNodes, initNumberOfEdges);
-        assertTrue(utils.checkIfNodeExists(tree, "node-3", "input", "node-3"));
-        assertTrue(utils.checkIfNodeExists(tree, "root", null, "root-1 | value = 1"));
-        assertTrue(utils.checkIfEdgeExists(tree, "node-3", "root", 1));
+        assertTrue(utils.checkIfNodeExists(tree, "node-3", "output", "node-3 | value = 1"));
+        assertTrue(utils.checkIfNodeExists(tree, "node-1", null, "node-1 | value = -9"));
+        assertTrue(utils.checkIfEdgeExists(tree, "node-3", "node-1", -10));
+        assertTrue(utils.checkIfEdgeExists(tree, "root", "node-3", 1));
     }
 
     @Test

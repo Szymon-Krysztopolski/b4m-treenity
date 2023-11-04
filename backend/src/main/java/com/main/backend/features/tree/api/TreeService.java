@@ -68,6 +68,7 @@ public class TreeService {
             } else if (potentialParent.isYourParent(nodeToChange)) {
                 log.debug("Changing the order of nodes");
                 potentialParent.setParentNode(nodeToChange.getParentNode());
+                potentialParent.setStepValue(nodeToChange.getStepValue());
                 repository.save(potentialParent);
             }
             nodeToChange.setParentNode(potentialParent);

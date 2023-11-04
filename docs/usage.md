@@ -24,9 +24,12 @@ Explanation of the meaning of form fields
 * If no parent is indicated, the node will become root.
 * If the `label` does not change, it will remain the same as before.
 * `Step cost` always overwrites old value.
-* It is possible to assign a parent and a child by places.
+* It is a possible to change order of nodes and set your child as your new parent (see screen).
 
 ![form-update](./images/form-update.png)
+
+![](./images/update-parent-1.png)
+![](./images/update-parent-2.png)
 
 ### Delete node
 * Form for deleting existing nodes
