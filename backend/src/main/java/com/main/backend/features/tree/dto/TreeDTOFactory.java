@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Factory to create {@link TreeDTO} objects.
+ * Tree is created from smaller parts named {@link TreeNodeConnectionDTO}.
  */
 public class TreeDTOFactory {
     public static TreeDTO createTree(List<Node> nodes) {

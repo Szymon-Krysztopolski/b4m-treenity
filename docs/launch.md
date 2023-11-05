@@ -2,6 +2,8 @@
 [back to README](./../README.md)
 
 ### Environment preparation
+*All the following commands are executed in the root directory*
+
 Create an `.env` file according to the template found in the `.env.template` file. You can copy the file and fill in the missing values. It is important that the file with the variables is named `.env` and that it is in the same folder as `docker-compose.yml`. Docker compose automatically retrieves the variables found in the `.env` configuration file.
 ```bash
 cp .env.template .env

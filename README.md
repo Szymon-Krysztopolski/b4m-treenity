@@ -20,14 +20,8 @@ The application allows for the creation, editing, deletion, and storage of numer
 1. [Application launch](./docs/launch.md)
 2. [Usage description](./docs/usage.md)
 
-## Quick reference guide
-```bash
-# commands to be executed in the root directory
-cp .env.template .env
-# fill in the values of the variables in the .env file
-
-docker compose up --build -d
-./test/mock-database.sh
-```
-
-
+## Quick guide
+1. Create `.env` file based on template `.env.template` 
+2. **Fill in** all empty values in `.env` file
+3. Being in root directory run `docker compose up --build -d`
+4. *(optional)* Once the dockers are running, set up the test data with the script `./test/mock-database.sh`
