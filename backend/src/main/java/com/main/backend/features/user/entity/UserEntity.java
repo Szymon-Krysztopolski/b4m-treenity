@@ -1,10 +1,7 @@
 package com.main.backend.features.user.entity;
 
 import com.main.backend.features.tree.entity.NodeEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
@@ -22,6 +19,6 @@ public class UserEntity {
     private String username;
     private String passwordHash;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<NodeEntity> nodes;
 }

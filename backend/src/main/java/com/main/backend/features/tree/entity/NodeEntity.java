@@ -19,7 +19,7 @@ public class NodeEntity {
     private String label;
     private Integer stepValue;
 
-    @OneToMany(mappedBy = "parentNode", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "parentNode", cascade = CascadeType.ALL)
     private List<NodeEntity> childNodes;
 
     @ManyToOne
