@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
  * This layer uses DTO objects, so that the following layers (e.g. service) do not need to know about the existence of DTO objects.
  */
 @RestController
-@RequestMapping("/v1")
 @Slf4j
 public class TreeController {
     private final TreeService service;

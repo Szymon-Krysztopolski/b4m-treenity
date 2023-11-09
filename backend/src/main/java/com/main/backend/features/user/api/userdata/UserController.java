@@ -1,4 +1,4 @@
-package com.main.backend.features.user.api;
+package com.main.backend.features.user.api.userdata;
 
 import com.main.backend.features.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;

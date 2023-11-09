@@ -1,4 +1,4 @@
-package com.main.backend.features.user.api;
+package com.main.backend.features.user.api.userdata;
 
 import com.main.backend.features.user.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

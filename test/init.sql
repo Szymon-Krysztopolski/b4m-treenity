@@ -4,11 +4,12 @@ CREATE TABLE IF NOT EXISTS users (
     id VARCHAR(255) PRIMARY KEY,
     username VARCHAR(255),
     password_hash VARCHAR(255),
-    email VARCHAR(255)
+    email VARCHAR(255),
+    is_active boolean default false
 );
-INSERT INTO users (id, username, password_hash, email) VALUES ('52fdb044-4061-4331-997a-602737b27ef0', 'JonNash', 'example-hash', 'JonNash@JonNashTest.com');
-INSERT INTO users (id, username, password_hash, email) VALUES ('b8a16543-23f7-4851-a9f8-ef2543b85577', 'Onyx', 'dvsdERXAAW', 'Onyx@OnyxTest.com');
-INSERT INTO users (id, username, password_hash, email) VALUES ('a2aea8ba-5e8a-4420-82f7-738661b86a52', 'Iris', 'CZXTYQasdw', 'Iris@IrisTest.com');
+INSERT INTO users (id, username, password_hash, email, is_active) VALUES ('52fdb044-4061-4331-997a-602737b27ef0', 'JonNash', 'qwerty', 'JonNash@JonNashTest.com', true);
+INSERT INTO users (id, username, password_hash, email, is_active) VALUES ('b8a16543-23f7-4851-a9f8-ef2543b85577', 'Onyx', 'qwerty', 'Onyx@OnyxTest.com', true);
+INSERT INTO users (id, username, password_hash, email) VALUES ('a2aea8ba-5e8a-4420-82f7-738661b86a52', 'Iris', 'qwerty', 'Iris@IrisTest.com');
 
 -- Nodes for tests
 DROP TABLE IF EXISTS nodes CASCADE;

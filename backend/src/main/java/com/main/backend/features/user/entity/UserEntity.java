@@ -19,6 +19,7 @@ public class UserEntity {
     private String username;
     private String passwordHash;
     private String email;
+    private Boolean isActive = false;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<NodeEntity> nodes;
