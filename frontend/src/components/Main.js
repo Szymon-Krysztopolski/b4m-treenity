@@ -19,7 +19,7 @@ export default function Main() {
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
     useEffect(() => {
-        fetch(baseUrl + '/api/tree')
+        fetch(baseUrl + '/api/v1/tree')
             .then(response => response.json())
             .then(data => {
                 const nodes = data['nodes'].map((node) => ({

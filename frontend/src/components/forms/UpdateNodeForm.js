@@ -10,7 +10,7 @@ export default function UpdateNodeForm({nodes}) {
     });
 
     return (
-        <form className={"panel--form"} onSubmit={handleSubmit(formData, "put", "/api/nodes/" + formData.id)}>
+        <form className={"panel--form"} onSubmit={handleSubmit(formData, "put", "/api/v1/nodes/" + formData.id)}>
             <div className={"panel--form--input"}>
                 <label>Node to update</label>
                 <select

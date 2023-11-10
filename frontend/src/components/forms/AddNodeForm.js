@@ -9,7 +9,7 @@ export default function AddNodeForm({nodes}) {
     });
 
     return (
-        <form className={"panel--form"} onSubmit={handleSubmit(formData, "post", "/api/nodes")}>
+        <form className={"panel--form"} onSubmit={handleSubmit(formData, "post", "/api/v1/nodes")}>
             <div className={"panel--form--input"}>
                 <label>Parent node</label>
                 <select
