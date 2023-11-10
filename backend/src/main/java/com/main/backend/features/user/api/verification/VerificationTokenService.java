@@ -49,8 +49,10 @@ public class VerificationTokenService {
             throw new UserNotFountException("User not found");
         }
         final String token = generateNewToken(user, FORGET_PASSWORD);
+        final String body = String.format("To confirm reset of password go here %s", token); // todo link to proper website
 
-        return "OK" + token; // todo
+        emailService.sendEmail(user.getEmail(), "Reset of password", body);
+        return "Email with reset password instructions has been sent";
     }
 
     private String generateNewToken(UserEntity user, VerificationTokenType tokenType) {
