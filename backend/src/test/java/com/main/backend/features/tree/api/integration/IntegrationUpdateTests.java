@@ -2,7 +2,7 @@ package com.main.backend.features.tree.api.integration;
 
 import com.main.backend.features.tree.api.TreeService;
 import com.main.backend.features.tree.api.utils.IntegrationTestsUtils;
-import com.main.backend.features.tree.domain.TreeException;
+import com.main.backend.features.tree.exception.TreeException;
 import com.main.backend.features.tree.dto.TreeDTO;
 import com.main.backend.features.tree.dto.TreeDTOFactory;
 import org.junit.jupiter.api.BeforeEach;

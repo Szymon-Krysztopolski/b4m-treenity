@@ -1,6 +1,7 @@
-package com.main.backend.features.user.entity;
+package com.main.backend.features.token.entity;
 
-import com.main.backend.features.user.domain.VerificationTokenType;
+import com.main.backend.features.token.domain.TokenType;
+import com.main.backend.features.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +16,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "verification_codes")
-public class VerificationTokenEntity {
+@Table(name = "tokens")
+public class TokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -24,7 +25,7 @@ public class VerificationTokenEntity {
     @OneToOne
     private UserEntity user;
     private String token;
-    private VerificationTokenType tokenType;
+    private TokenType tokenType;
     private Boolean isUsed = false;
 
     // Each token expires after 30 minutes

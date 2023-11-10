@@ -1,7 +1,7 @@
 package com.main.backend.features.tree.api;
 
 import com.main.backend.features.tree.domain.Node;
-import com.main.backend.features.tree.domain.TreeException;
+import com.main.backend.features.tree.exception.TreeException;
 import com.main.backend.features.tree.entity.NodeEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

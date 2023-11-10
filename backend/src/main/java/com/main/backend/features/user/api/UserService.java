@@ -1,4 +1,4 @@
-package com.main.backend.features.user.api.userdata;
+package com.main.backend.features.user.api;
 
 import com.main.backend.features.user.domain.User;
 import com.main.backend.features.user.entity.UserEntity;

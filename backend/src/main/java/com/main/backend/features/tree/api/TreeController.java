@@ -1,7 +1,7 @@
 package com.main.backend.features.tree.api;
 
 import com.main.backend.features.tree.dto.NodeInstructionDTO;
-import com.main.backend.features.tree.domain.TreeException;
+import com.main.backend.features.tree.exception.TreeException;
 import com.main.backend.features.tree.dto.TreeDTO;
 import com.main.backend.features.tree.dto.TreeDTOFactory;
 import lombok.extern.slf4j.Slf4j;
