@@ -34,6 +34,7 @@ public class TokenService {
     }
 
     public String confirmRegistration(String token) {
+        TokenEntity tokenENtity = repository.findByToken(token);
         return "OK"; // todo
     }
 

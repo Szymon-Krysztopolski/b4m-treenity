@@ -1,10 +1,7 @@
 package com.main.backend.features.user.api;
 
-import com.main.backend.features.token.api.TokenService;
 import com.main.backend.features.user.domain.User;
 import com.main.backend.features.user.dto.UserDTO;
-import com.main.backend.features.user.entity.UserEntity;
-import com.main.backend.features.user.exception.UserNotFountException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,13 +13,11 @@ import java.util.List;
 @Slf4j
 @RestController
 public class UserController {
-    private final UserService userService;
-    private final TokenService tokenService;
+    private final UserService service;
 
     @Autowired
-    public UserController(UserService userService, TokenService tokenService) {
-        this.userService = userService;
-        this.tokenService = tokenService;
+    public UserController(UserService service) {
+        this.service = service;
     }
 
     @PostMapping("/registration")
@@ -31,15 +26,12 @@ public class UserController {
         String response;
 
         try {
-            final UserEntity user = userService.createUser(userDTO.getUsername(), userDTO.getPassword(), userDTO.getEmail());
             status = HttpStatus.OK;
-            response = tokenService.registration(user);
-
+            response = service.registration(userDTO.getUsername(), userDTO.getPassword(), userDTO.getEmail());
             log.info("Registration token created successfully");
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
             response = "Error during token creation!";
-
             log.error(response, ex);
         }
 
@@ -48,7 +40,20 @@ public class UserController {
 
     @GetMapping("/registration/{token}")
     public ResponseEntity<String> confirmRegistration(@PathVariable String token) {
-        return ResponseEntity.ok(tokenService.confirmRegistration(token));
+        HttpStatus status;
+        String response;
+
+        try {
+            status = HttpStatus.OK;
+            response = service.confirmRegistration(token);
+            log.info("Account confirmed successfully");
+        } catch (Exception ex) {
+            status = HttpStatus.BAD_REQUEST;
+            response = "Error during account confirmation!";
+            log.error(response, ex);
+        }
+
+        return ResponseEntity.status(status).body(response);
     }
 
     @PostMapping("/forgot-password")
@@ -57,20 +62,12 @@ public class UserController {
         String response;
 
         try {
-            final UserEntity user = userService.getUserEntity(userId);
-            if (user == null) {
-                log.error("User: {} not found", userId);
-                throw new UserNotFountException("User not found");
-            }
-
             status = HttpStatus.OK;
-            response = tokenService.forgotPassword(user);
-
+            response = service.forgotPassword(userId);
             log.info("Forget-password token created successfully");
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
             response = "Error during token creation!";
-
             log.error(response, ex);
         }
 
@@ -79,6 +76,6 @@ public class UserController {
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
-        return ResponseEntity.ok(userService.getUsers());
+        return ResponseEntity.ok(service.getUsers());
     }
 }

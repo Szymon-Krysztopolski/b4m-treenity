@@ -24,6 +24,8 @@ public class TokenEntity {
 
     @OneToOne
     private UserEntity user;
+
+    @Column(unique = true)
     private String token;
     private TokenType tokenType;
     private Boolean isUsed = false;

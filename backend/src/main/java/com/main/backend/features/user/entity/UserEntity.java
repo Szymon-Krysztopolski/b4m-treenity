@@ -18,6 +18,8 @@ public class UserEntity {
     private String id;
     private String username;
     private String passwordHash;
+
+    @Column(unique = true)
     private String email;
     private Boolean isActive = false;
 
