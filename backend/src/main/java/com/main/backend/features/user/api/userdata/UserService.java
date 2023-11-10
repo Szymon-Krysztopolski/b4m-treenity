@@ -33,6 +33,8 @@ public class UserService {
     }
 
     public UserEntity createUser(String username, String password, String email) {
+        // todo check if email if proper and doesn't exist in database
+
         String newUserId = String.valueOf(UUID.randomUUID());
         UserEntity newUser = UserEntity.builder()
                 .id(newUserId)

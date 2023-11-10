@@ -1,5 +1,6 @@
 package com.main.backend.features.user.api.verification;
 
+import com.main.backend.features.mailserver.EmailService;
 import com.main.backend.features.user.api.userdata.UserService;
 import com.main.backend.features.user.domain.VerificationTokenType;
 import com.main.backend.features.user.entity.UserEntity;
@@ -19,18 +20,22 @@ import static com.main.backend.features.user.domain.VerificationTokenType.FORGET
 public class VerificationTokenService {
     private final VerificationTokenRepository repository;
     private final UserService userService;
+    private final EmailService emailService;
 
     @Autowired
-    public VerificationTokenService(VerificationTokenRepository repository, UserService userService) {
+    public VerificationTokenService(VerificationTokenRepository repository, UserService userService, EmailService emailService) {
         this.repository = repository;
         this.userService = userService;
+        this.emailService = emailService;
     }
 
     public String registration(String username, String password, String email) {
-        UserEntity user = userService.createUser(username, password, email);
+        final UserEntity user = userService.createUser(username, password, email);
         final String token = generateNewToken(user, REGISTRATION);
+        final String body = String.format("To confirm registration go here %s", token); // todo link to proper website
 
-        return "OK" + token; // todo
+        emailService.sendEmail(email, "Confirm registration", body);
+        return "New account created, confirm email before log in";
     }
 
     public String confirmRegistration(String token) {
@@ -38,8 +43,7 @@ public class VerificationTokenService {
     }
 
     public String forgotPassword(String userId) throws UserNotFountException {
-        UserEntity user = userService.getUserEntity(userId);
-
+        final UserEntity user = userService.getUserEntity(userId);
         if (user == null) {
             log.error("User: {} not found", userId);
             throw new UserNotFountException("User not found");
@@ -56,8 +60,8 @@ public class VerificationTokenService {
                 .user(user)
                 .tokenType(tokenType)
                 .build();
-
         repository.saveAndFlush(tokenEntity);
+
         return token;
     }
 }
