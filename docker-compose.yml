@@ -18,9 +18,10 @@ services:
       context: frontend
       args:
         REACT_APP_BASE_BACKEND_URL: ${REACT_APP_BASE_BACKEND_URL}
+        PUBLIC_URL: ${FRONTEND_PUBLIC_URL}
     image: treenity-frontend-image
     ports:
-      - "3000:3000"
+      - "3000:80"
 
   treenity-db:
     container_name: treenity-database-container
