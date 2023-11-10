@@ -12,7 +12,6 @@ import AddNodeForm from "./forms/AddNodeForm";
 import getLayoutedElements from "../utils/layoutUtils";
 import UpdateNodeForm from "./forms/UpdateNodeForm";
 import DeleteNodeForm from "./forms/DeleteNodeForm";
-import "../style.css"
 
 export default function Main() {
     const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL;

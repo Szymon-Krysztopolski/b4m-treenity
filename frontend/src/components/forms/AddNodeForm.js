@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {handleInputChange, handleSubmit} from "./dataHandler";
-import "../../style.css"
 
 export default function AddNodeForm({nodes}) {
     const [formData, setFormData] = useState({
