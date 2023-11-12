@@ -4,6 +4,8 @@ import com.main.backend.features.tree.entity.NodeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -21,8 +23,13 @@ public class UserEntity {
 
     @Column(unique = true)
     private String email;
-    private Boolean isActive = false;
+    private Boolean isActive;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<NodeEntity> nodes;
+
+    @PrePersist
+    public void prePersist() {
+        isActive = false;
+    }
 }

@@ -24,8 +24,14 @@ public class TokenEntity {
     @ManyToOne
     private UserEntity user;
     private TokenType tokenType;
-    private Boolean isUsed = false;
+    private Boolean isUsed;
+    private Date expiryDate;
 
-    // Each token expires after 15 minutes
-    private Date expiryDate = Date.from(Instant.now().plusSeconds(60 * 15));
+    @PrePersist
+    public void prePersist() {
+        isUsed = false;
+
+        // Each token expires after 15 minutes
+        expiryDate = Date.from(Instant.now().plusSeconds(60 * 15));
+    }
 }

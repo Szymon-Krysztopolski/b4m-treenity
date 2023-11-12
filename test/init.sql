@@ -38,3 +38,14 @@ INSERT INTO nodes (id, label, step_value, parent_node_id, owner_id) VALUES ('5f7
 INSERT INTO nodes (id, label, step_value, owner_id) VALUES ('20c04121-9ad0-47e2-b579-875cfb638e16', 'root-1', null, 'b8a16543-23f7-4851-a9f8-ef2543b85577');
 INSERT INTO nodes (id, label, step_value, parent_node_id, owner_id) VALUES ('b6c250aa-fb2f-4835-9b09-de8318235005', 'node-1', 11, '20c04121-9ad0-47e2-b579-875cfb638e16', 'b8a16543-23f7-4851-a9f8-ef2543b85577');
 INSERT INTO nodes (id, label, step_value, parent_node_id, owner_id) VALUES ('e1821130-a646-44b7-a956-49a08657129a', 'node-2', 42, '20c04121-9ad0-47e2-b579-875cfb638e16', 'b8a16543-23f7-4851-a9f8-ef2543b85577');
+
+-- Token table for tests
+DROP TABLE IF EXISTS tokens CASCADE;
+CREATE TABLE IF NOT EXISTS tokens (
+    token VARCHAR(255) PRIMARY KEY,
+    expiry_date timestamp(6),
+    is_used boolean,
+    token_type smallint,
+    user_id VARCHAR(255),
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
