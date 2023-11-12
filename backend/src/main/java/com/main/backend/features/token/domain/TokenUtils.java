@@ -12,13 +12,8 @@ import java.util.UUID;
 
 @Component
 public class TokenUtils {
-    private final TokenRepository repository;
 
-    public TokenUtils(TokenRepository repository) {
-        this.repository = repository;
-    }
-
-    public String generateNewToken(UserEntity user, TokenType tokenType) {
+    public String generateNewToken(TokenRepository repository, UserEntity user, TokenType tokenType) {
         final String token = String.valueOf(UUID.randomUUID());
         TokenEntity tokenEntity = TokenEntity.builder()
                 .token(token)
@@ -30,7 +25,7 @@ public class TokenUtils {
         return token;
     }
 
-    public UserEntity getUserOfTokenAndCheckTokenType(String token, TokenType tokenType) throws Exception {
+    public UserEntity getUserOfTokenAndCheckTokenType(TokenRepository repository, String token, TokenType tokenType) throws Exception {
         if (!repository.existsById(token))
             throw new TokenNotFoundException();
 

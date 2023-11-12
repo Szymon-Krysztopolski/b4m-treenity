@@ -8,28 +8,28 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 import static com.main.backend.features.token.domain.TokenType.REGISTRATION;
 import static com.main.backend.features.token.domain.TokenType.FORGET_PASSWORD;
 
 @Slf4j
 @Service
 public class TokenService {
-    private final TokenUtils utils;
+    private final TokenRepository repository;
     private final EmailService emailService;
     private final UserService userService;
+    private final TokenUtils utils;
 
     @Autowired
-    public TokenService(TokenUtils utils, EmailService emailService, UserService userService) {
-        this.utils = utils;
+    public TokenService(TokenRepository repository, EmailService emailService, UserService userService, TokenUtils utils) {
+        this.repository = repository;
         this.emailService = emailService;
         this.userService = userService;
+        this.utils = utils;
     }
 
     public String registration(String username, String password, String email) {
         final UserEntity user = userService.createUser(username, password, email);
-        final String token = utils.generateNewToken(user, REGISTRATION);
+        final String token = utils.generateNewToken(repository, user, REGISTRATION);
         final String body = String.format("To confirm registration go here %s", token); // todo link to proper website
 
         emailService.sendEmail(user.getEmail(), "Confirm registration", body);
@@ -37,14 +37,14 @@ public class TokenService {
     }
 
     public String confirmRegistration(String token) throws Exception {
-        final UserEntity user = utils.getUserOfTokenAndCheckTokenType(token, REGISTRATION);
+        final UserEntity user = utils.getUserOfTokenAndCheckTokenType(repository, token, REGISTRATION);
         userService.confirmRegistration(user);
         return "Email confirmed successfully";
     }
 
     public String forgotPassword(String email) throws Exception {
         final UserEntity user = userService.getUserByMail(email);
-        final String token = utils.generateNewToken(user, FORGET_PASSWORD);
+        final String token = utils.generateNewToken(repository, user, FORGET_PASSWORD);
         final String body = String.format("To confirm reset of password go here %s", token); // todo link to proper website
 
         emailService.sendEmail(user.getEmail(), "Reset of password", body);
@@ -52,7 +52,7 @@ public class TokenService {
     }
 
     public String resetPassword(String token) throws Exception {
-        final UserEntity user = utils.getUserOfTokenAndCheckTokenType(token, FORGET_PASSWORD);
+        final UserEntity user = utils.getUserOfTokenAndCheckTokenType(repository, token, FORGET_PASSWORD);
         final String newPassword = userService.resetPassword(user);
 
         emailService.sendEmail(user.getEmail(), "Regain access", String.format("Your new password: %s.", newPassword));
