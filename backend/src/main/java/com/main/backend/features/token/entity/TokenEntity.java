@@ -19,14 +19,10 @@ import java.util.Date;
 @Table(name = "tokens")
 public class TokenEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private String token;
 
     @OneToOne
     private UserEntity user;
-
-    @Column(unique = true)
-    private String token;
     private TokenType tokenType;
     private Boolean isUsed = false;
 
