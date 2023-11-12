@@ -2,7 +2,9 @@ package com.main.backend.features.user.api;
 
 import com.main.backend.features.user.domain.User;
 import com.main.backend.features.user.entity.UserEntity;
+import com.main.backend.features.user.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +46,25 @@ public class UserService {
         return newUser;
     }
 
-    public UserEntity getUser(String id) {
-        return repository.getReferenceById(id);
+    public UserEntity getUserByMail(String email) throws UserNotFoundException {
+        UserEntity user = repository.findByEmail(email);
+        if (user == null)
+            throw new UserNotFoundException();
+
+        return user;
+    }
+
+    public void confirmRegistration(@NotNull UserEntity user) {
+        user.setIsActive(true);
+        repository.saveAndFlush(user);
+    }
+
+    public String resetPassword(@NotNull UserEntity user) {
+        String newPassword = String.valueOf(UUID.randomUUID()).replace("-", "");
+
+        user.setPasswordHash(newPassword); // todo set passwordHash
+        log.info(newPassword); // todo del
+        repository.saveAndFlush(user);
+        return newPassword;
     }
 }

@@ -21,11 +21,11 @@ public class TokenEntity {
     @Id
     private String token;
 
-    @OneToOne
+    @ManyToOne
     private UserEntity user;
     private TokenType tokenType;
     private Boolean isUsed = false;
 
-    // Each token expires after 30 minutes
-    private Date expiryDate = Date.from(Instant.now().plusSeconds(60 * 30));
+    // Each token expires after 15 minutes
+    private Date expiryDate = Date.from(Instant.now().plusSeconds(60 * 15));
 }

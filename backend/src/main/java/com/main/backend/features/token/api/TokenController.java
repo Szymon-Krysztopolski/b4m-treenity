@@ -55,17 +55,35 @@ public class TokenController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestBody String userId) {
+    public ResponseEntity<String> forgotPassword(@RequestBody String email) {
         HttpStatus status;
         String response;
 
         try {
             status = HttpStatus.OK;
-            response = service.forgotPassword(userId);
+            response = service.forgotPassword(email);
             log.info("Forget-password token created successfully");
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
             response = "Error during token creation!";
+            log.error(response, ex);
+        }
+
+        return ResponseEntity.status(status).body(response);
+    }
+
+    @GetMapping("/forgot-password/{token}")
+    public ResponseEntity<String> resetPassword(@PathVariable String token) {
+        HttpStatus status;
+        String response;
+
+        try {
+            status = HttpStatus.OK;
+            response = service.resetPassword(token);
+            log.info("Password reset successfully");
+        } catch (Exception ex) {
+            status = HttpStatus.BAD_REQUEST;
+            response = "Error during password reset!";
             log.error(response, ex);
         }
 

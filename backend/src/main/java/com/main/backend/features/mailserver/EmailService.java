@@ -22,6 +22,7 @@ public class EmailService {
         message.setSubject(subject);
         message.setText(body);
 
-        mailSender.send(message);
+        // TODO -- uncomment before deploy
+        // mailSender.send(message);
     }
 }
