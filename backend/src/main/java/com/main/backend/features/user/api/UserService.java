@@ -6,6 +6,7 @@ import com.main.backend.features.user.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +17,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserService {
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> getUsers() {
@@ -37,7 +41,7 @@ public class UserService {
         UserEntity newUser = UserEntity.builder()
                 .id(newUserId)
                 .username(username)
-                .passwordHash(password) // todo hash
+                .passwordHash(passwordEncoder.encode(password))
                 .email(email)
                 .build();
         repository.saveAndFlush(newUser);
@@ -62,7 +66,7 @@ public class UserService {
     public String resetPassword(@NotNull UserEntity user) {
         String newPassword = String.valueOf(UUID.randomUUID()).replace("-", "");
 
-        user.setPasswordHash(newPassword); // todo set passwordHash
+        user.setPasswordHash(passwordEncoder.encode(newPassword));
         repository.saveAndFlush(user);
         return newPassword;
     }
