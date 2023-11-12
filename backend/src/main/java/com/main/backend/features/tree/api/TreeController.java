@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
+@RequestMapping("/v1")
 public class TreeController {
     private final TreeService service;
 
