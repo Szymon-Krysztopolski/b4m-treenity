@@ -8,8 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.main.backend.features.token.domain.TokenType.REGISTRATION;
-import static com.main.backend.features.token.domain.TokenType.FORGET_PASSWORD;
+import static com.main.backend.features.token.domain.TokenType.*;
 
 @Slf4j
 @Service
@@ -25,6 +24,11 @@ public class TokenService {
         this.emailService = emailService;
         this.userService = userService;
         this.utils = utils;
+    }
+
+    public String login(String email, String password) throws Exception {
+        final UserEntity user = userService.checkPassword(email, password);
+        return utils.generateNewToken(repository, user, SESSION);
     }
 
     public String registration(String username, String password, String email) {

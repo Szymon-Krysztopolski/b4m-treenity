@@ -3,6 +3,7 @@ package com.main.backend.features.user.api;
 import com.main.backend.features.user.domain.User;
 import com.main.backend.features.user.entity.UserEntity;
 import com.main.backend.features.user.exception.UserNotFoundException;
+import com.main.backend.features.user.exception.WrongPasswordException;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,14 @@ public class UserService {
         UserEntity user = repository.findByEmail(email);
         if (user == null)
             throw new UserNotFoundException();
+
+        return user;
+    }
+
+    public UserEntity checkPassword(String email, String password) throws UserNotFoundException, WrongPasswordException {
+        UserEntity user = getUserByMail(email);
+        if (!passwordEncoder.matches(password, user.getPasswordHash()))
+            throw new WrongPasswordException();
 
         return user;
     }

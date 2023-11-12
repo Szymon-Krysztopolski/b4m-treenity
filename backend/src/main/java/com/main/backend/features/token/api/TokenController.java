@@ -18,6 +18,17 @@ public class TokenController {
         this.service = service;
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserDTO userDTO) { // TODO finish
+        try {
+            final String token = service.login(userDTO.getEmail(), userDTO.getPassword());
+            log.info("Session token created successfully");
+            return ResponseEntity.ok().body("User logged in");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error during logging in!");
+        }
+    }
+
     @PostMapping("/registration")
     public ResponseEntity<String> registration(@RequestBody UserDTO userDTO) {
         HttpStatus status;
