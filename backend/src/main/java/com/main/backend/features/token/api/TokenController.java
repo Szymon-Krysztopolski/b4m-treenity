@@ -3,6 +3,7 @@ package com.main.backend.features.token.api;
 import com.main.backend.features.user.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,9 @@ public class TokenController {
         try {
             final String token = service.login(userDTO.getEmail(), userDTO.getPassword());
             log.info("Session token created successfully");
-            return ResponseEntity.ok().body("User logged in");
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.SET_COOKIE, "sessionToken=" + token)
+                    .body("User logged in");
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error during logging in!");
         }
