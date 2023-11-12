@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
  * Controller providing simple rest api.
  * This layer uses DTO objects, so that the following layers (e.g. service) do not need to know about the existence of DTO objects.
  */
-@RestController
 @Slf4j
+@RestController
 public class TreeController {
     private final TreeService service;
 

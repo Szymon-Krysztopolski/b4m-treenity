@@ -2,8 +2,10 @@ package com.main.backend.features.token.api;
 
 import com.main.backend.features.mailserver.EmailService;
 import com.main.backend.features.token.domain.TokenType;
+import com.main.backend.features.user.api.UserService;
 import com.main.backend.features.user.entity.UserEntity;
 import com.main.backend.features.token.entity.TokenEntity;
+import com.main.backend.features.user.exception.UserNotFountException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,14 +20,17 @@ import static com.main.backend.features.token.domain.TokenType.FORGET_PASSWORD;
 public class TokenService {
     private final TokenRepository repository;
     private final EmailService emailService;
+    private final UserService userService;
 
     @Autowired
-    public TokenService(TokenRepository repository, EmailService emailService) {
+    public TokenService(TokenRepository repository, EmailService emailService, UserService userService) {
         this.repository = repository;
         this.emailService = emailService;
+        this.userService = userService;
     }
 
-    public String registration(UserEntity user) {
+    public String registration(String username, String password, String email) {
+        final UserEntity user = userService.createUser(username, password, email);
         final String token = generateNewToken(user, REGISTRATION);
         final String body = String.format("To confirm registration go here %s", token); // todo link to proper website
 
@@ -34,11 +39,12 @@ public class TokenService {
     }
 
     public String confirmRegistration(String token) {
-        TokenEntity tokenENtity = repository.findByToken(token);
+        TokenEntity tokenEntity = repository.findByToken(token);
         return "OK"; // todo
     }
 
-    public String forgotPassword(UserEntity user) {
+    public String forgotPassword(String userId) {
+        final UserEntity user = userService.getUser(userId);
         final String token = generateNewToken(user, FORGET_PASSWORD);
         final String body = String.format("To confirm reset of password go here %s", token); // todo link to proper website
 
