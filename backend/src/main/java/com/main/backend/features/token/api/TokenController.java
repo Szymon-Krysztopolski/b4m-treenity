@@ -20,7 +20,7 @@ public class TokenController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserDTO userDTO) { // TODO finish
+    public ResponseEntity<String> login(@RequestBody UserDTO userDTO) {
         try {
             final String token = service.login(userDTO.getEmail(), userDTO.getPassword());
             log.info("Session token created successfully");
