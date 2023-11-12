@@ -63,7 +63,6 @@ public class UserService {
         String newPassword = String.valueOf(UUID.randomUUID()).replace("-", "");
 
         user.setPasswordHash(newPassword); // todo set passwordHash
-        log.info(newPassword); // todo del
         repository.saveAndFlush(user);
         return newPassword;
     }
