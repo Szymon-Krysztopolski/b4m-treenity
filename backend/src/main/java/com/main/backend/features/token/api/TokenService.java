@@ -1,14 +1,9 @@
 package com.main.backend.features.token.api;
 
 import com.main.backend.features.mailserver.EmailService;
-import com.main.backend.features.token.domain.TokenType;
 import com.main.backend.features.token.domain.TokenUtils;
-import com.main.backend.features.token.exception.TokenHasNoUserException;
-import com.main.backend.features.token.exception.TokenHasWrongTypeException;
-import com.main.backend.features.token.exception.TokenNotFoundException;
 import com.main.backend.features.user.api.UserService;
 import com.main.backend.features.user.entity.UserEntity;
-import com.main.backend.features.token.entity.TokenEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
