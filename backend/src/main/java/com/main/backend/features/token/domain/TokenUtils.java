@@ -2,10 +2,7 @@ package com.main.backend.features.token.domain;
 
 import com.main.backend.features.token.api.TokenRepository;
 import com.main.backend.features.token.entity.TokenEntity;
-import com.main.backend.features.token.exception.TokenHasExpiredException;
-import com.main.backend.features.token.exception.TokenHasNoUserException;
-import com.main.backend.features.token.exception.TokenHasWrongTypeException;
-import com.main.backend.features.token.exception.TokenNotFoundException;
+import com.main.backend.features.token.exception.*;
 import com.main.backend.features.user.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
@@ -37,9 +34,15 @@ public class TokenUtils {
         if (tokenEntity.isExpired())
             throw new TokenHasExpiredException();
 
+        if (tokenEntity.getIsUsed())
+            throw new TokenHasBeenUsedException();
+
         UserEntity user = tokenEntity.getUser();
         if (user == null)
             throw new TokenHasNoUserException();
+
+        tokenEntity.setIsUsed(true);
+        repository.saveAndFlush(tokenEntity);
 
         return user;
     }

@@ -3,10 +3,7 @@ package com.main.backend.features.token.entity;
 import com.main.backend.features.token.domain.TokenType;
 import com.main.backend.features.user.entity.UserEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.Instant;
 import java.util.Date;
@@ -24,6 +21,8 @@ public class TokenEntity {
     @ManyToOne
     private UserEntity user;
     private TokenType tokenType;
+
+    @Setter
     private Boolean isUsed;
     private Date expiryDate;
 
