@@ -43,7 +43,7 @@ public class TokenService {
 
         final UserEntity user = userService.createUser(username, password, email);
         final String token = utils.generateNewToken(repository, user, REGISTRATION);
-        final String body = String.format("To confirm registration go here: %s/%s", mailLink, token);
+        final String body = String.format("To confirm registration go here: %s/registration/%s", mailLink, token);
 
         emailService.sendEmail(user.getEmail(), "Confirm registration", body);
         return "New account created, confirm email before log in";
@@ -61,7 +61,7 @@ public class TokenService {
 
         final UserEntity user = userService.getUserByMail(email);
         final String token = utils.generateNewToken(repository, user, FORGET_PASSWORD);
-        final String body = String.format("To confirm reset of password go here: %s/%s", mailLink, token);
+        final String body = String.format("To confirm reset of password go here: %s/forgot-password/%s", mailLink, token);
 
         emailService.sendEmail(user.getEmail(), "Reset of password", body);
         return "Email with reset password instructions has been sent";
@@ -71,7 +71,6 @@ public class TokenService {
         final UserEntity user = utils.getUserOfTokenAndCheckTokenType(repository, token, FORGET_PASSWORD);
         final String newPassword = userService.resetPassword(user);
 
-        emailService.sendEmail(user.getEmail(), "Regain access", String.format("Your new password: %s.", newPassword));
-        return "Password reset successfully. Check email to get new password";
+        return String.format("Password reset successfully. Your new password: %s", newPassword);
     }
 }
