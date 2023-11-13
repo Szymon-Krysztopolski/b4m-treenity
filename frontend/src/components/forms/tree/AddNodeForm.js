@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import {formInputChange} from "../formInputChange";
-import {handleTreeSubmit} from "./handleTreeSubmit";
+import {formInputChange} from "../utils/formInputChange";
+import {handleTreeSubmit} from "../utils/handleTreeSubmit";
 
 export default function AddNodeForm({nodes}) {
     const [formData, setFormData] = useState({
