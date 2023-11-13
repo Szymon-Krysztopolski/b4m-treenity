@@ -1,5 +1,6 @@
 import React, {useState} from "react";
-import {handleInputChange, handleSubmit} from "../dataHandler";
+import {formInputChange} from "../formInputChange";
+import {handleTreeSubmit} from "./handleTreeSubmit";
 
 export default function UpdateNodeForm({nodes}) {
     const [formData, setFormData] = useState({
@@ -10,13 +11,13 @@ export default function UpdateNodeForm({nodes}) {
     });
 
     return (
-        <form className={"panel--form"} onSubmit={handleSubmit(formData, "put", "/api/v1/nodes/" + formData.id)}>
+        <form className={"panel--form"} onSubmit={handleTreeSubmit(formData, "put", "/api/v1/nodes/" + formData.id)}>
             <div className={"panel--form--input"}>
                 <label>Node to update</label>
                 <select
                     name="id"
                     value={formData.id}
-                    onChange={handleInputChange(formData, setFormData)}
+                    onChange={formInputChange(formData, setFormData)}
                 >
                     <option value="-">Select an element</option>
                     {nodes.map((node) => (
@@ -31,7 +32,7 @@ export default function UpdateNodeForm({nodes}) {
                 <select
                     name="parentId"
                     value={formData.parentId}
-                    onChange={handleInputChange(formData, setFormData)}
+                    onChange={formInputChange(formData, setFormData)}
                 >
                     <option value="">Select an element</option>
                     {nodes.map((node) => (
@@ -47,7 +48,7 @@ export default function UpdateNodeForm({nodes}) {
                     type="text"
                     name="label"
                     value={formData.label}
-                    onChange={handleInputChange(formData, setFormData)}
+                    onChange={formInputChange(formData, setFormData)}
                 />
             </div>
             <div className={"panel--form--input"}>
@@ -56,7 +57,7 @@ export default function UpdateNodeForm({nodes}) {
                     type="number"
                     name="stepValue"
                     value={formData.stepValue}
-                    onChange={handleInputChange(formData, setFormData)}
+                    onChange={formInputChange(formData, setFormData)}
                 />
             </div>
             <button type="submit">Update</button>
