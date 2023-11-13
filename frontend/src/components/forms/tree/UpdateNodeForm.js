@@ -1,15 +1,31 @@
 import React, {useState} from "react";
-import {handleInputChange, handleSubmit} from "./dataHandler";
+import {handleInputChange, handleSubmit} from "../dataHandler";
 
-export default function AddNodeForm({nodes}) {
+export default function UpdateNodeForm({nodes}) {
     const [formData, setFormData] = useState({
+        id: "-",
         parentId: "",
         label: "",
         stepValue: 0,
     });
 
     return (
-        <form className={"panel--form"} onSubmit={handleSubmit(formData, "post", "/api/v1/nodes")}>
+        <form className={"panel--form"} onSubmit={handleSubmit(formData, "put", "/api/v1/nodes/" + formData.id)}>
+            <div className={"panel--form--input"}>
+                <label>Node to update</label>
+                <select
+                    name="id"
+                    value={formData.id}
+                    onChange={handleInputChange(formData, setFormData)}
+                >
+                    <option value="-">Select an element</option>
+                    {nodes.map((node) => (
+                        <option key={node.id} value={node.id}>
+                            {node.data.label}
+                        </option>
+                    ))}
+                </select>
+            </div>
             <div className={"panel--form--input"}>
                 <label>Parent node</label>
                 <select
@@ -26,7 +42,7 @@ export default function AddNodeForm({nodes}) {
                 </select>
             </div>
             <div className={"panel--form--input"}>
-                <label>Label</label>
+                <label>New label (optional)</label>
                 <input
                     type="text"
                     name="label"
@@ -43,7 +59,7 @@ export default function AddNodeForm({nodes}) {
                     onChange={handleInputChange(formData, setFormData)}
                 />
             </div>
-            <button type="submit">Add</button>
+            <button type="submit">Update</button>
         </form>
     );
 }

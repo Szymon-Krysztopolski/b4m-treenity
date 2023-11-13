@@ -1,31 +1,15 @@
 import React, {useState} from "react";
-import {handleInputChange, handleSubmit} from "./dataHandler";
+import {handleInputChange, handleSubmit} from "../dataHandler";
 
-export default function UpdateNodeForm({nodes}) {
+export default function AddNodeForm({nodes}) {
     const [formData, setFormData] = useState({
-        id: "-",
         parentId: "",
         label: "",
         stepValue: 0,
     });
 
     return (
-        <form className={"panel--form"} onSubmit={handleSubmit(formData, "put", "/api/v1/nodes/" + formData.id)}>
-            <div className={"panel--form--input"}>
-                <label>Node to update</label>
-                <select
-                    name="id"
-                    value={formData.id}
-                    onChange={handleInputChange(formData, setFormData)}
-                >
-                    <option value="-">Select an element</option>
-                    {nodes.map((node) => (
-                        <option key={node.id} value={node.id}>
-                            {node.data.label}
-                        </option>
-                    ))}
-                </select>
-            </div>
+        <form className={"panel--form"} onSubmit={handleSubmit(formData, "post", "/api/v1/nodes")}>
             <div className={"panel--form--input"}>
                 <label>Parent node</label>
                 <select
@@ -42,7 +26,7 @@ export default function UpdateNodeForm({nodes}) {
                 </select>
             </div>
             <div className={"panel--form--input"}>
-                <label>New label (optional)</label>
+                <label>Label</label>
                 <input
                     type="text"
                     name="label"
@@ -59,7 +43,7 @@ export default function UpdateNodeForm({nodes}) {
                     onChange={handleInputChange(formData, setFormData)}
                 />
             </div>
-            <button type="submit">Update</button>
+            <button type="submit">Add</button>
         </form>
     );
 }

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {handleInputChange, handleSubmit} from "./dataHandler";
+import {handleInputChange, handleSubmit} from "../dataHandler";
 
 export default function DeleteNodeForm({nodes}) {
     const [formData, setFormData] = useState({
