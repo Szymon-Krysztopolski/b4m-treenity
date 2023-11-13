@@ -37,6 +37,11 @@ public class TokenService {
         return utils.generateNewToken(repository, user, SESSION);
     }
 
+    public String logout(String token) {
+        repository.deleteById(token);
+        return "Session logout successfully";
+    }
+
     public String registration(String username, String password, String email) throws Exception {
         if (mailLink == null || mailLink.trim().isBlank())
             throw new EmptyMailLinkException();

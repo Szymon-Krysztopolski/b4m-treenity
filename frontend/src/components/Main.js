@@ -63,7 +63,7 @@ export default function Main() {
                 <Panel position="top-left">
                     <div>
                         <h3>Admin Panel</h3>
-                        {localStorage.getItem("sessionToken") ? <Login/> : <Logout/>}
+                        {localStorage.getItem("sessionToken") !== "" ? <Login/> : <Logout/>}
                         <div>
                             <input className={"panel--button"} type="submit" value="Add new node"
                                    onClick={() => changeValue(showAddForm, setAddForm)}/>

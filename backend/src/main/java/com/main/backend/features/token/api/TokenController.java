@@ -34,6 +34,22 @@ public class TokenController {
         }
     }
 
+    @PostMapping("/logout/{token}")
+    public ResponseEntity<String> logout(@PathVariable String token) {
+        log.info("User with token: {} is trying to log into page", token);
+        String response;
+
+        try {
+            response = service.logout(token);
+            log.info("Session logout successfully");
+            return ResponseEntity.ok().body(response);
+        } catch (Exception ex) {
+            response = "Error during logging out!";
+            log.error(response, ex);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
     @PostMapping("/registration")
     public ResponseEntity<String> registration(@RequestBody UserDTO userDTO) {
         HttpStatus status;
