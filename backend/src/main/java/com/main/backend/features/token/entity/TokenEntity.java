@@ -34,4 +34,8 @@ public class TokenEntity {
         // Each token expires after 15 minutes
         expiryDate = Date.from(Instant.now().plusSeconds(60 * 15));
     }
+
+    public boolean isExpired() {
+        return Date.from(Instant.now()).after(expiryDate);
+    }
 }

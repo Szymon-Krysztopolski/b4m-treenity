@@ -2,6 +2,7 @@ package com.main.backend.features.token.domain;
 
 import com.main.backend.features.token.api.TokenRepository;
 import com.main.backend.features.token.entity.TokenEntity;
+import com.main.backend.features.token.exception.TokenHasExpiredException;
 import com.main.backend.features.token.exception.TokenHasNoUserException;
 import com.main.backend.features.token.exception.TokenHasWrongTypeException;
 import com.main.backend.features.token.exception.TokenNotFoundException;
@@ -32,6 +33,9 @@ public class TokenUtils {
         TokenEntity tokenEntity = repository.getReferenceById(token);
         if (!tokenEntity.getTokenType().equals(tokenType))
             throw new TokenHasWrongTypeException();
+
+        if (tokenEntity.isExpired())
+            throw new TokenHasExpiredException();
 
         UserEntity user = tokenEntity.getUser();
         if (user == null)
