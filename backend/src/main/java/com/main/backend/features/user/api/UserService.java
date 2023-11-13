@@ -2,10 +2,7 @@ package com.main.backend.features.user.api;
 
 import com.main.backend.features.user.domain.User;
 import com.main.backend.features.user.entity.UserEntity;
-import com.main.backend.features.user.exception.BlankFieldException;
-import com.main.backend.features.user.exception.InvalidEmailException;
-import com.main.backend.features.user.exception.UserNotFoundException;
-import com.main.backend.features.user.exception.WrongPasswordException;
+import com.main.backend.features.user.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.jetbrains.annotations.NotNull;
@@ -45,16 +42,29 @@ public class UserService {
         if (!EmailValidator.getInstance().isValid(email))
             throw new InvalidEmailException();
 
-        String newUserId = String.valueOf(UUID.randomUUID());
-        UserEntity newUser = UserEntity.builder()
-                .id(newUserId)
+        UserEntity.UserEntityBuilder userBuilder = UserEntity.builder();
+
+        UserEntity userToCheck = repository.findByEmail(email);
+        if (userToCheck == null) {
+            final String newUserId = String.valueOf(UUID.randomUUID());
+            userBuilder.id(newUserId);
+            log.info("New user: {} has been created", newUserId);
+        } else if (userToCheck.getIsActive()) {
+            log.error("Email is in use!");
+            throw new EmailAlreadyUsedException();
+        } else {
+            log.info("Email exists in the database, but is not confirmed. Data update for the user.");
+            userBuilder.id(userToCheck.getId());
+        }
+
+        UserEntity newUser = userBuilder
                 .username(username)
                 .passwordHash(passwordEncoder.encode(password))
                 .email(email)
+                .isActive(false)
                 .build();
-        repository.saveAndFlush(newUser);
 
-        log.info("New user: {} has been created", newUserId);
+        repository.saveAndFlush(newUser);
         return newUser;
     }
 
