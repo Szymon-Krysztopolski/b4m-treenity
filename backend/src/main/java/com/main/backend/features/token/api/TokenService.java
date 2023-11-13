@@ -28,6 +28,7 @@ public class TokenService {
 
     public String login(String email, String password) throws Exception {
         final UserEntity user = userService.checkPassword(email, password);
+        repository.deleteAllByUserAndTokenType(user, SESSION);
         return utils.generateNewToken(repository, user, SESSION);
     }
 

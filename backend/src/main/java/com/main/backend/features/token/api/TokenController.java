@@ -21,6 +21,8 @@ public class TokenController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserDTO userDTO) {
+        log.info("User: {} is trying to log into page", userDTO.getEmail());
+
         try {
             final String token = service.login(userDTO.getEmail(), userDTO.getPassword());
             log.info("Session token created successfully");
@@ -28,7 +30,9 @@ public class TokenController {
                     .header(HttpHeaders.SET_COOKIE, "sessionToken=" + token)
                     .body("User logged in");
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error during logging in!");
+            final String response = "Error during logging in!";
+            log.error(response, ex);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
