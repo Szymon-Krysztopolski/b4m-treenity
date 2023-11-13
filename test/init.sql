@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
     id VARCHAR(255) PRIMARY KEY,
     username VARCHAR(255),
     password_hash VARCHAR(255),
-    email VARCHAR(255),
+    email VARCHAR(255) unique,
     is_active boolean default false
 );
 INSERT INTO users (id, username, password_hash, email, is_active) VALUES ('52fdb044-4061-4331-997a-602737b27ef0', 'JonNash', '$2a$10$TFNUpqfvvJGe1n8JV59O0.9hVx5KiopkSGlk6Eu0AF7Gn9ZTxo2tK', 'JonNash@JonNashTest.com', true);

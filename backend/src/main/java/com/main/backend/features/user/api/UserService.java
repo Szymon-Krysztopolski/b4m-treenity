@@ -2,9 +2,12 @@ package com.main.backend.features.user.api;
 
 import com.main.backend.features.user.domain.User;
 import com.main.backend.features.user.entity.UserEntity;
+import com.main.backend.features.user.exception.BlankFieldException;
+import com.main.backend.features.user.exception.InvalidEmailException;
 import com.main.backend.features.user.exception.UserNotFoundException;
 import com.main.backend.features.user.exception.WrongPasswordException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,8 +38,12 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserEntity createUser(String username, String password, String email) {
-        // todo check if email if proper and doesn't exist in database
+    public UserEntity createUser(String username, String password, String email) throws Exception {
+        if (!checkIfBlank(username, password, email))
+            throw new BlankFieldException();
+
+        if (!EmailValidator.getInstance().isValid(email))
+            throw new InvalidEmailException();
 
         String newUserId = String.valueOf(UUID.randomUUID());
         UserEntity newUser = UserEntity.builder()
@@ -78,5 +85,13 @@ public class UserService {
         user.setPasswordHash(passwordEncoder.encode(newPassword));
         repository.saveAndFlush(user);
         return newPassword;
+    }
+
+    private boolean checkIfBlank(String... args) {
+        for (String arg : args) {
+            if (arg == null || arg.trim().isBlank())
+                return false;
+        }
+        return true;
     }
 }

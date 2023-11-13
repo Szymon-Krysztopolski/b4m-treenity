@@ -2,10 +2,12 @@ package com.main.backend.features.token.api;
 
 import com.main.backend.features.mailserver.EmailService;
 import com.main.backend.features.token.domain.TokenUtils;
+import com.main.backend.features.token.exception.EmptyMailLinkException;
 import com.main.backend.features.user.api.UserService;
 import com.main.backend.features.user.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import static com.main.backend.features.token.domain.TokenType.*;
@@ -17,6 +19,9 @@ public class TokenService {
     private final EmailService emailService;
     private final UserService userService;
     private final TokenUtils utils;
+
+    @Value("${tri.token.mail.link}")
+    private String mailLink;
 
     @Autowired
     public TokenService(TokenRepository repository, EmailService emailService, UserService userService, TokenUtils utils) {
@@ -32,10 +37,13 @@ public class TokenService {
         return utils.generateNewToken(repository, user, SESSION);
     }
 
-    public String registration(String username, String password, String email) {
+    public String registration(String username, String password, String email) throws Exception {
+        if (mailLink == null || mailLink.trim().isBlank())
+            throw new EmptyMailLinkException();
+
         final UserEntity user = userService.createUser(username, password, email);
         final String token = utils.generateNewToken(repository, user, REGISTRATION);
-        final String body = String.format("To confirm registration go here %s", token); // todo link to proper website
+        final String body = String.format("To confirm registration go here: %s/%s", mailLink, token);
 
         emailService.sendEmail(user.getEmail(), "Confirm registration", body);
         return "New account created, confirm email before log in";
@@ -48,9 +56,12 @@ public class TokenService {
     }
 
     public String forgotPassword(String email) throws Exception {
+        if (mailLink == null || mailLink.trim().isBlank())
+            throw new EmptyMailLinkException();
+
         final UserEntity user = userService.getUserByMail(email);
         final String token = utils.generateNewToken(repository, user, FORGET_PASSWORD);
-        final String body = String.format("To confirm reset of password go here %s", token); // todo link to proper website
+        final String body = String.format("To confirm reset of password go here: %s/%s", mailLink, token);
 
         emailService.sendEmail(user.getEmail(), "Reset of password", body);
         return "Email with reset password instructions has been sent";
