@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {formInputChange} from "../utils/formInputChange";
-import {handleTreeSubmit} from "../utils/handleTreeSubmit";
+import {handleStandardSubmit} from "../utils/handleStandardSubmit";
 
 export default function AddNodeForm({nodes}) {
     const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ export default function AddNodeForm({nodes}) {
     });
 
     return (
-        <form className={"panel--form"} onSubmit={handleTreeSubmit(formData, "post", "/api/v1/nodes")}>
+        <form className={"panel--form"} onSubmit={handleStandardSubmit(formData, "post", "/api/v1/nodes")}>
             <div className={"panel--form--input"}>
                 <label>Parent node</label>
                 <select

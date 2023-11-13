@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {formInputChange} from "../utils/formInputChange";
-import {handleTreeSubmit} from "../utils/handleTreeSubmit";
+import {handleStandardSubmit} from "../utils/handleStandardSubmit";
 
 export default function UpdateNodeForm({nodes}) {
     const [formData, setFormData] = useState({
@@ -11,7 +11,7 @@ export default function UpdateNodeForm({nodes}) {
     });
 
     return (
-        <form className={"panel--form"} onSubmit={handleTreeSubmit(formData, "put", "/api/v1/nodes/" + formData.id)}>
+        <form className={"panel--form"} onSubmit={handleStandardSubmit(formData, "put", "/api/v1/nodes/" + formData.id)}>
             <div className={"panel--form--input"}>
                 <label>Node to update</label>
                 <select

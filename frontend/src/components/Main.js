@@ -13,6 +13,7 @@ import getLayoutedElements from "../utils/layoutUtils";
 import UpdateNodeForm from "./forms/tree/UpdateNodeForm";
 import DeleteNodeForm from "./forms/tree/DeleteNodeForm";
 import Login from "./forms/Login";
+import Logout from "./forms/Logout";
 
 export default function Main() {
     // const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL; // TODO uncomment after tests
@@ -62,7 +63,7 @@ export default function Main() {
                 <Panel position="top-left">
                     <div>
                         <h3>Admin Panel</h3>
-                        <Login/>
+                        {localStorage.getItem("sessionToken") ? <Login/> : <Logout/>}
                         <div>
                             <input className={"panel--button"} type="submit" value="Add new node"
                                    onClick={() => changeValue(showAddForm, setAddForm)}/>

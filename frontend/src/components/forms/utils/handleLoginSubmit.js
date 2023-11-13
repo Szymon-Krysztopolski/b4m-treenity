@@ -11,7 +11,7 @@ export const handleLoginSubmit = (formData) => (event) => {
     }).then(response => {
         if (response.ok) {
             response.text().then(text => {
-                console.log(text) // todo set global variable
+                localStorage.setItem("sessionToken", text)
             });
             window.location.reload();
         }
