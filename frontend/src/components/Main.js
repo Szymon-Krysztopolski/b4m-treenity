@@ -65,18 +65,22 @@ export default function Main() {
                 <Panel position="top-left">
                     <div>
                         <h3>Admin Panel</h3>
-                        {cookie.get('sessionToken') ? <Logout/> : <Login/>}
-                        <div>
-                            <input className={"panel--button"} type="submit" value="Add new node"
-                                   onClick={() => changeValue(showAddForm, setAddForm)}/>
-                            <input className={"panel--button"} type="submit" value="Update node"
-                                   onClick={() => changeValue(showUpdateForm, setUpdateForm)}/>
-                            <input className={"panel--button"} type="submit" value="Delete node"
-                                   onClick={() => changeValue(showDeleteForm, setDeleteForm)}/>
-                        </div>
-                        {showAddForm ? <AddNodeForm nodes={nodes}/> : null}
-                        {showUpdateForm ? <UpdateNodeForm nodes={nodes}/> : null}
-                        {showDeleteForm ? <DeleteNodeForm nodes={nodes}/> : null}
+                        {cookie.get('sessionToken')
+                            ? <div>
+                                <Logout/>
+                                <input className={"panel--button"} type="submit" value="Add new node"
+                                       onClick={() => changeValue(showAddForm, setAddForm)}/>
+                                <input className={"panel--button"} type="submit" value="Update node"
+                                       onClick={() => changeValue(showUpdateForm, setUpdateForm)}/>
+                                <input className={"panel--button"} type="submit" value="Delete node"
+                                       onClick={() => changeValue(showDeleteForm, setDeleteForm)}/>
+
+                                {showAddForm ? <AddNodeForm nodes={nodes}/> : null}
+                                {showUpdateForm ? <UpdateNodeForm nodes={nodes}/> : null}
+                                {showDeleteForm ? <DeleteNodeForm nodes={nodes}/> : null}
+                            </div>
+                            : <Login/>
+                        }
                     </div>
                 </Panel>
                 <MiniMap/>

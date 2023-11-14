@@ -6,7 +6,7 @@ export default function Logout() {
     const cookie = new Cookies();
 
     return (
-        <form onSubmit={handleLoginSubmit(null, false)}>
+        <form className={"logout--form"} onSubmit={handleLoginSubmit(null, false)}>
             <input type="submit" value="Logout"/>
         </form>
     )
