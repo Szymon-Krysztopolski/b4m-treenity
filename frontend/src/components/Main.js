@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import Cookies from "universal-cookie";
 import ReactFlow, {
     useNodesState,
     useEdgesState,
@@ -16,6 +17,7 @@ import Login from "./forms/Login";
 import Logout from "./forms/Logout";
 
 export default function Main() {
+    const cookie = new Cookies();
     // const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL; // TODO uncomment after tests
     const baseUrl = "http://127.0.0.1:8080";
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -63,7 +65,7 @@ export default function Main() {
                 <Panel position="top-left">
                     <div>
                         <h3>Admin Panel</h3>
-                        {localStorage.getItem("sessionToken") !== "" ? <Login/> : <Logout/>}
+                        {cookie.get('sessionToken') ? <Logout/> : <Login/>}
                         <div>
                             <input className={"panel--button"} type="submit" value="Add new node"
                                    onClick={() => changeValue(showAddForm, setAddForm)}/>

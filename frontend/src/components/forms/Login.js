@@ -9,7 +9,7 @@ export default function Login() {
     });
 
     return (
-        <form className={"login--form"} onSubmit={handleLoginSubmit(formData)}>
+        <form className={"login--form"} onSubmit={handleLoginSubmit(formData, true)}>
             <div className="input--container">
                 <label>Email </label>
                 <input

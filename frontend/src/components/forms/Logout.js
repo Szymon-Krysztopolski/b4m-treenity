@@ -1,9 +1,12 @@
 import React from "react"
-import {handleStandardSubmit} from "./utils/handleStandardSubmit";
+import Cookies from "universal-cookie";
+import {handleLoginSubmit} from "./utils/handleLoginSubmit";
 
 export default function Logout() {
+    const cookie = new Cookies();
+
     return (
-        <form onSubmit={handleStandardSubmit(null, "POST", "/api/v1/logout/" + localStorage.getItem("sessionToken"))}>
+        <form onSubmit={handleLoginSubmit(null, false)}>
             <input type="submit" value="Logout"/>
         </form>
     )
