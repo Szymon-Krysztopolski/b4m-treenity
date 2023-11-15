@@ -13,8 +13,8 @@ import AddNodeForm from "./forms/tree/AddNodeForm";
 import getLayoutedElements from "../utils/layoutUtils";
 import UpdateNodeForm from "./forms/tree/UpdateNodeForm";
 import DeleteNodeForm from "./forms/tree/DeleteNodeForm";
-import Login from "./forms/Login";
-import Logout from "./forms/Logout";
+import LoginForm from "./forms/login/LoginForm";
+import Logout from "./forms/login/Logout";
 
 export default function Main() {
     const cookie = new Cookies();
@@ -79,7 +79,7 @@ export default function Main() {
                                 {showUpdateForm ? <UpdateNodeForm nodes={nodes}/> : null}
                                 {showDeleteForm ? <DeleteNodeForm nodes={nodes}/> : null}
                             </div>
-                            : <Login/>
+                            : <LoginForm/>
                         }
                     </div>
                 </Panel>

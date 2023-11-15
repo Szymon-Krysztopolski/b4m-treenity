@@ -1,8 +1,8 @@
 import React, {useState} from "react"
-import {formInputChange} from "./utils/formInputChange";
-import {handleLoginSubmit} from "./utils/handleLoginSubmit";
+import {formInputChange} from "../utils/formInputChange";
+import {handleLoginSubmit} from "../utils/handleLoginSubmit";
 
-export default function Login() {
+export default function LoginForm() {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
