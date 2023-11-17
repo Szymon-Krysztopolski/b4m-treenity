@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255) unique,
     is_active boolean default false
 );
+-- every password is 'qwerty'
 INSERT INTO users (id, username, password_hash, email, is_active) VALUES ('52fdb044-4061-4331-997a-602737b27ef0', 'JonNash', '$2a$10$TFNUpqfvvJGe1n8JV59O0.9hVx5KiopkSGlk6Eu0AF7Gn9ZTxo2tK', 'JonNash@JonNashTest.com', true);
 INSERT INTO users (id, username, password_hash, email, is_active) VALUES ('b8a16543-23f7-4851-a9f8-ef2543b85577', 'Onyx', '$2a$10$/nAalx1mdE3z97p0oI92huRwk8vu4HrBsLUGsGDw4fsw83VO26EX2', 'Onyx@OnyxTest.com', true);
 INSERT INTO users (id, username, password_hash, email) VALUES ('a2aea8ba-5e8a-4420-82f7-738661b86a52', 'Iris', '$2a$10$Xdzagi1kZdwEVWWUc9elHuhXaTha2qXAOxxVjUihfOIwqBXomY4MO', 'Iris@IrisTest.com');

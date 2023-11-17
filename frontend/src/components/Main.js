@@ -48,10 +48,21 @@ export default function Main() {
     const [showUpdateForm, setUpdateForm] = React.useState(false)
     const [showDeleteForm, setDeleteForm] = React.useState(false)
 
-    function changeValue(prev, setFormValue) {
+    function changeTreeFormVisibility(prev, setFormValue) {
         setAddForm(false);
         setUpdateForm(false);
         setDeleteForm(false);
+        setFormValue(!prev);
+    }
+
+    const [showLogin, setLogin] = React.useState(true)
+    const [showRegistration, setRegistration] = React.useState(false)
+    const [showResetPassword, setResetPassword] = React.useState(false)
+
+    function changeUserFormVisibility(prev, setFormValue) {
+        setLogin(false);
+        setRegistration(false);
+        setResetPassword(false);
         setFormValue(!prev);
     }
 
@@ -71,20 +82,26 @@ export default function Main() {
                             ? <div>
                                 <Logout/>
                                 <input className={"panel--button"} type="submit" value="Add new node"
-                                       onClick={() => changeValue(showAddForm, setAddForm)}/>
+                                       onClick={() => changeTreeFormVisibility(showAddForm, setAddForm)}/>
                                 <input className={"panel--button"} type="submit" value="Update node"
-                                       onClick={() => changeValue(showUpdateForm, setUpdateForm)}/>
+                                       onClick={() => changeTreeFormVisibility(showUpdateForm, setUpdateForm)}/>
                                 <input className={"panel--button"} type="submit" value="Delete node"
-                                       onClick={() => changeValue(showDeleteForm, setDeleteForm)}/>
+                                       onClick={() => changeTreeFormVisibility(showDeleteForm, setDeleteForm)}/>
 
                                 {showAddForm ? <AddNodeForm nodes={nodes}/> : null}
                                 {showUpdateForm ? <UpdateNodeForm nodes={nodes}/> : null}
                                 {showDeleteForm ? <DeleteNodeForm nodes={nodes}/> : null}
                             </div>
                             : <div>
-                                <LoginForm/>
-                                <RegistrationForm/>
-                                <ResetPasswordForm/>
+                                <input className={"panel--button"} type="submit" value="Login"
+                                       onClick={() => changeUserFormVisibility(showLogin, setLogin)}/>
+                                <input className={"panel--button"} type="submit" value="Registration"
+                                       onClick={() => changeUserFormVisibility(showRegistration, setRegistration)}/>
+                                <input className={"panel--button"} type="submit" value="Reset password"
+                                       onClick={() => changeUserFormVisibility(showResetPassword, setResetPassword)}/>
+                                {showLogin ? <LoginForm/> : null}
+                                {showRegistration ? <RegistrationForm/> : null}
+                                {showResetPassword ? <ResetPasswordForm/> : null}
                             </div>
                         }
                     </div>

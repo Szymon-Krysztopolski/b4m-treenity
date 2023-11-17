@@ -3,7 +3,7 @@ import Cookies from "universal-cookie";
 
 export default function Logout() {
     return (
-        <form className={"user--form"} onSubmit={handleSubmit}>
+        <form className={"logout--form"} onSubmit={handleSubmit}>
             <input type="submit" value="Logout"/>
         </form>
     )
@@ -15,7 +15,7 @@ const handleSubmit = (event) => {
     const baseUrl = "http://127.0.0.1:8080";
     event.preventDefault();
 
-    fetch(`{${baseUrl}/api/v1/logout/${cookies.get("sessionToken")}`, {
+    fetch(`${baseUrl}/api/v1/logout/${cookies.get("sessionToken")}`, {
         method: "POST"
     }).then(response => {
         if (response.ok) {
