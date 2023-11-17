@@ -26,7 +26,9 @@ public class TokenController {
         try {
             final String token = service.login(userDTO.getEmail(), userDTO.getPassword());
             log.info("Session token created successfully");
-            return ResponseEntity.ok().body(token);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.SET_COOKIE, "sessionToken=" + token)
+                    .body(token);
         } catch (Exception ex) {
             final String response = "Error during logging in!";
             log.error(response, ex);

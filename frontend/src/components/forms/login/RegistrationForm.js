@@ -43,7 +43,7 @@ export default function RegistrationForm() {
             </div>
 
             <div className="button--container">
-                <input type="submit" value="Register"/>
+                <input type="submit" value="Registration"/>
             </div>
         </form>
     )
