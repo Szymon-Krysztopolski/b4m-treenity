@@ -78,4 +78,8 @@ public class TokenService {
 
         return String.format("Password reset successfully. Your new password: %s", newPassword);
     }
+
+    public UserEntity checkTokenAndGetUser(String sessionToken) throws Exception {
+        return utils.getUserOfTokenAndCheckTokenType(repository, sessionToken, SESSION);
+    }
 }
