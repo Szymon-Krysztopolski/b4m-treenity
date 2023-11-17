@@ -36,7 +36,7 @@ public class TokenController {
 
     @PostMapping("/logout/{token}")
     public ResponseEntity<String> logout(@PathVariable String token) {
-        log.info("User with token: {} is trying to log into page", token);
+        log.info("User with token: {} is trying to log out", token);
         String response;
 
         try {
