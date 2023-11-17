@@ -15,6 +15,8 @@ import UpdateNodeForm from "./forms/tree/UpdateNodeForm";
 import DeleteNodeForm from "./forms/tree/DeleteNodeForm";
 import LoginForm from "./forms/login/LoginForm";
 import Logout from "./forms/login/Logout";
+import RegistrationForm from "./forms/login/RegistrationForm";
+import ResetPasswordForm from "./forms/login/ResetPasswordForm";
 
 export default function Main() {
     const cookie = new Cookies();
@@ -79,7 +81,11 @@ export default function Main() {
                                 {showUpdateForm ? <UpdateNodeForm nodes={nodes}/> : null}
                                 {showDeleteForm ? <DeleteNodeForm nodes={nodes}/> : null}
                             </div>
-                            : <LoginForm/>
+                            : <div>
+                                <LoginForm/>
+                                <RegistrationForm/>
+                                <ResetPasswordForm/>
+                            </div>
                         }
                     </div>
                 </Panel>
