@@ -20,13 +20,13 @@ public class TreeService {
         this.repository = repository;
     }
 
-    public List<Node> getNodeList() {
+    public List<Node> getNodeList(String sessionToken) {
         List<NodeEntity> nodeEntityList = repository.findAll();
 
         return nodeEntityList.stream().map(Node::from).toList();
     }
 
-    public String addNode(String parentId, String label, Integer stepValue) throws TreeException {
+    public String addNode(String sessionToken, String parentId, String label, Integer stepValue) throws TreeException {
         String newNodeId = String.valueOf(UUID.randomUUID());
 
         NodeEntity parent = (parentId != null && repository.existsById(parentId)
@@ -53,7 +53,7 @@ public class TreeService {
         return String.format("Node {%s} added successfully", newNodeId);
     }
 
-    public String updateNode(String id, String parentId, String label, Integer stepValue) throws TreeException {
+    public String updateNode(String sessionToken, String id, String parentId, String label, Integer stepValue) throws TreeException {
         if (id == null || id.isBlank() || !repository.existsById(id)) {
             log.error("Node {} not found!", id);
             throw new TreeException("No node has been selected! Select proper value!");
@@ -83,7 +83,7 @@ public class TreeService {
         return String.format("Node {%s} updated successfully", id);
     }
 
-    public String deleteNode(String id) {
+    public String deleteNode(String sessionToken, String id) {
         repository.deleteById(id);
         return String.format("Node {%s} deleted successfully", id);
     }

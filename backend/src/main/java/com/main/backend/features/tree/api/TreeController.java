@@ -25,11 +25,11 @@ public class TreeController {
         this.service = service;
     }
 
-    @GetMapping("/tree")
-    public ResponseEntity<TreeDTO> getTree() {
+    @GetMapping("/tree/{sessionToken}")
+    public ResponseEntity<TreeDTO> getTree(@PathVariable String sessionToken) {
         try {
-            log.info("Downloading the tree");
-            return ResponseEntity.ok(TreeDTOFactory.createTree(service.getNodeList()));
+            log.info("[{}] Downloading the tree", sessionToken);
+            return ResponseEntity.ok(TreeDTOFactory.createTree(service.getNodeList(sessionToken)));
         } catch (Exception ex) {
             log.error("Error with getTree()!", ex);
         }
@@ -42,11 +42,12 @@ public class TreeController {
         HttpStatus status;
         String response;
 
+        String sessionToken = instruction.getSessionToken();
         try {
-            log.info("Adding new node to parent: {}", instruction.getParentId());
+            log.info("[{}] Adding new node to parent: {}", sessionToken, instruction.getParentId());
             status = HttpStatus.OK;
-            response = service.addNode(instruction.getParentId(), instruction.getLabel(), instruction.getStepValue());
-            log.info("Node added successfully");
+            response = service.addNode(sessionToken, instruction.getParentId(), instruction.getLabel(), instruction.getStepValue());
+            log.info("[{}] Node added successfully", sessionToken);
         } catch (TreeException ex) {
             status = HttpStatus.BAD_REQUEST;
             response = ex.getMessage();
@@ -54,7 +55,7 @@ public class TreeController {
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
             response = "Error during adding node!";
-            log.error(response, ex);
+            log.error("[{}]" + response, sessionToken, ex);
         }
 
         return ResponseEntity.status(status).body(response);
@@ -65,11 +66,12 @@ public class TreeController {
         HttpStatus status;
         String response;
 
+        String sessionToken = instruction.getSessionToken();
         try {
-            log.info("Updating node: {}", id);
+            log.info("[{}] Updating node: {}", sessionToken, id);
             status = HttpStatus.OK;
-            response = service.updateNode(id, instruction.getParentId(), instruction.getLabel(), instruction.getStepValue());
-            log.info("Node updated successfully");
+            response = service.updateNode(sessionToken, id, instruction.getParentId(), instruction.getLabel(), instruction.getStepValue());
+            log.info("[{}] Node updated successfully", sessionToken);
         } catch (TreeException ex) {
             status = HttpStatus.BAD_REQUEST;
             response = ex.getMessage();
@@ -77,26 +79,27 @@ public class TreeController {
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
             response = "Error when updating node!";
-            log.error(response, ex);
+            log.error("[{}]" + response, sessionToken, ex);
         }
 
         return ResponseEntity.status(status).body(response);
     }
 
     @DeleteMapping("/nodes/{id}")
-    public ResponseEntity<String> deleteNode(@PathVariable String id) {
+    public ResponseEntity<String> deleteNode(@PathVariable String id, @RequestBody NodeInstructionDTO instruction) {
         HttpStatus status;
         String response;
 
+        String sessionToken = instruction.getSessionToken();
         try {
-            log.info("Deleting node: {}", id);
+            log.info("[{}] Deleting node: {}", sessionToken, id);
             status = HttpStatus.OK;
-            response = service.deleteNode(id);
-            log.info("Node {} deleted successfully", id);
+            response = service.deleteNode(sessionToken, id);
+            log.info("[{}] Node {} deleted successfully", sessionToken, id);
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
             response = "Error when deleting node!";
-            log.error(response, ex);
+            log.error("[{}]" + response, sessionToken, ex);
         }
 
         return ResponseEntity.status(status).body(response);

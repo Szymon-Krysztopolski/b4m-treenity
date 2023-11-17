@@ -8,6 +8,7 @@ import lombok.Getter;
  */
 @Getter
 public class NodeInstructionDTO {
+    private String sessionToken;
     private String parentId;
     private String label;
     private Integer stepValue;
