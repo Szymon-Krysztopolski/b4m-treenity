@@ -18,12 +18,9 @@ const handleSubmit = (event) => {
     fetch(`${baseUrl}/api/v1/logout/${cookies.get("sessionToken")}`, {
         method: "POST"
     }).then(response => {
-        if (response.ok) {
-            cookies.set("sessionToken", "", {path: "/"});
-            window.location.reload();
-        }
-    }).catch(error => {
-        alert(error)
-        console.error(error);
-    });
+        console.log(response)
+    })
+
+    cookies.set("sessionToken", "", {path: "/"});
+    window.location.reload();
 };
