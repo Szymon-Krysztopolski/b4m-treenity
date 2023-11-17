@@ -4,6 +4,7 @@ import com.main.backend.features.tree.entity.NodeEntity;
 import com.main.backend.features.user.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,5 +16,6 @@ public interface TreeRepository extends JpaRepository<NodeEntity, String> {
 
     NodeEntity getReferenceByIdAndOwner(String id, UserEntity owner);
 
+    @Transactional
     void deleteByIdAndOwner(String id, UserEntity owner);
 }

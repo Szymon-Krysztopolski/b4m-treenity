@@ -20,13 +20,14 @@ import ResetPasswordForm from "./forms/login/ResetPasswordForm";
 
 export default function Main() {
     const cookie = new Cookies();
+    const sessionToken = cookie.get('sessionToken') || "";
     // const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL; // TODO uncomment after tests
     const baseUrl = "http://127.0.0.1:8080";
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
     useEffect(() => {
-        fetch(baseUrl + '/api/v1/tree')
+        fetch(baseUrl + '/api/v1/tree/' + sessionToken)
             .then(response => response.json())
             .then(data => {
                 const nodes = data['nodes'].map((node) => ({
@@ -78,7 +79,7 @@ export default function Main() {
                 <Panel position="top-left">
                     <div>
                         <h3>Admin Panel</h3>
-                        {cookie.get('sessionToken')
+                        {sessionToken
                             ? <div>
                                 <Logout/>
                                 <input className={"panel--button"} type="submit" value="Add new node"

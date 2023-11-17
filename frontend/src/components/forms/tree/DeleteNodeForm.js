@@ -8,7 +8,8 @@ export default function DeleteNodeForm({nodes}) {
     });
 
     return (
-        <form className={"panel--form"} onSubmit={handleStandardSubmit(null, "delete", "/api/v1/nodes/" + formData.id)}>
+        <form className={"panel--form"}
+              onSubmit={handleStandardSubmit(formData, "delete", "/api/v1/nodes/" + formData.id)}>
             <div className={"panel--form--input"}>
                 <label>Node to delete</label>
                 <select

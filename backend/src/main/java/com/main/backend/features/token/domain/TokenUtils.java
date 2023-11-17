@@ -34,7 +34,7 @@ public class TokenUtils {
         if (tokenEntity.isExpired())
             throw new TokenHasExpiredException();
 
-        if (tokenEntity.getIsUsed())
+        if (tokenEntity.getIsUsed() && !tokenEntity.getTokenType().equals(TokenType.SESSION))
             throw new TokenHasBeenUsedException();
 
         UserEntity user = tokenEntity.getUser();
