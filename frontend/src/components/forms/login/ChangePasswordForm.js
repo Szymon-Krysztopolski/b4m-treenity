@@ -1,37 +1,38 @@
-import React, {useState} from "react"
+import React, {useState} from "react";
 import {formInputChange} from "../utils/formInputChange";
 import Cookies from "universal-cookie";
 
-export default function LoginForm() {
+export default function ChangePasswordForm() {
     const [formData, setFormData] = useState({
-        email: "",
-        password: "",
+        currentPassword: "",
+        newPassword: "",
     });
 
     return (
         <form className={"user--form"} onSubmit={handleSubmit(formData)}>
             <div className="input--container">
-                <label>Email </label>
+                <label>Current password </label>
                 <input
-                    type="text"
-                    name="email"
-                    value={formData.email}
+                    type="password"
+                    name="currentPassword"
+                    value={formData.currentPassword}
                     onChange={formInputChange(formData, setFormData)}
                     required
                 />
             </div>
             <div className="input--container">
-                <label>Password </label>
+                <label>New password </label>
                 <input
                     type="password"
-                    name="password"
-                    value={formData.password}
+                    name="newPassword"
+                    value={formData.newPassword}
                     onChange={formInputChange(formData, setFormData)}
                     required
                 />
             </div>
+
             <div className="button--container">
-                <input type="submit" value="Login"/>
+                <input type="submit" value="Change password"/>
             </div>
         </form>
     )
@@ -42,16 +43,19 @@ const handleSubmit = (formData) => (event) => {
     const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL;
     event.preventDefault();
 
-    fetch(baseUrl + "/api/v1/login", {
+    fetch(`${baseUrl}/api/v1/change-password/${cookies.get("sessionToken")}`, {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(formData)
     }).then(response => {
         if (response.ok) {
-            response.text().then(text => {
-                cookies.set("sessionToken", text, {path: "/"});
-                window.location.reload();
-            });
+            console.log(response);
+            window.location.reload();
+        } else {
+            return response.text()
+                .then(errorText => {
+                    throw new Error(errorText);
+                });
         }
     }).catch(error => {
         alert(error)

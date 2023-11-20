@@ -19,7 +19,7 @@ public class UserController {
         this.service = service;
     }
 
-    @GetMapping("/users")
+    // @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok(service.getUsers());
     }

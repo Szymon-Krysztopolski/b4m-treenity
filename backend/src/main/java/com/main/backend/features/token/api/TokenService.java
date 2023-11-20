@@ -32,7 +32,7 @@ public class TokenService {
     }
 
     public String login(String email, String password) throws Exception {
-        final UserEntity user = userService.checkPassword(email, password);
+        final UserEntity user = userService.checkPasswordByMail(email, password);
         repository.deleteAllByUserAndTokenType(user, SESSION);
         return utils.generateNewToken(repository, user, SESSION);
     }
@@ -40,6 +40,13 @@ public class TokenService {
     public String logout(String token) {
         repository.deleteById(token);
         return "Session logout successfully";
+    }
+
+    public String changePassword(String token, String currentPassword, String newPassword) throws Exception {
+        final UserEntity user = checkTokenAndGetUser(token);
+        userService.changePassword(user, currentPassword, newPassword);
+
+        return "Password changed successfully";
     }
 
     public String registration(String username, String password, String email) throws Exception {

@@ -1,5 +1,6 @@
 package com.main.backend.features.token.api;
 
+import com.main.backend.features.user.dto.PasswordDTO;
 import com.main.backend.features.user.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,24 @@ public class TokenController {
             log.error(response, ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
+    }
+
+    @PostMapping("/change-password/{token}")
+    public ResponseEntity<String> changePassword(@PathVariable String token, @RequestBody PasswordDTO passwordDTO) {
+        HttpStatus status;
+        String response;
+
+        try {
+            status = HttpStatus.OK;
+            response = service.changePassword(token, passwordDTO.getCurrentPassword(), passwordDTO.getNewPassword());
+            log.info("Password changed successfully");
+        } catch (Exception ex) {
+            status = HttpStatus.BAD_REQUEST;
+            response = "Error during password changing!";
+            log.error(response, ex);
+        }
+
+        return ResponseEntity.status(status).body(response);
     }
 
     @PostMapping("/registration")
