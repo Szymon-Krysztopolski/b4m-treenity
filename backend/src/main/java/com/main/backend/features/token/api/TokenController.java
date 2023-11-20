@@ -1,6 +1,7 @@
 package com.main.backend.features.token.api;
 
-import com.main.backend.features.user.dto.PasswordDTO;
+import com.main.backend.features.user.dto.ChangePasswordDTO;
+import com.main.backend.features.user.dto.ForgotPasswordDTO;
 import com.main.backend.features.user.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,13 +55,13 @@ public class TokenController {
     }
 
     @PostMapping("/change-password/{token}")
-    public ResponseEntity<String> changePassword(@PathVariable String token, @RequestBody PasswordDTO passwordDTO) {
+    public ResponseEntity<String> changePassword(@PathVariable String token, @RequestBody ChangePasswordDTO changePasswordDTO) {
         HttpStatus status;
         String response;
 
         try {
             status = HttpStatus.OK;
-            response = service.changePassword(token, passwordDTO.getCurrentPassword(), passwordDTO.getNewPassword());
+            response = service.changePassword(token, changePasswordDTO.getCurrentPassword(), changePasswordDTO.getNewPassword());
             log.info("Password changed successfully");
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
@@ -108,13 +109,13 @@ public class TokenController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestBody String email) {
+    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordDTO forgotPasswordDTO) {
         HttpStatus status;
         String response;
 
         try {
             status = HttpStatus.OK;
-            response = service.forgotPassword(email);
+            response = service.forgotPassword(forgotPasswordDTO.getEmail());
             log.info("Forget-password token created successfully");
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
