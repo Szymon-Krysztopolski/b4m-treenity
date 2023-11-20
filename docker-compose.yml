@@ -11,6 +11,9 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      MAIL_USER: ${MAIL_USER}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      TOKEN_LINK: ${TOKEN_LINK}
 
   treenity-frontend:
     container_name: treenity-frontend-container
