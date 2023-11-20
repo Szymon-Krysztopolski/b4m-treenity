@@ -32,3 +32,8 @@ select {
     float: right;
     clear: both;
 }
+
+.error {
+    color: red;
+    font-size: 12px;
+}

@@ -1,0 +1,43 @@
+.user--form {
+    margin: 20px auto;
+    width: 250px;
+    background-color: white;
+    padding: 2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.user--form input[type="text"],
+.user--form input[type="password"] {
+    height: 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.user--form input[type="submit"] {
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    background: rgb(128, 128, 128);
+    border: 1px solid rgb(128, 128, 128);
+    color: #fff;
+    padding: 10px 20px;
+}
+
+.user--form input[type="submit"]:hover {
+    background: rgb(178, 178, 178);
+}
+
+.user--form .input--container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px;
+}
+
+.user--form .button--container {
+    display: flex;
+    justify-content: center;
+}
+
+.logout--form input[type="submit"] {
+    margin-left: 10px;
+}

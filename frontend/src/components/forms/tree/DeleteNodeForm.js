@@ -1,5 +1,6 @@
 import React, {useState} from "react";
-import {handleInputChange, handleSubmit} from "./dataHandler";
+import {formInputChange} from "../utils/formInputChange";
+import {handleStandardSubmit} from "../utils/handleStandardSubmit";
 
 export default function DeleteNodeForm({nodes}) {
     const [formData, setFormData] = useState({
@@ -7,13 +8,14 @@ export default function DeleteNodeForm({nodes}) {
     });
 
     return (
-        <form className={"panel--form"} onSubmit={handleSubmit(null, "delete", "/api/nodes/" + formData.id)}>
+        <form className={"panel--form"}
+              onSubmit={handleStandardSubmit(formData, "delete", "/api/v1/nodes/" + formData.id)}>
             <div className={"panel--form--input"}>
                 <label>Node to delete</label>
                 <select
                     name="id"
                     value={formData.id}
-                    onChange={handleInputChange(formData, setFormData)}
+                    onChange={formInputChange(formData, setFormData)}
                 >
                     <option value="-">Select an element</option>
                     {nodes.map((node) => (

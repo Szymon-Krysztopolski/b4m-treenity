@@ -1,8 +1,10 @@
 package com.main.backend.features.tree.api;
 
+import com.main.backend.features.token.api.TokenService;
 import com.main.backend.features.tree.domain.Node;
-import com.main.backend.features.tree.domain.TreeException;
+import com.main.backend.features.tree.exception.TreeException;
 import com.main.backend.features.tree.entity.NodeEntity;
+import com.main.backend.features.user.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,23 +16,27 @@ import java.util.UUID;
 @Slf4j
 public class TreeService {
     private final TreeRepository repository;
+    private final TokenService tokenService;
 
     @Autowired
-    public TreeService(TreeRepository repository) {
+    public TreeService(TreeRepository repository, TokenService tokenService) {
         this.repository = repository;
+        this.tokenService = tokenService;
     }
 
-    public List<Node> getNodeList() {
-        List<NodeEntity> nodeEntityList = repository.findAll();
+    public List<Node> getNodeList(String sessionToken) throws Exception {
+        UserEntity user = tokenService.checkTokenAndGetUser(sessionToken);
+        List<NodeEntity> nodeEntityList = repository.findAllByOwner(user);
 
         return nodeEntityList.stream().map(Node::from).toList();
     }
 
-    public String addNode(String parentId, String label, Integer stepValue) throws TreeException {
+    public String addNode(String sessionToken, String parentId, String label, Integer stepValue) throws Exception {
+        UserEntity user = tokenService.checkTokenAndGetUser(sessionToken);
         String newNodeId = String.valueOf(UUID.randomUUID());
 
-        NodeEntity parent = (parentId != null && repository.existsById(parentId)
-                ? repository.getReferenceById(parentId)
+        NodeEntity parent = (parentId != null && repository.existsByIdAndOwner(parentId, user)
+                ? repository.getReferenceByIdAndOwner(parentId, user)
                 : null
         );
 
@@ -44,6 +50,7 @@ public class TreeService {
 
         repository.saveAndFlush(NodeEntity.builder()
                 .id(newNodeId)
+                .owner(user)
                 .label(label)
                 .parentNode(parent)
                 .stepValue(stepValue)
@@ -53,15 +60,16 @@ public class TreeService {
         return String.format("Node {%s} added successfully", newNodeId);
     }
 
-    public String updateNode(String id, String parentId, String label, Integer stepValue) throws TreeException {
-        if (id == null || id.isBlank() || !repository.existsById(id)) {
+    public String updateNode(String sessionToken, String id, String parentId, String label, Integer stepValue) throws Exception {
+        UserEntity user = tokenService.checkTokenAndGetUser(sessionToken);
+        if (id == null || id.isBlank() || !repository.existsByIdAndOwner(id, user)) {
             log.error("Node {} not found!", id);
             throw new TreeException("No node has been selected! Select proper value!");
         }
 
-        NodeEntity nodeToChange = repository.getReferenceById(id);
-        if (parentId != null && repository.existsById(parentId)) {
-            NodeEntity potentialParent = repository.getReferenceById(parentId);
+        NodeEntity nodeToChange = repository.getReferenceByIdAndOwner(id, user);
+        if (parentId != null && repository.existsByIdAndOwner(parentId, user)) {
+            NodeEntity potentialParent = repository.getReferenceByIdAndOwner(parentId, user);
             if (potentialParent.isYou(nodeToChange)) {
                 log.error("Incorrect node selected as parent");
                 throw new TreeException("You cannot set you as your parent!");
@@ -83,8 +91,10 @@ public class TreeService {
         return String.format("Node {%s} updated successfully", id);
     }
 
-    public String deleteNode(String id) {
-        repository.deleteById(id);
+    public String deleteNode(String sessionToken, String id) throws Exception {
+        UserEntity user = tokenService.checkTokenAndGetUser(sessionToken);
+
+        repository.deleteByIdAndOwner(id, user);
         return String.format("Node {%s} deleted successfully", id);
     }
 }

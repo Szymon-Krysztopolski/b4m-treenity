@@ -1,13 +1,16 @@
 FROM node:16-alpine as builder
-WORKDIR /frontend
-COPY package.json /frontend
+WORKDIR /app
+COPY package.json ./
 RUN npm install
-COPY . /frontend
-EXPOSE 3000
+COPY . .
 
 ARG REACT_APP_BASE_BACKEND_URL
 ENV REACT_APP_BASE_BACKEND_URL $REACT_APP_BASE_BACKEND_URL
+ARG PUBLIC_URL
+ENV PUBLIC_URL $PUBLIC_URL
 
 RUN npm run build
-RUN npm install -g serve
-CMD ["serve", "-s", "build"]
+FROM nginx:alpine
+COPY --from=builder /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
