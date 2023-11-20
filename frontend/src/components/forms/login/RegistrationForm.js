@@ -10,7 +10,7 @@ export default function RegistrationForm() {
     });
 
     return (
-        <form className={"user--form"} onSubmit={handleStandardSubmit(formData, "POST", "/registration")}>
+        <form className={"user--form"} onSubmit={handleStandardSubmit(formData, "POST", "/api/v1/registration")}>
             <div className="input--container">
                 <label>Username </label>
                 <input
