@@ -84,6 +84,14 @@ public class UserService {
         return user;
     }
 
+    public void changePassword(@NotNull UserEntity user, String currentPassword, String newPassword) throws WrongPasswordException {
+        if (!passwordEncoder.matches(currentPassword, user.getPasswordHash()))
+            throw new WrongPasswordException();
+
+        user.setPasswordHash(passwordEncoder.encode(newPassword));
+        repository.saveAndFlush(user);
+    }
+
     public void confirmRegistration(@NotNull UserEntity user) {
         user.setIsActive(true);
         repository.saveAndFlush(user);
