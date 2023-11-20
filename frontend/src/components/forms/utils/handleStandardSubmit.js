@@ -1,8 +1,8 @@
 import Cookies from "universal-cookie";
 
 export const handleStandardSubmit = (formData, method, endpoint) => (event) => {
-    // const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL; // TODO uncomment after tests
-    const baseUrl = "http://127.0.0.1:8080";
+    const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL;
+
     console.log("Form submitted with data:", formData);
     event.preventDefault();
 

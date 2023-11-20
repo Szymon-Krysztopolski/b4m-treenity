@@ -21,8 +21,8 @@ import ResetPasswordForm from "./forms/login/ResetPasswordForm";
 export default function Main() {
     const cookie = new Cookies();
     const sessionToken = cookie.get('sessionToken') || "";
-    // const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL; // TODO uncomment after tests
-    const baseUrl = "http://127.0.0.1:8080";
+    const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL;
+
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 

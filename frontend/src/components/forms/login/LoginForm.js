@@ -40,8 +40,8 @@ export default function LoginForm() {
 const handleSubmit = (formData) => (event) => {
 
     const cookies = new Cookies();
-    // const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL; // TODO uncomment after tests
-    const baseUrl = "http://127.0.0.1:8080";
+    const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL;
+
     event.preventDefault();
 
     fetch(baseUrl + "/api/v1/login", {

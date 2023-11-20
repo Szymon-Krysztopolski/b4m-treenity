@@ -11,8 +11,8 @@ export default function Logout() {
 
 const handleSubmit = (event) => {
     const cookies = new Cookies();
-    // const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL; // TODO uncomment after tests
-    const baseUrl = "http://127.0.0.1:8080";
+    const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL;
+
     event.preventDefault();
 
     fetch(`${baseUrl}/api/v1/logout/${cookies.get("sessionToken")}`, {
