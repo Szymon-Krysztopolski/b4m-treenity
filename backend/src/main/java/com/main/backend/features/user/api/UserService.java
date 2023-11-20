@@ -76,7 +76,7 @@ public class UserService {
         return user;
     }
 
-    public UserEntity checkPassword(String email, String password) throws UserNotFoundException, WrongPasswordException {
+    public UserEntity checkPasswordByMail(String email, String password) throws UserNotFoundException, WrongPasswordException {
         UserEntity user = getUserByMail(email);
         if (!passwordEncoder.matches(password, user.getPasswordHash()))
             throw new WrongPasswordException();
