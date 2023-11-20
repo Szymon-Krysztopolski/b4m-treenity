@@ -17,6 +17,7 @@ import LoginForm from "./forms/login/LoginForm";
 import Logout from "./forms/login/Logout";
 import RegistrationForm from "./forms/login/RegistrationForm";
 import ResetPasswordForm from "./forms/login/ResetPasswordForm";
+import ChangePasswordForm from "./forms/login/ChangePasswordForm";
 
 export default function Main() {
     const cookie = new Cookies();
@@ -45,11 +46,13 @@ export default function Main() {
             });
     }, []);
 
+    const [showChangePassword, setChangePassword] = React.useState(false)
     const [showAddForm, setAddForm] = React.useState(false)
     const [showUpdateForm, setUpdateForm] = React.useState(false)
     const [showDeleteForm, setDeleteForm] = React.useState(false)
 
     function changeTreeFormVisibility(prev, setFormValue) {
+        setChangePassword(false);
         setAddForm(false);
         setUpdateForm(false);
         setDeleteForm(false);
@@ -81,7 +84,10 @@ export default function Main() {
                         <h3>Admin Panel</h3>
                         {sessionToken
                             ? <div>
+                                <input className={"panel--button"} type="submit" value="Change password"
+                                       onClick={() => changeTreeFormVisibility(showChangePassword, setChangePassword)}/>
                                 <Logout/>
+
                                 <input className={"panel--button"} type="submit" value="Add new node"
                                        onClick={() => changeTreeFormVisibility(showAddForm, setAddForm)}/>
                                 <input className={"panel--button"} type="submit" value="Update node"
@@ -89,6 +95,7 @@ export default function Main() {
                                 <input className={"panel--button"} type="submit" value="Delete node"
                                        onClick={() => changeTreeFormVisibility(showDeleteForm, setDeleteForm)}/>
 
+                                {showChangePassword ? <ChangePasswordForm/> : null}
                                 {showAddForm ? <AddNodeForm nodes={nodes}/> : null}
                                 {showUpdateForm ? <UpdateNodeForm nodes={nodes}/> : null}
                                 {showDeleteForm ? <DeleteNodeForm nodes={nodes}/> : null}
