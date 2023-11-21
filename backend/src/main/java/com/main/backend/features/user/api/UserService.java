@@ -1,5 +1,7 @@
 package com.main.backend.features.user.api;
 
+import com.main.backend.features.user.domain.PasswordValidator;
+import com.main.backend.features.user.domain.SecurityManager;
 import com.main.backend.features.user.domain.User;
 import com.main.backend.features.user.entity.UserEntity;
 import com.main.backend.features.user.exception.*;
@@ -20,7 +22,6 @@ public class UserService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
 
-
     @Autowired
     public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
@@ -38,6 +39,9 @@ public class UserService {
     public UserEntity createUser(String username, String password, String email) throws Exception {
         if (!checkIfBlank(username, password, email))
             throw new BlankFieldException();
+
+        if (!PasswordValidator.isPasswordValid(password))
+            throw new InvalidPasswordException();
 
         if (!EmailValidator.getInstance().isValid(email))
             throw new InvalidEmailException();
