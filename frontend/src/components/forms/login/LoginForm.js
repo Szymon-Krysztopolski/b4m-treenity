@@ -52,6 +52,11 @@ const handleSubmit = (formData) => (event) => {
                 cookies.set("sessionToken", text, {path: "/"});
                 window.location.reload();
             });
+        } else {
+            return response.text()
+                .then(errorText => {
+                    throw new Error(errorText);
+                });
         }
     }).catch(error => {
         alert(error)

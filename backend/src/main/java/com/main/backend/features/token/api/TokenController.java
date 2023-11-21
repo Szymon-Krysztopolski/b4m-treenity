@@ -32,7 +32,7 @@ public class TokenController {
                     .header(HttpHeaders.SET_COOKIE, "sessionToken=" + token)
                     .body(token);
         } catch (Exception ex) {
-            final String response = "Error during logging in!";
+            final String response = ex.getMessage();
             log.error("[{}] " + response, userDTO.getEmail(), ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
@@ -48,7 +48,7 @@ public class TokenController {
             log.info("[{}] Session logout successfully", token);
             return ResponseEntity.ok().body(response);
         } catch (Exception ex) {
-            response = "Error during logging out!";
+            response = ex.getMessage();
             log.error("[{}] " + response, token, ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
@@ -65,7 +65,7 @@ public class TokenController {
             log.info("[{}] Password changed successfully", token);
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
-            response = "Error during password changing!";
+            response = ex.getMessage();
             log.error("[{}] " + response, token, ex);
         }
 
@@ -83,7 +83,7 @@ public class TokenController {
             log.info("[{}] Registration token created successfully", userDTO.getEmail());
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
-            response = "Error during token creation!";
+            response = ex.getMessage();
             log.error("[{}] " + response, userDTO.getEmail(), ex);
         }
 
@@ -101,7 +101,7 @@ public class TokenController {
             log.info("[{}] Account confirmed successfully", token);
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
-            response = "Error during account confirmation!";
+            response = ex.getMessage();
             log.error("[{}] " + response, token, ex);
         }
 
@@ -119,7 +119,7 @@ public class TokenController {
             log.info("[{}] Forget-password token created successfully", forgetPasswordDTO.getEmail());
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
-            response = "Error during token creation!";
+            response = ex.getMessage();
             log.error("[{}] " + response, forgetPasswordDTO.getEmail(), ex);
         }
 
@@ -137,7 +137,7 @@ public class TokenController {
             log.info("[{}] Password reset successfully", token);
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
-            response = "Error during password reset!";
+            response = ex.getMessage();
             log.error("[{}] " + response, token, ex);
         }
 
