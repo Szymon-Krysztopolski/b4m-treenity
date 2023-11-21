@@ -1,5 +1,6 @@
 import React from "react"
 import Cookies from "universal-cookie";
+import {getBaseUrl} from "../utils/api";
 
 export default function Logout() {
     return (
@@ -11,10 +12,9 @@ export default function Logout() {
 
 const handleSubmit = (event) => {
     const cookies = new Cookies();
-    const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL;
     event.preventDefault();
 
-    fetch(`${baseUrl}/api/v1/logout/${cookies.get("sessionToken")}`, {
+    fetch(`${getBaseUrl()}/api/v1/logout/${cookies.get("sessionToken")}`, {
         method: "POST"
     }).then(response => {
         console.log(response)

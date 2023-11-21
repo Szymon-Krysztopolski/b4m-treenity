@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {formInputChange} from "../utils/formInputChange";
 import Cookies from "universal-cookie";
+import {getBaseUrl} from "../utils/api";
 
 export default function ChangePasswordForm() {
     const [formData, setFormData] = useState({
@@ -40,10 +41,9 @@ export default function ChangePasswordForm() {
 
 const handleSubmit = (formData) => (event) => {
     const cookies = new Cookies();
-    const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL;
     event.preventDefault();
 
-    fetch(`${baseUrl}/api/v1/change-password/${cookies.get("sessionToken")}`, {
+    fetch(`${getBaseUrl()}/api/v1/change-password/${cookies.get("sessionToken")}`, {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(formData)

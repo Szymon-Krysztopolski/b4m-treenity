@@ -18,17 +18,17 @@ import Logout from "./forms/login/Logout";
 import RegistrationForm from "./forms/login/RegistrationForm";
 import ResetPasswordForm from "./forms/login/ResetPasswordForm";
 import ChangePasswordForm from "./forms/login/ChangePasswordForm";
+import {getBaseUrl} from "./forms/utils/api";
 
 export default function Main() {
     const cookie = new Cookies();
     const sessionToken = cookie.get('sessionToken') || "";
-    const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL;
 
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
     useEffect(() => {
-        fetch(baseUrl + '/api/v1/tree/' + sessionToken)
+        fetch(getBaseUrl() + '/api/v1/tree/' + sessionToken)
             .then(response => response.json())
             .then(data => {
                 const nodes = data['nodes'].map((node) => ({

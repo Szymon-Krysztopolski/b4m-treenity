@@ -1,15 +1,14 @@
 import Cookies from "universal-cookie";
+import {getBaseUrl} from "./api";
 
 export const handleStandardSubmit = (formData, method, endpoint) => (event) => {
-    const baseUrl = process.env.REACT_APP_BASE_BACKEND_URL;
-
     console.log("Form submitted with data:", formData);
     event.preventDefault();
 
     const cookie = new Cookies();
     formData.sessionToken = cookie.get("sessionToken");
 
-    fetch(baseUrl + endpoint, {
+    fetch(getBaseUrl() + endpoint, {
         method: method,
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(formData)
