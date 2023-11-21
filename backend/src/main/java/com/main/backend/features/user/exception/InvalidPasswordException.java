@@ -1,6 +1,8 @@
 package com.main.backend.features.user.exception;
 
-public class InvalidPasswordException extends Exception {
+import com.main.backend.shared.TreenityException;
+
+public class InvalidPasswordException extends TreenityException {
     public InvalidPasswordException() {
         super("Password is invalid!");
     }

@@ -1,6 +1,8 @@
 package com.main.backend.features.token.exception;
 
-public class EmptyMailLinkException extends Exception {
+import com.main.backend.shared.TreenityException;
+
+public class EmptyMailLinkException extends TreenityException {
     public EmptyMailLinkException() {
         super("Mail website link is empty!");
     }

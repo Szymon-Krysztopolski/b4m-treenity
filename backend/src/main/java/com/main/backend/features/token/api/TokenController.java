@@ -3,6 +3,7 @@ package com.main.backend.features.token.api;
 import com.main.backend.features.user.dto.ChangePasswordDTO;
 import com.main.backend.features.user.dto.ForgetPasswordDTO;
 import com.main.backend.features.user.dto.UserDTO;
+import com.main.backend.shared.TreenityException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -32,7 +33,7 @@ public class TokenController {
                     .header(HttpHeaders.SET_COOKIE, "sessionToken=" + token)
                     .body(token);
         } catch (Exception ex) {
-            final String response = ex.getMessage();
+            final String response = (ex instanceof TreenityException ? ex.getMessage() : "Something went wrong");
             log.error("[{}] " + response, userDTO.getEmail(), ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
@@ -48,7 +49,7 @@ public class TokenController {
             log.info("[{}] Session logout successfully", token);
             return ResponseEntity.ok().body(response);
         } catch (Exception ex) {
-            response = ex.getMessage();
+            response = "Something went wrong";
             log.error("[{}] " + response, token, ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
@@ -65,7 +66,7 @@ public class TokenController {
             log.info("[{}] Password changed successfully", token);
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
-            response = ex.getMessage();
+            response = (ex instanceof TreenityException ? ex.getMessage() : "Something went wrong");
             log.error("[{}] " + response, token, ex);
         }
 
@@ -83,7 +84,7 @@ public class TokenController {
             log.info("[{}] Registration token created successfully", userDTO.getEmail());
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
-            response = ex.getMessage();
+            response = (ex instanceof TreenityException ? ex.getMessage() : "Something went wrong");
             log.error("[{}] " + response, userDTO.getEmail(), ex);
         }
 
@@ -101,7 +102,7 @@ public class TokenController {
             log.info("[{}] Account confirmed successfully", token);
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
-            response = ex.getMessage();
+            response = (ex instanceof TreenityException ? ex.getMessage() : "Something went wrong");
             log.error("[{}] " + response, token, ex);
         }
 
@@ -119,7 +120,7 @@ public class TokenController {
             log.info("[{}] Forget-password token created successfully", forgetPasswordDTO.getEmail());
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
-            response = ex.getMessage();
+            response = (ex instanceof TreenityException ? ex.getMessage() : "Something went wrong");
             log.error("[{}] " + response, forgetPasswordDTO.getEmail(), ex);
         }
 
@@ -137,7 +138,7 @@ public class TokenController {
             log.info("[{}] Password reset successfully", token);
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
-            response = ex.getMessage();
+            response = (ex instanceof TreenityException ? ex.getMessage() : "Something went wrong");
             log.error("[{}] " + response, token, ex);
         }
 

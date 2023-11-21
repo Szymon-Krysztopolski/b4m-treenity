@@ -1,6 +1,8 @@
 package com.main.backend.features.user.exception;
 
-public class WrongPasswordException extends Exception {
+import com.main.backend.shared.TreenityException;
+
+public class WrongPasswordException extends TreenityException {
     public WrongPasswordException() {
         super("Wrong password!");
     }
