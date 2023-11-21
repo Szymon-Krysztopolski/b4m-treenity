@@ -27,29 +27,29 @@ public class TokenController {
 
         try {
             final String token = service.login(userDTO.getEmail(), userDTO.getPassword());
-            log.info("Session token {} created successfully", token);
+            log.info("[{}] Session token created successfully", token);
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, "sessionToken=" + token)
                     .body(token);
         } catch (Exception ex) {
-            final String response = "[{}] Error during logging in!";
-            log.error(response, userDTO.getEmail(), ex);
+            final String response = "Error during logging in!";
+            log.error("[{}] " + response, userDTO.getEmail(), ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
     @PostMapping("/logout/{token}")
     public ResponseEntity<String> logout(@PathVariable String token) {
-        log.info("User with token: {} is trying to log out", token);
+        log.info("[{}] User with token is trying to log out", token);
         String response;
 
         try {
             response = service.logout(token);
-            log.info("Session logout successfully");
+            log.info("[{}] Session logout successfully", token);
             return ResponseEntity.ok().body(response);
         } catch (Exception ex) {
             response = "Error during logging out!";
-            log.error(response, ex);
+            log.error("[{}] " + response, token, ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
@@ -62,11 +62,11 @@ public class TokenController {
         try {
             status = HttpStatus.OK;
             response = service.changePassword(token, changePasswordDTO.getCurrentPassword(), changePasswordDTO.getNewPassword());
-            log.info("Password changed successfully");
+            log.info("[{}] Password changed successfully", token);
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
             response = "Error during password changing!";
-            log.error(response, ex);
+            log.error("[{}] " + response, token, ex);
         }
 
         return ResponseEntity.status(status).body(response);
@@ -80,11 +80,11 @@ public class TokenController {
         try {
             status = HttpStatus.OK;
             response = service.registration(userDTO.getUsername(), userDTO.getPassword(), userDTO.getEmail());
-            log.info("Registration token created successfully");
+            log.info("[{}] Registration token created successfully", userDTO.getEmail());
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
             response = "Error during token creation!";
-            log.error(response, ex);
+            log.error("[{}] " + response, userDTO.getEmail(), ex);
         }
 
         return ResponseEntity.status(status).body(response);
@@ -98,11 +98,11 @@ public class TokenController {
         try {
             status = HttpStatus.OK;
             response = service.confirmRegistration(token);
-            log.info("Account confirmed successfully");
+            log.info("[{}] Account confirmed successfully", token);
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
             response = "Error during account confirmation!";
-            log.error(response, ex);
+            log.error("[{}] " + response, token, ex);
         }
 
         return ResponseEntity.status(status).body(response);
@@ -116,11 +116,11 @@ public class TokenController {
         try {
             status = HttpStatus.OK;
             response = service.forgetPassword(forgetPasswordDTO.getEmail());
-            log.info("Forget-password token created successfully");
+            log.info("[{}] Forget-password token created successfully", forgetPasswordDTO.getEmail());
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
             response = "Error during token creation!";
-            log.error(response, ex);
+            log.error("[{}] " + response, forgetPasswordDTO.getEmail(), ex);
         }
 
         return ResponseEntity.status(status).body(response);
@@ -134,11 +134,11 @@ public class TokenController {
         try {
             status = HttpStatus.OK;
             response = service.resetPassword(token);
-            log.info("Password reset successfully");
+            log.info("[{}] Password reset successfully", token);
         } catch (Exception ex) {
             status = HttpStatus.BAD_REQUEST;
             response = "Error during password reset!";
-            log.error(response, ex);
+            log.error("[{}] " + response, token, ex);
         }
 
         return ResponseEntity.status(status).body(response);
