@@ -88,7 +88,10 @@ public class UserService {
         return user;
     }
 
-    public void changePassword(@NotNull UserEntity user, String currentPassword, String newPassword) throws WrongPasswordException {
+    public void changePassword(@NotNull UserEntity user, String currentPassword, String newPassword) throws WrongPasswordException, InvalidPasswordException {
+        if (!PasswordValidator.isPasswordValid(newPassword))
+            throw new InvalidPasswordException();
+
         if (!passwordEncoder.matches(currentPassword, user.getPasswordHash()))
             throw new WrongPasswordException();
 
