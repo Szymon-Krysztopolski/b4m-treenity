@@ -8,7 +8,7 @@ export default function ResetPasswordForm() {
     });
 
     return (
-        <form className={"user--form"} onSubmit={handleStandardSubmit(formData, "POST", "/api/v1/forgot-password")}>
+        <form className={"user--form"} onSubmit={handleStandardSubmit(formData, "POST", "/api/v1/forget-password")}>
             <div className="input--container">
                 <label>Email </label>
                 <input

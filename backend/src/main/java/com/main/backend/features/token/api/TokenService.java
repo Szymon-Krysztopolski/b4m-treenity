@@ -67,13 +67,13 @@ public class TokenService {
         return "Email confirmed successfully";
     }
 
-    public String forgotPassword(String email) throws Exception {
+    public String forgetPassword(String email) throws Exception {
         if (mailLink == null || mailLink.trim().isBlank())
             throw new EmptyMailLinkException();
 
         final UserEntity user = userService.getUserByMail(email);
         final String token = utils.generateNewToken(repository, user, FORGET_PASSWORD);
-        final String body = String.format("To confirm reset of password go here: %s/v1/forgot-password/%s", mailLink, token);
+        final String body = String.format("To confirm reset of password go here: %s/v1/forget-password/%s", mailLink, token);
 
         emailService.sendEmail(user.getEmail(), "Reset of password", body);
         return "Email with reset password instructions has been sent";
