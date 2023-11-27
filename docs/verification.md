@@ -1,8 +1,13 @@
 ## User verification description
 [back to README](./../README.md)
 
+// TODO
+
+### Backend class structure
+![](./images/backand-structure.jpg)
+
 ### Endpoints
-* logged user
+* Logged user
   * token endpoints
     * [POST] `/logout/{sessionToken}`
     * [POST] `/change-password/{sessionToken}` @body(ChangePasswordDTO)
@@ -11,7 +16,7 @@
     * [POST] `/nodes` @body(NodeInstructionDTO) - add new node in User's forest
     * [PUT] `/nodes/{nodeId}` @body(NodeInstructionDTO) - update User's node
     * [DELETE] `/nodes/{nodeId}` @body(NodeInstructionDTO) - delete node and all it's children
-* un-logged user
+* Un-logged user
   * token endpoints
     * [POST] `/login` @body(UserDTO)
     * [POST] `/registration` @body(UserDTO)

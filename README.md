@@ -16,6 +16,8 @@ The application allows for the creation, editing, deletion, and storage of numer
 * Postgres
 * Docker
 
+![](./docs/images/app-structure.jpg)
+
 ## Table of Contents
 1. [Application launch](./docs/launch.md)
 2. [Usage description](./docs/usage.md)
