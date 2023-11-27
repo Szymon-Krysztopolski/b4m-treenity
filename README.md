@@ -19,6 +19,7 @@ The application allows for the creation, editing, deletion, and storage of numer
 ## Table of Contents
 1. [Application launch](./docs/launch.md)
 2. [Usage description](./docs/usage.md)
+3. [User verification description](./docs/verification.md)
 
 ## Quick guide
 1. Create `.env` file based on template `.env.template` 

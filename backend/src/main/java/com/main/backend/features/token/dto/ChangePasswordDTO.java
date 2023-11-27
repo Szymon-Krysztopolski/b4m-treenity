@@ -1,4 +1,4 @@
-package com.main.backend.features.user.dto;
+package com.main.backend.features.token.dto;
 
 import lombok.Getter;
 

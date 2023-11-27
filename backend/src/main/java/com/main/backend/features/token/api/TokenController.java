@@ -1,8 +1,8 @@
 package com.main.backend.features.token.api;
 
-import com.main.backend.features.user.dto.ChangePasswordDTO;
-import com.main.backend.features.user.dto.ForgetPasswordDTO;
-import com.main.backend.features.user.dto.UserDTO;
+import com.main.backend.features.token.dto.ChangePasswordDTO;
+import com.main.backend.features.token.dto.ForgetPasswordDTO;
+import com.main.backend.features.token.dto.UserDTO;
 import com.main.backend.shared.TreenityException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
