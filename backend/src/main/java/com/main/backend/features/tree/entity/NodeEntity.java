@@ -1,5 +1,6 @@
 package com.main.backend.features.tree.entity;
 
+import com.main.backend.features.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,11 +19,14 @@ public class NodeEntity {
     private String label;
     private Integer stepValue;
 
-    @OneToMany(mappedBy = "parentNode", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "parentNode", cascade = CascadeType.ALL)
     private List<NodeEntity> childNodes;
 
     @ManyToOne
     private NodeEntity parentNode;
+
+    @ManyToOne
+    private UserEntity owner;
 
     public int getPathValue() {
         int pathValue = (hasStepValue() ? stepValue : 0);

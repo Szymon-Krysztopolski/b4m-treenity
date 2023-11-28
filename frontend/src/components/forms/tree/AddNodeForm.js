@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import {handleInputChange, handleSubmit} from "./dataHandler";
-import "../../style.css"
+import {formInputChange} from "../utils/formInputChange";
+import {handleStandardSubmit} from "../utils/handleStandardSubmit";
 
 export default function AddNodeForm({nodes}) {
     const [formData, setFormData] = useState({
@@ -10,13 +10,13 @@ export default function AddNodeForm({nodes}) {
     });
 
     return (
-        <form className={"panel--form"} onSubmit={handleSubmit(formData, "post", "/api/nodes")}>
+        <form className={"panel--form"} onSubmit={handleStandardSubmit(formData, "post", "/api/v1/nodes")}>
             <div className={"panel--form--input"}>
                 <label>Parent node</label>
                 <select
                     name="parentId"
                     value={formData.parentId}
-                    onChange={handleInputChange(formData, setFormData)}
+                    onChange={formInputChange(formData, setFormData)}
                 >
                     <option value="">Select an element</option>
                     {nodes.map((node) => (
@@ -32,7 +32,7 @@ export default function AddNodeForm({nodes}) {
                     type="text"
                     name="label"
                     value={formData.label}
-                    onChange={handleInputChange(formData, setFormData)}
+                    onChange={formInputChange(formData, setFormData)}
                 />
             </div>
             <div className={"panel--form--input"}>
@@ -41,7 +41,7 @@ export default function AddNodeForm({nodes}) {
                     type="number"
                     name="stepValue"
                     value={formData.stepValue}
-                    onChange={handleInputChange(formData, setFormData)}
+                    onChange={formInputChange(formData, setFormData)}
                 />
             </div>
             <button type="submit">Add</button>

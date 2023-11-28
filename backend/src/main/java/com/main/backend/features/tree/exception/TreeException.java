@@ -1,4 +1,4 @@
-package com.main.backend.features.tree.domain;
+package com.main.backend.features.tree.exception;
 
 /**
  * Exception thrown when detecting disallowed actions during tree creation.
