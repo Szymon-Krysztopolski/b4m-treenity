@@ -24,7 +24,7 @@ services:
         PUBLIC_URL: ${FRONTEND_PUBLIC_URL}
     image: treenity-frontend-image
     ports:
-      - "3000:80"
+      - "80:80"
 
   treenity-db:
     container_name: treenity-database-container
