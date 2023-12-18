@@ -27,4 +27,28 @@ After setting docker with database, there is a possible to set default tree for 
 # go to root directory and run
 ./test/mock-database.sh
 ```
+
+### Example of nginx configuration
+```bash
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	# SSL configuration
+	# listen 443 ssl default_server;
+	# listen [::]:443 ssl default_server;
+
+	server_name _;
+
+	location / {
+		proxy_pass http://127.0.0.1:3000;
+		# try_files $uri $uri/ =404;
+	}
+
+	location /backend/ {
+		proxy_pass http://127.0.0.1:8080/;
+	}
+}
+```
+
 [back to README](./../README.md)
